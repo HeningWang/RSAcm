@@ -6,7 +6,10 @@
       "Bash(cp:*)",
       "Bash(gh auth:*)",
       "Bash(brew list:*)",
-      "Bash(brew install:*)"
+      "Bash(brew install:*)",
+      "Bash(git rm:*)",
+      "Bash(git:*)",
+      "Bash(gh repo:*)"
     ]
   }
 }
