@@ -48,3 +48,4 @@ writing/ConsensusMarker/build/
 *.dvi
 # Keep compiled PDFs tracked; uncomment to ignore them too:
 # *.pdf
+.vscode/settings.json

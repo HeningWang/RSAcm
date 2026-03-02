@@ -12,6 +12,7 @@
   // Show the PDF in a tab on the right
 "latex-workshop.view.pdf.viewer": "tab",
 "chat.tools.terminal.autoApprove": {
-    "latexmk": true
+    "latexmk": true,
+    "mv": true
 }
 }
