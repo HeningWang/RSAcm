@@ -1,0 +1,466 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\preamble{%
+\newcommand{\SortNoop}[1]{}%
+}
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global}
+    \entry{degen2023rational}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=dd2ab438d2870d0a198b4047b2d880a4}{%
+           family={Degen},
+           familyi={D\bibinitperiod},
+           given={Judith},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Annual Reviews}%
+      }
+      \strng{namehash}{dd2ab438d2870d0a198b4047b2d880a4}
+      \strng{fullhash}{dd2ab438d2870d0a198b4047b2d880a4}
+      \strng{bibnamehash}{dd2ab438d2870d0a198b4047b2d880a4}
+      \strng{authorbibnamehash}{dd2ab438d2870d0a198b4047b2d880a4}
+      \strng{authornamehash}{dd2ab438d2870d0a198b4047b2d880a4}
+      \strng{authorfullhash}{dd2ab438d2870d0a198b4047b2d880a4}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Annual Review of Linguistics}
+      \field{number}{1}
+      \field{title}{The rational speech act framework}
+      \field{volume}{9}
+      \field{year}{2023}
+      \field{pages}{519\bibrangedash 540}
+      \range{pages}{22}
+    \endentry
+    \entry{doring2016modal}{thesis}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=340f61c07bc1355d11d756bc7d32a40e}{%
+           family={Döring},
+           familyi={D\bibinitperiod},
+           given={Sophia},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Humboldt-Universität zu Berlin}%
+      }
+      \list{location}{1}{%
+        {Berlin}%
+      }
+      \strng{namehash}{340f61c07bc1355d11d756bc7d32a40e}
+      \strng{fullhash}{340f61c07bc1355d11d756bc7d32a40e}
+      \strng{bibnamehash}{340f61c07bc1355d11d756bc7d32a40e}
+      \strng{authorbibnamehash}{340f61c07bc1355d11d756bc7d32a40e}
+      \strng{authornamehash}{340f61c07bc1355d11d756bc7d32a40e}
+      \strng{authorfullhash}{340f61c07bc1355d11d756bc7d32a40e}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{15}
+      \field{month}{7}
+      \field{note}{Disputation: 15.\ Juli 2016}
+      \field{title}{Modal Particles, Discourse Structure and Common Ground Management: Theoretical and Empirical Aspects}
+      \field{type}{phdthesis}
+      \field{year}{2016}
+      \field{dateera}{ce}
+    \endentry
+    \entry{franke2016probabilistic}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=aa30cd9ac1061ac80fc3bf007cd48a5d}{%
+           family={Franke},
+           familyi={F\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=04e6613905aec889d86b7ddc2e914c2b}{%
+           family={Jäger},
+           familyi={J\bibinitperiod},
+           given={Gerhard},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {De Gruyter Mouton}%
+      }
+      \strng{namehash}{9e79147599ccf8ac98f9d214fc92f408}
+      \strng{fullhash}{9e79147599ccf8ac98f9d214fc92f408}
+      \strng{bibnamehash}{9e79147599ccf8ac98f9d214fc92f408}
+      \strng{authorbibnamehash}{9e79147599ccf8ac98f9d214fc92f408}
+      \strng{authornamehash}{9e79147599ccf8ac98f9d214fc92f408}
+      \strng{authorfullhash}{9e79147599ccf8ac98f9d214fc92f408}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Zeitschrift für sprachwissenschaft}
+      \field{number}{1}
+      \field{title}{Probabilistic pragmatics, or why Bayes’ rule is probably important for pragmatics}
+      \field{volume}{35}
+      \field{year}{2016}
+      \field{pages}{3\bibrangedash 44}
+      \range{pages}{42}
+    \endentry
+    \entry{goodman2016pragmatic}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=17c6b9edbad988db7d426fba005cecff}{%
+           family={Goodman},
+           familyi={G\bibinitperiod},
+           given={Noah\bibnamedelima D},
+           giveni={N\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=34397283b94e67a1618493e4c967cb29}{%
+           family={Frank},
+           familyi={F\bibinitperiod},
+           given={Michael\bibnamedelima C},
+           giveni={M\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{46854a34d8ca9bff3b9ae2203e1b5e56}
+      \strng{fullhash}{46854a34d8ca9bff3b9ae2203e1b5e56}
+      \strng{bibnamehash}{46854a34d8ca9bff3b9ae2203e1b5e56}
+      \strng{authorbibnamehash}{46854a34d8ca9bff3b9ae2203e1b5e56}
+      \strng{authornamehash}{46854a34d8ca9bff3b9ae2203e1b5e56}
+      \strng{authorfullhash}{46854a34d8ca9bff3b9ae2203e1b5e56}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Trends in cognitive sciences}
+      \field{number}{11}
+      \field{title}{Pragmatic language interpretation as probabilistic inference}
+      \field{volume}{20}
+      \field{year}{2016}
+      \field{pages}{818\bibrangedash 829}
+      \range{pages}{12}
+    \endentry
+    \entry{grosz2021discourse}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=94a7e6e8356d19f65ff4533a4dea98e7}{%
+           family={Grosz},
+           familyi={G\bibinitperiod},
+           given={Patrick},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Wiley Hoboken, NJ}%
+      }
+      \strng{namehash}{94a7e6e8356d19f65ff4533a4dea98e7}
+      \strng{fullhash}{94a7e6e8356d19f65ff4533a4dea98e7}
+      \strng{bibnamehash}{94a7e6e8356d19f65ff4533a4dea98e7}
+      \strng{authorbibnamehash}{94a7e6e8356d19f65ff4533a4dea98e7}
+      \strng{authornamehash}{94a7e6e8356d19f65ff4533a4dea98e7}
+      \strng{authorfullhash}{94a7e6e8356d19f65ff4533a4dea98e7}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The Wiley Blackwell companion to semantics}
+      \field{title}{Discourse particles}
+      \field{year}{2021}
+      \field{pages}{619\bibrangedash 652}
+      \range{pages}{34}
+    \endentry
+    \entry{gutzmann2015use}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=ebbc36dd3457e43cd4260a76aecb287f}{%
+           family={Gutzmann},
+           familyi={G\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {OUP Oxford}%
+      }
+      \strng{namehash}{ebbc36dd3457e43cd4260a76aecb287f}
+      \strng{fullhash}{ebbc36dd3457e43cd4260a76aecb287f}
+      \strng{bibnamehash}{ebbc36dd3457e43cd4260a76aecb287f}
+      \strng{authorbibnamehash}{ebbc36dd3457e43cd4260a76aecb287f}
+      \strng{authornamehash}{ebbc36dd3457e43cd4260a76aecb287f}
+      \strng{authorfullhash}{ebbc36dd3457e43cd4260a76aecb287f}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Use-conditional meaning: Studies in multidimensional semantics}
+      \field{volume}{6}
+      \field{year}{2015}
+    \endentry
+    \entry{jacobs_semantics_1991}{incollection}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=74918230f37d4772021619b231fba17b}{%
+           family={Jacobs},
+           familyi={J\bibinitperiod},
+           given={Joachim},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \name{editor}{1}{}{%
+        {{hash=b5ebafde1b24c0eb335fca77369b26ad}{%
+           family={Abraham},
+           familyi={A\bibinitperiod},
+           given={Werner},
+           giveni={W\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {John Benjamins Publishing Company}%
+      }
+      \strng{namehash}{74918230f37d4772021619b231fba17b}
+      \strng{fullhash}{74918230f37d4772021619b231fba17b}
+      \strng{bibnamehash}{74918230f37d4772021619b231fba17b}
+      \strng{authorbibnamehash}{74918230f37d4772021619b231fba17b}
+      \strng{authornamehash}{74918230f37d4772021619b231fba17b}
+      \strng{authorfullhash}{74918230f37d4772021619b231fba17b}
+      \strng{editorbibnamehash}{b5ebafde1b24c0eb335fca77369b26ad}
+      \strng{editornamehash}{b5ebafde1b24c0eb335fca77369b26ad}
+      \strng{editorfullhash}{b5ebafde1b24c0eb335fca77369b26ad}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Descriptive and theoretical investigations on the logical, syntactic and pragmatic properties of discourse particles in {German}}
+      \field{isbn}{978-90-272-8331-3}
+      \field{title}{On the semantics of modal particles}
+      \field{urlday}{24}
+      \field{urlmonth}{2}
+      \field{urlyear}{2026}
+      \field{year}{1991}
+      \field{urldateera}{ce}
+      \field{pages}{141\bibrangedash 162}
+      \range{pages}{22}
+      \verb{doi}
+      \verb doi:10.1075/pbns.12.06jac
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1075/pbns.12.06jac
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1075/pbns.12.06jac
+      \endverb
+    \endentry
+    \entry{karagjosova2004meaning}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=004628630ee881ee5498e65198d98f41}{%
+           family={Karagjosova},
+           familyi={K\bibinitperiod},
+           given={Elena},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {DFKI}%
+      }
+      \strng{namehash}{004628630ee881ee5498e65198d98f41}
+      \strng{fullhash}{004628630ee881ee5498e65198d98f41}
+      \strng{bibnamehash}{004628630ee881ee5498e65198d98f41}
+      \strng{authorbibnamehash}{004628630ee881ee5498e65198d98f41}
+      \strng{authornamehash}{004628630ee881ee5498e65198d98f41}
+      \strng{authorfullhash}{004628630ee881ee5498e65198d98f41}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The meaning and function of German modal particles}
+      \field{year}{2004}
+    \endentry
+    \entry{repp2013common}{incollection}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=dc98a151452b283426d31843c9beb826}{%
+           family={Repp},
+           familyi={R\bibinitperiod},
+           given={Sophie},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Brill}%
+      }
+      \strng{namehash}{dc98a151452b283426d31843c9beb826}
+      \strng{fullhash}{dc98a151452b283426d31843c9beb826}
+      \strng{bibnamehash}{dc98a151452b283426d31843c9beb826}
+      \strng{authorbibnamehash}{dc98a151452b283426d31843c9beb826}
+      \strng{authornamehash}{dc98a151452b283426d31843c9beb826}
+      \strng{authorfullhash}{dc98a151452b283426d31843c9beb826}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Beyond expressives: Explorations in use-conditional meaning}
+      \field{title}{Common ground management: Modal particles, illocutionary negation and verum}
+      \field{year}{2013}
+      \field{pages}{231\bibrangedash 274}
+      \range{pages}{44}
+    \endentry
+    \entry{seemann2025}{thesis}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=b48caf5d40b14cec56d73d036af80632}{%
+           family={Seemann},
+           familyi={S\bibinitperiod},
+           given={Hannah},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{b48caf5d40b14cec56d73d036af80632}
+      \strng{fullhash}{b48caf5d40b14cec56d73d036af80632}
+      \strng{bibnamehash}{b48caf5d40b14cec56d73d036af80632}
+      \strng{authorbibnamehash}{b48caf5d40b14cec56d73d036af80632}
+      \strng{authornamehash}{b48caf5d40b14cec56d73d036af80632}
+      \strng{authorfullhash}{b48caf5d40b14cec56d73d036af80632}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The Signaling Function of Modal Particles in Discourse}
+      \field{type}{phdthesis}
+      \field{year}{2025}
+      \verb{urlraw}
+      \verb https://osf.io/tw3mb
+      \endverb
+      \verb{url}
+      \verb https://osf.io/tw3mb
+      \endverb
+    \endentry
+    \entry{thurmair1989modalpartikeln}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=419b39b9065effd87b8c1b6ed9277ab6}{%
+           family={Thurmair},
+           familyi={T\bibinitperiod},
+           given={Maria},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Tübingen}%
+      }
+      \list{publisher}{1}{%
+        {Niemeyer}%
+      }
+      \strng{namehash}{419b39b9065effd87b8c1b6ed9277ab6}
+      \strng{fullhash}{419b39b9065effd87b8c1b6ed9277ab6}
+      \strng{bibnamehash}{419b39b9065effd87b8c1b6ed9277ab6}
+      \strng{authorbibnamehash}{419b39b9065effd87b8c1b6ed9277ab6}
+      \strng{authornamehash}{419b39b9065effd87b8c1b6ed9277ab6}
+      \strng{authorfullhash}{419b39b9065effd87b8c1b6ed9277ab6}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Modalpartikeln und ihre Kombinationen}
+      \field{year}{1989}
+    \endentry
+    \entry{waltereit2001modal}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=68f0b9ad2d1d5d5b5307d7cda834f638}{%
+           family={Waltereit},
+           familyi={W\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{68f0b9ad2d1d5d5b5307d7cda834f638}
+      \strng{fullhash}{68f0b9ad2d1d5d5b5307d7cda834f638}
+      \strng{bibnamehash}{68f0b9ad2d1d5d5b5307d7cda834f638}
+      \strng{authorbibnamehash}{68f0b9ad2d1d5d5b5307d7cda834f638}
+      \strng{authornamehash}{68f0b9ad2d1d5d5b5307d7cda834f638}
+      \strng{authorfullhash}{68f0b9ad2d1d5d5b5307d7cda834f638}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Pragmatics}
+      \field{number}{9}
+      \field{title}{Modal particles and their functional equivalents: A speech-act-theoretic approach}
+      \field{volume}{33}
+      \field{year}{2001}
+      \field{pages}{1391\bibrangedash 1417}
+      \range{pages}{27}
+    \endentry
+    \entry{zimmermann2011discourse}{incollection}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=0e13ef306daf2c90fa831463181c7413}{%
+           family={Zimmermann},
+           familyi={Z\bibinitperiod},
+           given={Malte},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Berlin}%
+      }
+      \list{publisher}{1}{%
+        {Mouton de Gruyter}%
+      }
+      \strng{namehash}{0e13ef306daf2c90fa831463181c7413}
+      \strng{fullhash}{0e13ef306daf2c90fa831463181c7413}
+      \strng{bibnamehash}{0e13ef306daf2c90fa831463181c7413}
+      \strng{authorbibnamehash}{0e13ef306daf2c90fa831463181c7413}
+      \strng{authornamehash}{0e13ef306daf2c90fa831463181c7413}
+      \strng{authorfullhash}{0e13ef306daf2c90fa831463181c7413}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Handbook of Semantics / Handbücher zur Sprachund Kommunikationswissenschaft}
+      \field{note}{In: Paul Portner, Claudia Maienborn & Klaus von Heusinger (eds.). Handbucher zur Sprach- und Kommunikationswissenschaft. Berlin: Mouton de Gruyter.}
+      \field{title}{Discourse particles}
+      \field{year}{2012}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

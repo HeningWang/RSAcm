@@ -5,3 +5,14 @@ dist/
 .env.local
 CLAUDE.md
 .claude/
+writing/ConsensusMarker/production_exp.aux
+writing/ConsensusMarker/production_exp.bbl
+writing/ConsensusMarker/production_exp.bcf
+writing/ConsensusMarker/production_exp.blg
+writing/ConsensusMarker/production_exp.fdb_latexmk
+writing/ConsensusMarker/production_exp.fls
+writing/ConsensusMarker/production_exp.log
+writing/ConsensusMarker/production_exp.out
+.gitignore
+writing/ConsensusMarker/production_exp.run.xml
+writing/ConsensusMarker/production_exp.synctex.gz

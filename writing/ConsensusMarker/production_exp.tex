@@ -1,0 +1,329 @@
+% production_exp.tex
+% Stand-alone description of the production experiment.
+% Can be embedded in main.tex via \input{production_exp}.
+%
+% Compile stand-alone:
+%   pdflatex production_exp.tex
+%
+% Embed in main.tex:
+%   \input{production_exp}   % (inside a \section{Experiment} environment)
+
+\documentclass[12pt]{article}
+\usepackage{CSPArticleStyle}
+\usepackage{csquotes}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{tabularray}   % robust tables; fall back to tabular if unavailable
+\usepackage{gb4e}         % linguistic examples
+\noautomath
+
+\title{Production Experiment: Eliciting Consensus-Marker Choice\\
+       Across Perceived-Controversy and Goal-Strength Conditions}
+\author{}
+\date{}
+
+\begin{document}
+
+%% ============================================================
+%% When embedding in main.tex, delete from \documentclass to
+%% \begin{document} and delete \end{document} at the bottom.
+%% ============================================================
+
+\section{Experiment: Consensus-Marker Production}
+
+\subsection{Overview}
+
+The production experiment empirically estimates the decision thresholds
+that govern the use of five German consensus markers by placing
+participants in the speaker role.
+Participants read short vignettes that independently varied
+\emph{pragmatic perceived controversy} (\textsc{pc\textsubscript{prag}})
+and the speaker's \emph{persuasive-goal strength} ($g$), then selected
+which consensus marker they would most naturally use in the described
+situation.
+\emph{Propositional perceived controversy} (\textsc{pc\textsubscript{prop}})
+is held constant within the experiment and operationalised as a continuous
+topic-level covariate obtained from a separate norming study: for each
+of the eight topic items, participants rated the degree to which the
+proposition $p$ is considered established/accepted (0--100 scale);
+the resulting means enter the regression analyses as a fixed covariate.
+The resulting distribution of marker choices across the
+$\textsc{pc}_\text{prag} \times g$ design, combined with the
+continuous \textsc{pc\textsubscript{prop}} covariate, provides the
+empirical basis for estimating the ordinal thresholds
+$\mu_1 < \cdots < \mu_4$ of the noisy-threshold RSA model.
+
+\subsection{Participants}
+
+Participants will be recruited via Prolific and will be required to be
+native speakers of German (language-at-home filter).
+Data collection is ongoing; a target of $N = 80$ participants is planned
+($n = 20$ per list across 4 lists), each completing 16 trials (8 critical + 8 filler).
+
+\subsection{Materials}
+
+\subsubsection{Markers}
+
+The five consensus markers under investigation are, from weakest to
+strongest presumed common-ground commitment:
+
+\begin{enumerate}
+  \item \textit{sofern ich wei\ss{}} (`as far as I know')
+  \item \textit{wie du ja wei\ss t} (`as you (prt) know')
+  \item \textit{wie wir wissen} (`as we know')
+  \item \textit{ja} (modal particle; roughly `as you know / of course')
+  \item \textit{bekanntlich} (`as is well known / notoriously')
+\end{enumerate}
+
+These markers were embedded in the sentential \emph{Mittelfeld}
+(middle field), immediately after the finite verb, as illustrated in
+example~(\ref{ex:frame}):
+
+\begin{exe}
+  \ex \label{ex:frame}
+  Digitale Kompetenzen sind \textbf{[MARKER]}
+  in der heutigen Arbeitswelt unverzichtbar.\\
+  `Digital skills are \textbf{[MARKER]} indispensable in today's
+  working world.'
+\end{exe}
+
+This syntactic position is licit for all five markers: modal particles
+such as \textit{ja} canonically occupy the left edge of the Mittelfeld
+\citep{thurmair1989modalpartikeln}, while the adverb \textit{bekanntlich}
+and parenthetical clauses (\textit{wie wir wissen}, etc.) can appear
+there as well (see \citealt{jacobs_semantics_1991} for discussion).
+Each target sentence was followed by a consequent clause with the
+recommended action $q$: \textit{Deshalb solltest du [q].}
+(`Therefore, you should [q].')
+
+\subsubsection{Topic Items}
+
+Eight topic domains were used, each associated with a fixed proposition
+$p$ (sentence frame) and consequent action $q$ (Table~\ref{tab:items}).
+The first four items were used in earlier pilot work; items 5--8 were
+added to reach the minimum of eight required for a complete Latin square.
+
+\begin{table}[ht]
+\centering
+\caption{Topic items: sentence frame for $p$ (with marker slot [M]) and consequent $q$.}
+\label{tab:items}
+\small
+\begin{tabular}{clll}
+\toprule
+\textbf{\#} & \textbf{Topic} & \textbf{Sentence frame} & \textbf{Consequent $q$} \\
+\midrule
+1 & Klimawandel &
+  \textit{Der Klimawandel wird [M]} &
+  auf Flugreisen verzichten \\
+  & & \textit{durch menschliche Aktivit\"aten verursacht.} & \\[3pt]
+2 & Ern\"ahrung &
+  \textit{Eine \"uberwiegend pflanzliche Ern\"ahrung} &
+  mehr pflanzliche Lebens- \\
+  & & \textit{f\"ordert [M] die Gesundheit.} &
+  mittel einbauen \\[3pt]
+3 & Stadtverkehr &
+  \textit{Ein ausgebautes Nahverkehrsnetz} &
+  h\"aufiger auf \"offentliche \\
+  & & \textit{entlastet [M] den Stadtverkehr deutlich.} &
+  Verkehrsmittel umsteigen \\[3pt]
+4 & Digitalisierung &
+  \textit{Digitale Kompetenzen sind [M] in der} &
+  regelm\"a\ss{}ig Weiterbildungs- \\
+  & & \textit{heutigen Arbeitswelt unverzichtbar.} &
+  angebote nutzen \\[3pt]
+5 & Schlaf &
+  \textit{Ausreichend Schlaf ist [M] entscheidend} &
+  auf feste Schlafzeiten \\
+  & & \textit{f\"ur die kognitive Leistungsf\"ahigkeit.} &
+  achten \\[3pt]
+6 & Plastik &
+  \textit{Einwegplastik schadet [M] den} &
+  konsequent auf Einweg- \\
+  & & \textit{Meeres\"okosystemen erheblich.} &
+  plastik verzichten \\[3pt]
+7 & Sport &
+  \textit{Regelm\"a\ss{}ige k\"orperliche Bewegung} &
+  regelm\"a\ss{}ig Sport in \\
+  & & \textit{senkt [M] das Risiko f\"ur} &
+  den Alltag integrieren \\
+  & & \textit{Herz-Kreislauf-Erkrankungen deutlich.} & \\[3pt]
+8 & Lokalkauf &
+  \textit{Das Kaufen bei lokalen H\"andlern} &
+  \"ofter bei lokalen \\
+  & & \textit{st\"arkt [M] die regionale Wirtschaft} &
+  Gesch\"aften einkaufen \\
+  & & \textit{nachhaltig.} & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent [M] denotes the marker slot (dropdown).
+
+\subsubsection{Vignettes}
+
+Each trial began with a context paragraph that established the
+communicative situation and manipulated the two within-experiment factors.
+\textsc{pc\textsubscript{prag}} (pragmatic controversy) was manipulated
+by stating that the interlocutor's social circle (colleagues, friends, or
+neighbours) \emph{largely agreed} (low) or \emph{held divergent views}
+(high) about $p$.
+\textsc{pc\textsubscript{prop}} was not manipulated within the experiment:
+all context paragraphs presented the proposition $p$ neutrally, without
+scientific framing or editorial evaluation. Topic-level propositional
+acceptance ratings from the norming study are used as a continuous
+covariate in analysis.
+Goal strength $g$ was manipulated via an explicit goal instruction
+appended to the context:
+
+\begin{itemize}
+  \item $g_\text{low}$: \textit{Du m\"ochtest das nur kurz anmerken.}
+        (`You just want to make a brief note of this.')
+  \item $g_\text{high}$: \textit{Es ist dir sehr wichtig, dass dein
+        Gespr\"achspartner das akzeptiert.}
+        (`It is very important to you that your interlocutor accepts this.')
+\end{itemize}
+
+A complete sample item (topic: Digitalisierung, $\textsc{pc}_\text{prag} =
+\text{high}$, $g = \text{high}$; norming $\textsc{pc}_\text{prop}$ rating
+for this topic: 85/100) is given in (\ref{ex:sample}):
+
+\begin{exe}
+  \ex \label{ex:sample}
+  \textit{Du sprichst mit einer Kollegin {\"u}ber Berufsausbildung und
+  Weiterbildung.
+  In eurem Team gehen die Meinungen dazu stark auseinander.}
+
+  \textit{[Goal instruction:] Es ist dir sehr wichtig, dass dein
+  Gespr\"achspartner das akzeptiert.}
+
+  \textit{Sentence frame:} Digitale Kompetenzen sind \underline{\hspace{2.5cm}}
+  in der heutigen Arbeitswelt unverzichtbar.
+  Deshalb solltest du regelm\"a\ss{}ig digitale Weiterbildungsangebote nutzen.
+\end{exe}
+
+\subsection{Design}
+
+\subsubsection{Factorial structure}
+
+The experiment employed a \textbf{2 (pc\textsubscript{prag}: low vs.\ high)
+$\times$ 2 ($g$: low vs.\ high) fully crossed design},
+yielding 4 conditions.
+\textsc{pc\textsubscript{prop}} is not a within-experiment factor; it enters
+as a continuous topic-level covariate from the norming study.
+With 8 topic items and a Latin square rotation across 4 lists, each
+participant saw exactly \textbf{8 critical trials}---two items per condition---plus
+8 filler trials, for \textbf{16 trials} in total
+(Table~\ref{tab:design}).
+
+\begin{table}[ht]
+\centering
+\caption{%
+  The $2\times2$ design (4 conditions).
+  \textsc{pc\textsubscript{prop}} is a continuous norming covariate, not a
+  within-experiment factor.
+  In each list, the 8 items are assigned to conditions via the Latin square
+  rotation described in Section~\ref{subsub:counterbalancing}.}
+\label{tab:design}
+\small
+\begin{tabular}{ccl}
+\toprule
+\textbf{pc\textsubscript{prag}} &
+\textbf{$g$} &
+\textbf{Condition label} \\
+\midrule
+low  & low  & (0) community agrees, casual \\
+low  & high & (1) community agrees, pressing \\
+high & low  & (2) community divided, casual \\
+high & high & (3) community divided, pressing \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Counterbalancing}
+\label{subsub:counterbalancing}
+
+The experiment used a \textbf{Latin square} to counterbalance item--condition
+pairings across participants.
+With $k = 4$ conditions and 8 items, a balanced assignment is achieved:
+each of the 4 lists assigns item $i$ ($i = 0,\ldots,7$) to condition
+$(i + l)\bmod 4$, where $l \in \{0,1,2,3\}$ is the list number.
+The resulting assignment matrix (Table~\ref{tab:ls}) guarantees that
+\begin{itemize}
+  \item each participant sees every item exactly once;
+  \item each participant sees each condition exactly twice (two items per
+        condition), ensuring balanced coverage of the 2$\times$2 design;
+  \item across all 4 lists, each item appears equally often in each
+        condition (twice per condition over the full participant sample).
+\end{itemize}
+
+\begin{table}[ht]
+\centering
+\caption{Latin square assignment of conditions to items across 4 lists.
+  Cell entries are condition indices (0--3) as defined in
+  Table~\ref{tab:design}.
+  Rows = lists ($l$); columns = items ($i$).}
+\label{tab:ls}
+\small
+\begin{tabular}{ccccccccc}
+\toprule
+\textbf{List} &
+\textbf{Item 1} & \textbf{Item 2} & \textbf{Item 3} & \textbf{Item 4} &
+\textbf{Item 5} & \textbf{Item 6} & \textbf{Item 7} & \textbf{Item 8} \\
+\midrule
+0 & 0 & 1 & 2 & 3 & 0 & 1 & 2 & 3 \\
+1 & 1 & 2 & 3 & 0 & 1 & 2 & 3 & 0 \\
+2 & 2 & 3 & 0 & 1 & 2 & 3 & 0 & 1 \\
+3 & 3 & 0 & 1 & 2 & 3 & 0 & 1 & 2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent List assignment is determined automatically from the URL query
+parameter \texttt{?list=N} (0--3); if absent, a random list is selected.
+Each participant is thus within-subjects across items and sees all four
+conditions (twice each). Condition effects are estimated from within-participant
+variation across the 2$\times$2 design, controlling for by-participant
+random intercepts.
+
+In addition to the 8 critical trials, each participant completed 8
+\textbf{filler trials} drawn from separate topic domains (train travel,
+reading light, cooking, coffee, vacation, hydration, fresh air, noise).
+Filler items used the same trial format but were excluded from the
+main analysis; they serve to dilute the critical items and reduce
+potential demand characteristics.
+
+\subsubsection{Dependent variable}
+
+The dependent variable was the marker chosen from a drop-down menu
+displaying all five options in fixed order (as listed in
+Section~\ref{sub:markers}).
+No response time threshold was imposed, but response times were logged.
+Recorded per trial: \texttt{trial\_id}, \texttt{topic}, \texttt{is\_filler},
+\texttt{condition\_index}, \texttt{pc\_prag}, \texttt{g},
+\texttt{selected\_marker}, \texttt{rt} (ms); and once per participant:
+\texttt{list\_num}.
+The continuous \texttt{pc\_prop\_rating} covariate (topic-level norming mean)
+is joined to the trial data during analysis.
+
+\subsection{Procedure}
+
+Participants completed the experiment online via the
+magpie platform \citep{kochetkova2024magpie} in a browser.
+After reading instructions in German, participants were assigned to one
+of 4 counterbalancing lists (via URL parameter or randomly).
+They then proceeded through 16 trials---8 critical and 8 fillers---in a
+fully randomised order, followed by a post-test questionnaire eliciting
+native language, age, gender, education level, and optional comments.
+Each trial displayed (a) a context paragraph, (b) a goal instruction,
+and (c) the sentence frame with the marker drop-down embedded at the
+Mittelfeld position.
+The ``Weiter'' (Next) button was disabled until a marker had been
+selected, ensuring a response on every trial.
+
+\end{document}

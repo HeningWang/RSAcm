@@ -1,0 +1,46 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'experiments/**'
+
+jobs:
+  build-and-deploy:
+    strategy:
+      max-parallel: 1
+      matrix:
+        folder:
+          - experiments/production_exp
+          - experiments/norming_exp
+          - experiments/comprehension_exp
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: ${{ matrix.folder }}/package-lock.json
+
+      - name: Install and Build
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+        working-directory: ${{ matrix.folder }}
+        run: |
+          npm install
+          npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: ${{ matrix.folder }}/dist
+          target-folder: ${{ matrix.folder }}
+          token: ${{ secrets.GITHUB_TOKEN }}
