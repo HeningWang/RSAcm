@@ -1,0 +1,17 @@
+{
+  // LaTeX Workshop: PDF lives next to the .tex file (out_dir = . in .latexmkrc)
+  // aux/cache files are routed to writing/ConsensusMarker/build/ by .latexmkrc
+  "latex-workshop.latex.outDir": "%DIR%",
+
+  // Use latexmk (respects .latexmkrc automatically)
+  "latex-workshop.latex.recipe.default": "latexmk",
+
+  // Clean aux files on a successful build
+  "latex-workshop.latex.autoClean.run": "never",
+
+  // Show the PDF in a tab on the right
+"latex-workshop.view.pdf.viewer": "tab",
+"chat.tools.terminal.autoApprove": {
+    "latexmk": true
+}
+}

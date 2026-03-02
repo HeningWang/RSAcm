@@ -1,18 +1,50 @@
+## ── Node / magpie experiments ──────────────────────────────────────────────
 node_modules/
-.DS_Store
 dist/
+
+## ── Environment / secrets ──────────────────────────────────────────────────
 .env
 .env.local
+
+## ── Claude / AI tooling ────────────────────────────────────────────────────
 CLAUDE.md
 .claude/
-writing/ConsensusMarker/production_exp.aux
-writing/ConsensusMarker/production_exp.bbl
-writing/ConsensusMarker/production_exp.bcf
-writing/ConsensusMarker/production_exp.blg
-writing/ConsensusMarker/production_exp.fdb_latexmk
-writing/ConsensusMarker/production_exp.fls
-writing/ConsensusMarker/production_exp.log
-writing/ConsensusMarker/production_exp.out
-.gitignore
-writing/ConsensusMarker/production_exp.run.xml
-writing/ConsensusMarker/production_exp.synctex.gz
+
+## ── macOS ───────────────────────────────────────────────────────────────────
+.DS_Store
+
+## ── LaTeX auxiliary / build files ──────────────────────────────────────────
+# latexmk routes aux files to writing/ConsensusMarker/build/ via .latexmkrc
+writing/ConsensusMarker/build/
+# Fallback globs catch any aux files that land outside build/
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.lof
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.synctex\(busy\)
+*.toc
+*.idx
+*.ilg
+*.ind
+*.glo
+*.gls
+*.glg
+*.acn
+*.acr
+*.alg
+*.ist
+*.nav
+*.snm
+*.vrb
+*.xdv
+*.dvi
+# Keep compiled PDFs tracked; uncomment to ignore them too:
+# *.pdf

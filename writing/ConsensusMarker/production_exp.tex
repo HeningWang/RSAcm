@@ -167,19 +167,45 @@ added to reach the minimum of eight required for a complete Latin square.
 
 \subsubsection{Vignettes}
 
-Each trial began with a context paragraph that established the
-communicative situation and manipulated the two within-experiment factors.
-\textsc{pc\textsubscript{prag}} (pragmatic controversy) was manipulated
-by stating that the interlocutor's social circle (colleagues, friends, or
-neighbours) \emph{largely agreed} (low) or \emph{held divergent views}
-(high) about $p$.
-\textsc{pc\textsubscript{prop}} was not manipulated within the experiment:
-all context paragraphs presented the proposition $p$ neutrally, without
-scientific framing or editorial evaluation. Topic-level propositional
-acceptance ratings from the norming study are used as a continuous
-covariate in analysis.
-Goal strength $g$ was manipulated via an explicit goal instruction
-appended to the context:
+\paragraph{Propositional perceived controversy (\textsc{pc\textsubscript{prop}}).}
+\textsc{pc\textsubscript{prop}} was \emph{not} manipulated within the
+production experiment.
+Instead, it was operationalised as a continuous, topic-level covariate
+obtained from a separate norming study conducted prior to the production
+experiment.
+In that norming study, a different sample of native German speakers rated,
+for each topic proposition $p$, the degree to which they considered $p$
+accepted/established in (German) public discourse, on a 0--100 scale
+($0 = $ `completely contested', $100 = $ `universally accepted').
+The resulting per-topic means (e.g., \textit{Digitalisierung}: 85/100;
+\textit{Lokalkauf}: 58/100) enter the regression analyses as a
+continuous, centred predictor \textsc{pc\textsubscript{prop}}$_c$
+(mean-centred, SD $\approx$ 1).
+Context paragraphs in the production experiment therefore present
+the proposition $p$ without any editorial evaluation, so that
+participants' experience of propositional controversy is shaped
+solely by their own prior knowledge and the norming-derived covariate
+captures this variation in analysis.
+
+\paragraph{Pragmatic perceived controversy (\textsc{pc\textsubscript{prag}}).}
+\textsc{pc\textsubscript{prag}} was manipulated between instances of each item
+by varying whether the speaker's social circle \emph{largely agreed} (low)
+or \emph{held divergent views} (high) about $p$.
+The two context versions for the \textit{Digitalisierung} item are:
+
+\begin{itemize}
+  \item $\textsc{pc}_\text{prag} = \text{low}$: \textit{Du sprichst mit einer
+        Kollegin {\"u}ber Berufsausbildung und Weiterbildung.
+        In eurem Team teilen die meisten die Ansicht,
+        dass digitale Kompetenzen in der heutigen Arbeitswelt unverzichtbar sind.}
+  \item $\textsc{pc}_\text{prag} = \text{high}$: \textit{Du sprichst mit einer
+        Kollegin {\"u}ber Berufsausbildung und Weiterbildung.
+        In eurem Team gehen die Meinungen dazu stark auseinander.}
+\end{itemize}
+
+\paragraph{Speaker goal strength ($g$).}
+Goal strength was manipulated via a standardised goal instruction
+appended after the context paragraph:
 
 \begin{itemize}
   \item $g_\text{low}$: \textit{Du m\"ochtest das nur kurz anmerken.}
@@ -189,23 +215,57 @@ appended to the context:
         (`It is very important to you that your interlocutor accepts this.')
 \end{itemize}
 
-A complete sample item (topic: Digitalisierung, $\textsc{pc}_\text{prag} =
-\text{high}$, $g = \text{high}$; norming $\textsc{pc}_\text{prop}$ rating
-for this topic: 85/100) is given in (\ref{ex:sample}):
+\paragraph{Complete sample item (all four conditions).}
+Examples (\ref{ex:cond1})--(\ref{ex:cond4}) show the full vignette for
+the topic \textit{Digitalisierung}
+(norming $\textsc{pc}_\text{prop}$ rating: 85/100;
+sentence frame: \textit{Digitale Kompetenzen sind [M] in der heutigen
+Arbeitswelt unverzichtbar.
+Deshalb solltest du regelm\"a\ss{}ig digitale Weiterbildungsangebote nutzen.})
+across all four conditions of the $2\times2$ design.
 
 \begin{exe}
-  \ex \label{ex:sample}
-  \textit{Du sprichst mit einer Kollegin {\"u}ber Berufsausbildung und
-  Weiterbildung.
-  In eurem Team gehen die Meinungen dazu stark auseinander.}
-
-  \textit{[Goal instruction:] Es ist dir sehr wichtig, dass dein
-  Gespr\"achspartner das akzeptiert.}
-
-  \textit{Sentence frame:} Digitale Kompetenzen sind \underline{\hspace{2.5cm}}
+  \ex \label{ex:cond1}
+  \textbf{Condition 0: $\textsc{pc}_\text{prag} = \text{low}$, $g = \text{low}$}\\
+  \textit{Du sprichst mit einer Kollegin {\"u}ber Berufsausbildung und Weiterbildung.
+  In eurem Team teilen die meisten die Ansicht,
+  dass digitale Kompetenzen in der heutigen Arbeitswelt unverzichtbar sind.}\\
+  \textit{Du m\"ochtest das nur kurz anmerken.}\\
+  Digitale Kompetenzen sind \underline{\hspace{2.2cm}}
   in der heutigen Arbeitswelt unverzichtbar.
-  Deshalb solltest du regelm\"a\ss{}ig digitale Weiterbildungsangebote nutzen.
+
+  \ex \label{ex:cond2}
+  \textbf{Condition 1: $\textsc{pc}_\text{prag} = \text{low}$, $g = \text{high}$}\\
+  \textit{Du sprichst mit einer Kollegin {\"u}ber Berufsausbildung und Weiterbildung.
+  In eurem Team teilen die meisten die Ansicht,
+  dass digitale Kompetenzen in der heutigen Arbeitswelt unverzichtbar sind.}\\
+  \textit{Es ist dir sehr wichtig, dass dein Gespr\"achspartner das akzeptiert.}\\
+  Digitale Kompetenzen sind \underline{\hspace{2.2cm}}
+  in der heutigen Arbeitswelt unverzichtbar.
+
+  \ex \label{ex:cond3}
+  \textbf{Condition 2: $\textsc{pc}_\text{prag} = \text{high}$, $g = \text{low}$}\\
+  \textit{Du sprichst mit einer Kollegin {\"u}ber Berufsausbildung und Weiterbildung.
+  In eurem Team gehen die Meinungen dazu stark auseinander.}\\
+  \textit{Du m\"ochtest das nur kurz anmerken.}\\
+  Digitale Kompetenzen sind \underline{\hspace{2.2cm}}
+  in der heutigen Arbeitswelt unverzichtbar.
+
+  \ex \label{ex:cond4}
+  \textbf{Condition 3: $\textsc{pc}_\text{prag} = \text{high}$, $g = \text{high}$}\\
+  \textit{Du sprichst mit einer Kollegin {\"u}ber Berufsausbildung und Weiterbildung.
+  In eurem Team gehen die Meinungen dazu stark auseinander.}\\
+  \textit{Es ist dir sehr wichtig, dass dein Gespr\"achspartner das akzeptiert.}\\
+  Digitale Kompetenzen sind \underline{\hspace{2.2cm}}
+  in der heutigen Arbeitswelt unverzichtbar.
 \end{exe}
+
+\noindent In all four vignettes the sentence frame and consequent clause
+(\textit{Deshalb solltest du regelm\"a\ss{}ig digitale
+Weiterbildungsangebote nutzen.}) are identical; only the context
+paragraph and goal instruction vary across conditions.
+The marker slot [M] / \underline{\hspace{2.2cm}} was presented as a
+drop-down menu in the actual experiment.
 
 \subsection{Design}
 

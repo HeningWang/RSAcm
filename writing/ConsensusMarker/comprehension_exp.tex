@@ -1,0 +1,556 @@
+% comprehension_exp.tex
+% Stand-alone plan for the comprehension experiment.
+% Can be embedded in main.tex via \input{comprehension_exp}.
+%
+% Compile stand-alone:
+%   pdflatex comprehension_exp.tex
+%
+% Embed in main.tex:
+%   \input{comprehension_exp}   % (inside a \section{Experiment} environment)
+
+\documentclass[12pt]{article}
+\usepackage{CSPArticleStyle}
+\usepackage{csquotes}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{tabularray}
+\usepackage{gb4e}
+\noautomath
+
+\title{Comprehension Experiment: Inferring Speaker Goal and Action Adoption
+       from Consensus-Marker Use}
+\author{}
+\date{}
+
+\begin{document}
+
+%% ============================================================
+%% When embedding in main.tex, delete from \documentclass to
+%% \begin{document} and delete \end{document} at the bottom.
+%% ============================================================
+
+\section{Experiment: Consensus-Marker Comprehension}
+
+\subsection{Overview}
+
+The comprehension experiment is the listener-side counterpart of the
+production experiment and tests whether listeners can invert the
+speaker's marker choice to recover the latent context that motivated it.
+Where the production experiment gave participants a context (fixing
+\textsc{pc\textsubscript{prag}} and $g$) and asked which marker they
+would use, the comprehension experiment gives participants a context
+(fixing \textsc{pc\textsubscript{prag}}) together with a marker already
+embedded in the sentence and asks what goal strength the speaker likely
+had and how likely the listener is to adopt $q$.
+
+The specific marker presented in each vignette is not chosen arbitrarily
+from all five markers. Instead, it is the \emph{Bayesian best-choice
+marker} for the corresponding production condition: the marker with the
+highest posterior probability under the noisy-threshold RSA model fitted
+to the production data, given the context's \textsc{pc\textsubscript{prag}}
+level and a specified $g$ level. This mirrors the production design
+exactly and ensures that the comprehension stimuli reflect ecologically
+valid marker use rather than arbitrary marker$\times$item pairings.
+
+\textsc{pc\textsubscript{prag}} is retained as an explicit context
+manipulation (low vs.\ high), so that listeners can be expected to
+have a well-defined prior on pragmatic controversy when interpreting
+the marker. \textsc{pc\textsubscript{prop}} is not manipulated within
+the experiment; it enters as a continuous topic-level covariate from
+the norming study.
+
+After reading each vignette, participants provide two slider ratings
+operationalising the key listener-side quantities:
+\begin{enumerate}
+  \item \textbf{Inferred speaker goal strength} ($\widehat{g}$):
+        how strongly does the speaker seem to want the listener to
+        accept and act on $q$?
+  \item \textbf{Adoption likelihood} ($\widehat{A}$):
+        how likely is the listener to follow the recommended action $q$?
+\end{enumerate}
+
+\noindent Perceived controversy is \emph{not} elicited as a rating:
+because \textsc{pc\textsubscript{prag}} is already manipulated as a
+context factor, asking participants to rate controversy would be
+redundant with respect to the manipulation check and circular with
+respect to the research question. The theoretically central inference
+to test is whether listeners can decode the speaker's \emph{goal} from
+marker use, and whether that inference translates into adoption
+behaviour.
+
+The two slider measures, together with the \textsc{pc\textsubscript{prag}}
+context and the \textsc{pc\textsubscript{prop}} covariate, provide the
+data needed to fit the model's listener parameters
+$(\eta_0, \eta_g, \eta_{pc}, \eta_{\mathrm{int}})$.
+
+\subsection{Participants}
+
+Participants will be recruited via Prolific and will be required to be
+native speakers of German (language-at-home filter).
+Data collection is planned after completion of the production experiment
+(model fitting required to determine the best-choice markers).
+A target of $N = 80$ participants is planned ($n = 20$ per list across
+4 counterbalancing lists), each completing 16 trials (8 critical + 8
+filler), matching the structure of the production experiment.
+
+\subsection{Materials}
+
+\subsubsection{Markers}
+
+Each critical vignette is presented with one specific consensus marker
+already embedded in the Mittelfeld of the sentence frame (see
+example~(\ref{ex:frame_comp})):
+
+\begin{exe}
+  \ex \label{ex:frame_comp}
+  Digitale Kompetenzen sind \textbf{[MARKER]}
+  in der heutigen Arbeitswelt unverzichtbar.\\
+  `Digital skills are \textbf{[MARKER]} indispensable in today's
+  working world.'
+\end{exe}
+
+Unlike the production experiment, participants do \emph{not} choose the
+marker; they read the sentence with the marker already in place and respond
+to the two rating probes.
+
+Critically, the marker assigned to each condition is not drawn arbitrarily
+from the five candidates. Instead, for each of the four production
+conditions (pc\textsubscript{prag} $\times$ $g$), the marker used in
+comprehension is the \textbf{Bayesian best-choice marker}: the marker
+$u^*$ with the highest posterior probability under the fitted
+noisy-threshold RSA production model,
+\[
+u^* = \arg\max_{u} \; P(u \mid pc_{\mathrm{prag}}, g,
+                           pc_{\mathrm{prop}\_c}).
+\]
+Because $pc_{\mathrm{prop}}$ varies continuously across items,
+$u^*$ may differ per item even within the same
+(pc\textsubscript{prag}, $g$) cell; the final stimulus list is therefore
+constructed item-by-item once the production model has been fitted.
+This ensures that comprehension vignettes reflect speaker behaviour that
+is optimal under the model, creating a tight production--comprehension
+link and allowing a direct empirical test of the Bayesian inversion
+hypothesis.
+
+All five markers remain candidates; the mapping from conditions to
+best-choice markers is an empirical output of the production analysis,
+not a design pre-commitment.
+
+\subsubsection{Topic Items}
+
+The same eight topic domains used in the norming study and the production
+experiment are used here (Table~\ref{tab:items_comp}).
+The 4-condition $\times$ 8-item Latin square (Section~\ref{subsub:counterbalancing_comp})
+requires no additional items.
+
+\begin{table}[ht]
+\centering
+\caption{Topic items: sentence frame for $p$ (with marker position [M])
+         and consequent $q$.}
+\label{tab:items_comp}
+\small
+\begin{tabular}{clll}
+\toprule
+\textbf{\#} & \textbf{Topic} & \textbf{Sentence frame} & \textbf{Consequent $q$} \\
+\midrule
+1 & Klimawandel &
+  \textit{Der Klimawandel wird [M]} &
+  auf Flugreisen verzichten \\
+  & & \textit{durch menschliche Aktivit\"aten verursacht.} & \\[3pt]
+2 & Ern\"ahrung &
+  \textit{Eine \"uberwiegend pflanzliche Ern\"ahrung} &
+  mehr pflanzliche Lebens- \\
+  & & \textit{f\"ordert [M] die Gesundheit.} &
+  mittel einbauen \\[3pt]
+3 & Stadtverkehr &
+  \textit{Ein ausgebautes Nahverkehrsnetz} &
+  h\"aufiger auf \\
+  & & \textit{entlastet [M] den Stadtverkehr} &
+  \"offentliche Verkehrs- \\
+  & & \textit{deutlich.} &
+  mittel umsteigen \\[3pt]
+4 & Digitalisierung &
+  \textit{Digitale Kompetenzen sind [M] in} &
+  regelm\"a\ss{}ig Weiter- \\
+  & & \textit{der heutigen Arbeitswelt unverzichtbar.} &
+  bildungsangebote nutzen \\[3pt]
+5 & Schlaf &
+  \textit{Ausreichend Schlaf ist [M] entscheidend} &
+  auf feste Schlafzeiten \\
+  & & \textit{f\"ur die kognitive Leistungsf\"ahigkeit.} &
+  achten \\[3pt]
+6 & Plastik &
+  \textit{Einwegplastik schadet [M] den} &
+  konsequent auf Einweg- \\
+  & & \textit{Meeres\"okosystemen erheblich.} &
+  plastik verzichten \\[3pt]
+7 & Sport &
+  \textit{Regelm\"a\ss{}ige k\"orperliche Bewegung} &
+  regelm\"a\ss{}ig Sport in \\
+  & & \textit{senkt [M] das Risiko f\"ur} &
+  den Alltag integrieren \\
+  & & \textit{Herz-Kreislauf-Erkrankungen deutlich.} & \\[3pt]
+8 & Lokalkauf &
+  \textit{Das Kaufen bei lokalen H\"andlern} &
+  \"ofter bei lokalen \\
+  & & \textit{st\"arkt [M] die regionale Wirtschaft} &
+  Gesch\"aften einkaufen \\
+  & & \textit{nachhaltig.} & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent [M] denotes the position of the pre-filled best-choice marker.
+
+\subsubsection{Vignettes}
+
+\paragraph{Structure.}
+Each trial presents a vignette consisting of three parts:
+(a) a context paragraph establishing the communicative situation and
+fixing the \textsc{pc\textsubscript{prag}} level;
+(b) the target sentence with the best-choice marker already embedded
+in the Mittelfeld;
+(c) the consequent action clause.
+The two rating probes follow immediately below the vignette.
+
+\paragraph{Propositional perceived controversy (\textsc{pc\textsubscript{prop}}).}
+As in the production experiment, \textsc{pc\textsubscript{prop}} is not
+manipulated within the comprehension experiment.
+Topic-level propositional acceptance ratings from the norming study
+(0--100 scale; e.g., \textit{Digitalisierung}: 85/100,
+\textit{Lokalkauf}: 58/100) serve as a continuous, mean-centred
+covariate \textsc{pc\textsubscript{prop}}$_c$ in analysis.
+Context paragraphs present $p$ without editorial evaluation; variation in
+listeners' individual assessments of propositional controversy is
+captured by the norming-derived covariate.
+
+\paragraph{Pragmatic perceived controversy (\textsc{pc\textsubscript{prag}}).}
+\textsc{pc\textsubscript{prag}} is manipulated between item instances
+using the same two context versions as in the production experiment:
+the speaker's social circle either \emph{largely agrees} (low) or
+\emph{holds divergent views} (high) about $p$.
+For example, for the \textit{Digitalisierung} item:
+
+\begin{itemize}
+  \item $\textsc{pc}_\text{prag} = \text{low}$: \textit{Du h\"orst, wie deine
+        Kollegin mit einer anderen Kollegin \"uber Berufsausbildung und
+        Weiterbildung spricht.
+        In eurem Team teilen die meisten die Ansicht, dass digitale Kompetenzen
+        in der heutigen Arbeitswelt unverzichtbar sind.}
+  \item $\textsc{pc}_\text{prag} = \text{high}$: \textit{Du h\"orst, wie deine
+        Kollegin mit einer anderen Kollegin \"uber Berufsausbildung und
+        Weiterbildung spricht.
+        In eurem Team gehen die Meinungen dazu stark auseinander.}
+\end{itemize}
+
+Note that the context is framed from the listener's perspective (third-person
+eavesdropping), in contrast to the production study, where participants adopt
+the speaker's perspective.
+
+\paragraph{Marker manipulation.}
+The dependent measures of the production experiment (which marker is chosen)
+become the independent variable here.
+One of the five consensus markers is inserted into the Mittelfeld of the
+target sentence.
+A complete sample item for the \textit{Digitalisierung} topic
+($\textsc{pc}_\text{prag} = \text{high}$, marker = \textit{bekanntlich};
+norming $\textsc{pc}_\text{prop}$ rating: 85/100) is given in
+(\ref{ex:comp_sample}):
+
+\begin{exe}
+  \ex \label{ex:comp_sample}
+  \textit{Du h\"orst, wie deine Kollegin mit einer anderen Kollegin \"uber
+  Berufsausbildung und Weiterbildung spricht.
+  In eurem Team gehen die Meinungen dazu stark auseinander.}
+
+  \textit{Deine Kollegin sagt:} Digitale Kompetenzen sind \textbf{bekanntlich}
+  in der heutigen Arbeitswelt unverzichtbar.
+  Deshalb solltest du regelm\"a\ss{}ig digitale Weiterbildungsangebote nutzen.
+
+  \noindent\textit{[Rating probes follow.]}
+\end{exe}
+
+\subsection{Design}
+
+\subsubsection{Factorial structure}
+
+The comprehension experiment mirrors the production experiment's
+$\mathbf{2}$~\textbf{(pc\textsubscript{prag}: low vs.\ high)}
+$\mathbf{\times}$~$\mathbf{2}$~\textbf{($g_{\mathrm{implied}}$: low
+vs.\ high) design}, yielding \textbf{4 conditions}.
+The $g_{\mathrm{implied}}$ dimension is not manipulated via an explicit
+goal instruction (as in production) but is instead conveyed entirely
+through the choice of marker: for each condition, the marker presented
+is the best-choice marker for the corresponding
+(\textsc{pc\textsubscript{prag}},~$g$) cell from the production model.
+\textsc{pc\textsubscript{prop}} enters as a continuous norming covariate.
+With 8 topic items and a Latin square rotation across 4 lists, each
+participant sees exactly \textbf{8 critical trials}---one item per
+condition, each condition appearing twice---plus 8 filler trials,
+for \textbf{16 trials} in total (Table~\ref{tab:design_comp}).
+
+\begin{table}[ht]
+\centering
+\caption{%
+  The $2\times2$ design (4 conditions), mirroring the production experiment.
+  The marker presented in each condition is the Bayesian best-choice
+  marker from the fitted production model; specific markers are
+  determined after production data collection.}
+\label{tab:design_comp}
+\small
+\begin{tabular}{ccll}
+\toprule
+\textbf{pc\textsubscript{prag}} &
+\textbf{$g_{\mathrm{implied}}$} &
+\textbf{Marker (TBD from production)} &
+\textbf{Condition label} \\
+\midrule
+low  & low  & best-choice for $(\text{low}, g_{\text{low}})$  &
+  (0) community agrees, weak signal \\
+low  & high & best-choice for $(\text{low}, g_{\text{high}})$ &
+  (1) community agrees, strong signal \\
+high & low  & best-choice for $(\text{high}, g_{\text{low}})$ &
+  (2) community divided, weak signal \\
+high & high & best-choice for $(\text{high}, g_{\text{high}})$ &
+  (3) community divided, strong signal \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Counterbalancing}
+\label{subsub:counterbalancing_comp}
+
+The experiment uses the \textbf{same $4 \times 8$ Latin square} as the
+production experiment: each of the 4 lists assigns item $i$
+($i = 0,\ldots,7$) to condition $(i + l)\bmod 4$, where
+$l \in \{0,1,2,3\}$ is the list number.
+This guarantees that:
+\begin{itemize}
+  \item each participant sees every item exactly once;
+  \item each participant sees each of the 4 conditions exactly twice
+        (two items per condition), ensuring balanced coverage of the
+        $2\times2$ design;
+  \item across all 4 lists, each item appears equally often in each
+        condition.
+\end{itemize}
+
+List assignment follows the same Prolific-and-URL strategy as the production
+experiment: each Prolific study embeds \texttt{?list=N} (0--3) in the
+experiment URL, capping recruitment at $n = 20$ participants per list
+for a total of $N = 80$.
+
+In addition to the 8 critical trials, each participant completed 8
+\textbf{filler trials} using the same filler items as the production
+experiment (train travel, reading light, cooking, coffee, vacation,
+hydration, fresh air, noise), each presented with a randomly assigned
+marker.
+Fillers are excluded from analysis; they serve to dilute the critical
+items and reduce demand characteristics.
+
+\subsubsection{Dependent variables}
+\label{subsub:dvs_comp}
+
+Two slider ratings are collected after each vignette (0--100 continuous
+scale with no visible numbers, labelled at the endpoints as shown):
+
+\begin{enumerate}
+  \item \textbf{Inferred speaker goal strength} (operationalises $\widehat{g}$):
+  \begin{quote}
+    \textit{Wie stark hast du den Eindruck, dass die Sprecherin m\"ochte,
+    dass du ihre Empfehlung befolgst?}\\
+    (`How strongly do you get the impression that the speaker wants you to
+    follow their recommendation?')\\
+    Endpoints: 0 = \textit{\"uberhaupt nicht}
+    (`not at all') ---
+    100 = \textit{sehr stark} (`very strongly').
+  \end{quote}
+
+  \item \textbf{Adoption likelihood of $q$} (operationalises $\widehat{A}$):
+  \begin{quote}
+    \textit{Wie wahrscheinlich ist es, dass du die empfohlene Handlung
+    tats\"achlich umsetzt?}\\
+    (`How likely is it that you will actually carry out the recommended
+    action?')\\
+    Endpoints: 0 = \textit{sehr unwahrscheinlich}
+    (`very unlikely') ---
+    100 = \textit{sehr wahrscheinlich} (`very likely').
+  \end{quote}
+\end{enumerate}
+
+\noindent Perceived controversy is deliberately \emph{not} included as a
+rating probe: \textsc{pc\textsubscript{prag}} is experimentally
+manipulated via the context paragraph, so a controversy rating would
+be redundant and risks obscuring the marker's contribution to inferred
+goal strength.
+
+Recorded per trial: \texttt{trial\_id}, \texttt{topic},
+\texttt{is\_filler}, \texttt{condition\_index}, \texttt{marker},
+\texttt{pc\_prag}, \texttt{g\_implied}, \texttt{rating\_g},
+\texttt{rating\_adopt}, \texttt{rt} (ms); and once per participant:
+\texttt{list\_num}.
+The continuous \texttt{pc\_prop\_rating} covariate (topic-level norming
+mean) is joined to the trial data during analysis.
+
+\subsection{Procedure}
+
+Participants complete the experiment online via the magpie platform
+\citep{kochetkova2024magpie} in a browser.
+After reading instructions in German, participants are assigned to one of
+4 counterbalancing lists (via URL \texttt{?list=N} parameter assigned by
+Prolific; no random fallback in deployment).
+They then proceed through 16 trials---8 critical and 8 fillers---in a
+fully randomised order, followed by a post-test questionnaire eliciting
+native language, age, gender, education level, and optional comments.
+
+Each trial displays:
+(a) a context paragraph establishing the communicative situation and the
+\textsc{pc\textsubscript{prag}} level;
+(b) the target sentence with the best-choice marker already in place in
+the Mittelfeld;
+(c) the consequent action clause;
+(d) the two rating sliders in fixed order ($\widehat{g}$, $\widehat{A}$),
+each labelled in German.
+The ``Weiter'' (Next) button is disabled until both sliders have been
+moved at least once, ensuring a complete response on every trial.
+
+\subsection{Planned Analysis}
+
+\subsubsection{Empirical plots}
+
+For each dependent variable ($\widehat{g}$, $\widehat{A}$):
+
+\begin{itemize}
+  \item \textbf{Condition means}: a dot-and-whisker plot shows mean
+        ratings per condition (the $2\times2$ of pc\textsubscript{prag}
+        $\times$ $g_{\mathrm{implied}}$) with 95\% bootstrapped CIs.
+        The expected pattern: $\widehat{g}$ and $\widehat{A}$ should
+        be higher in the high-$g_{\mathrm{implied}}$ conditions
+        (where the model assigns a stronger marker), and lower in the
+        high-pc\textsubscript{prag} conditions (credibility discounting).
+  \item \textbf{Marker identity}: because the best-choice marker may
+        differ across items within the same condition, a secondary plot
+        shows ratings grouped by actual marker identity, allowing
+        inspection of whether marker type (rather than just condition)
+        drives the effects.
+  \item \textbf{pc\textsubscript{prop} covariate}: scatter plots display
+        each DV as a function of the continuous norming rating per
+        condition, testing whether higher propositional acceptance
+        amplifies the $\widehat{g}$ and $\widehat{A}$ signals for
+        strong markers.
+\end{itemize}
+
+\subsubsection{Bayesian mixed-effects regression}
+
+Two Bayesian mixed-effects regression models are fitted via
+\texttt{brms} \citep{burkner2017}, one per DV ($\widehat{g}$ and
+$\widehat{A}$):
+
+\begin{align}
+y &\sim \mathrm{Beta}(\mu, \phi)
+\quad \text{(ratings rescaled to }(0,1)\text{)} \\
+\mathrm{logit}(\mu) &= \alpha
++ \beta_{g} \cdot \mathrm{g\_implied\_c}
++ \beta_{\mathrm{prag}} \cdot \mathrm{pc\_prag\_c}
++ \beta_{\mathrm{prop}} \cdot \mathrm{pc\_prop\_c}
++ \beta_{\mathrm{int}} \cdot \mathrm{g\_implied\_c}
+  \times \mathrm{pc\_prag\_c}
++ (1 \mid \mathrm{submission\_id})
++ (1 \mid \mathrm{topic}),
+\end{align}
+
+where \texttt{g\_implied\_c} is the $g$ level from the corresponding
+production condition ($-0.5$ = low, $+0.5$ = high), effectively
+coding the marker's position on the production utility scale.
+A secondary specification replaces \texttt{g\_implied\_c} with
+actualy marker identity as an unordered factor, to examine
+non-monotonic patterns and verify that marker rather than
+condition label drives effects.
+
+Model comparison via approximate leave-one-out cross-validation (LOO)
+selects among additive, interaction, and marker-as-categorical
+formulations.
+
+\subsubsection{RSA listener parameter estimation}
+\label{subsub:rsa_fit}
+
+The two empirical rating means (per condition cell: 4 conditions) constrain
+the listener parameters of the noisy-threshold RSA model.
+Specifically, the model predicts:
+
+\begin{align}
+\mathbb{E}[\widehat{g} \mid u, \text{context}]
+  &= \int g \cdot P(g \mid u, pc_{\mathrm{prag}})\, dg,
+\label{eq:pred_g} \\
+P(\widehat{A} \mid u, \text{context})
+  &= \iiint \sigma(\eta_0 + \eta_g g - \eta_{pc}\, pc
+     - \eta_{\mathrm{int}}\, g \cdot pc)\;
+     P(pc_{\mathrm{prop}}, pc_{\mathrm{prag}}, g \mid u)\,
+     d{pc_{\mathrm{prop}}}\,d{pc_{\mathrm{prag}}}\,dg,
+\label{eq:adoption}
+\end{align}
+
+\noindent where the posterior $P(pc_{\mathrm{prop}}, pc_{\mathrm{prag}}, g
+\mid u)$ is conditioned on the context's \textsc{pc\textsubscript{prag}}
+level as a known prior (since it is explicitly given to the listener).
+
+The threshold parameters $(\mu_1,\ldots,\mu_4, \sigma_1,\ldots,\sigma_4,
+\lambda)$ are estimated jointly from the production experiment data via
+the Stan model.
+Given those threshold estimates, the listener parameters
+$(\eta_0, \eta_g, \eta_{pc}, \eta_{\mathrm{int}})$ are then estimated by
+minimising the weighted squared deviation between the model-predicted
+means (Eqs.~\ref{eq:pred_g}--\ref{eq:adoption}) and the empirical rating
+means from the comprehension experiment, or via a full joint Bayesian
+fit over both experiments simultaneously.
+
+\subsection{Model Predictions}
+
+The noisy-threshold RSA model makes the following predictions for
+$\widehat{g}$ and $\widehat{A}$, which serve as pre-registered hypotheses.
+In all cases, ``strong-marker condition'' refers to conditions 1 and 3
+(high $g_{\mathrm{implied}}$, i.e.\ the marker selected by the production
+model under a high-$g$ context), and ``weak-marker condition'' to conditions
+0 and 2.
+
+\begin{enumerate}
+  \item \textbf{Marker encodes inferred goal $\widehat{g}$}: $\widehat{g}$
+        ratings should be higher in strong-marker conditions than in
+        weak-marker conditions, across both pc\textsubscript{prag} levels.
+        This is the core inversion prediction: if the production model
+        correctly captures speaker behaviour, listeners should be able to
+        decode $g$ from the marker.
+
+  \item \textbf{Marker encodes adoption $\widehat{A}$}: $\widehat{A}$
+        ratings should likewise be higher in strong-marker conditions,
+        reflecting that higher inferred $g$ translates into greater
+        adoption pressure downstream.
+
+  \item \textbf{pc\textsubscript{prag} modulates $\widehat{A}$ but not
+        $\widehat{g}$}: because $g$ is orthogonal to pc\textsubscript{prag}
+        in the model's utility function, the effect of the marker on
+        $\widehat{g}$ should be largely the same in low- and high-
+        pc\textsubscript{prag} contexts.
+        By contrast, $\widehat{A}$ should be reduced in high-
+        pc\textsubscript{prag} contexts via the interaction term
+        $\eta_{\mathrm{int}}\,g \cdot pc$: even a strong-marker signal
+        for high $g$ is partly cancelled when controversy is high.
+
+  \item \textbf{Credibility discounting}: for strong-marker conditions
+        presented in a high-pc\textsubscript{prag} context (condition~3),
+        $\widehat{A}$ should be \emph{lower} than for the same marker in
+        a low-pc\textsubscript{prag} context (condition~1).
+        This is the model's signature prediction distinguishing Bayesian
+        inversion from a simpler marker-strength heuristic: a sceptical
+        listener who knows controversy is high will discount the adoption
+        implication of even the strongest marker.
+        The $g_{\mathrm{implied}} \times \textsc{pc\textsubscript{prag}}$
+        interaction on $\widehat{A}$ provides the empirical test.
+\end{enumerate}
+
+\end{document}
