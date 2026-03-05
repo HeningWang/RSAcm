@@ -1,0 +1,358 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{longtable}
+\usepackage{array}
+
+\title{Pre-registration: From Controversy to Consensus: Community-Sensitive Common-Ground Management in German Consensus Markers}
+\author{Anonymized for Review}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Study Information}
+
+German discourse markers such as \textit{soviel ich wei\ss} (`as far as I know'), \textit{ja} (modal particle, roughly `as you know / of course'), and \textit{bekanntlich} (`as is well known') form a gradient scale of how strongly a proposition $p$ is presented as shared and settled within a relevant epistemic community. We refer to these as \emph{consensus markers}. We propose that their use is sensitive to both the perceived controversy of the proposition which is be further decomposed into propositional and pragmatic dimensions, and the speaker's communicative goals. We run three experiments, where participants engage with everyday social topics and put in a causal communication situation that is relevant for decision making. With the norming study eliciting the propositional controversy ratings, the production experiment testing how the two dimensions of controversy and speaker goal strength jointly determine marker choice, and the comprehension experiment testing whether listeners can recover these latent contextual parameters from the observed marker and whether this inference predicts downstream action adoption, we aim to provide a comprehensive empirical and computational account of how speakers manage common ground in a community-sensitive way.
+
+This project investigates:
+
+\textbf{Research Questions}
+\begin{enumerate}
+    \item How do perceived controversy (both propositional and pragmatic) and speaker goal strength jointly determine consensus marker choice?
+    \item Where do the thresholds for different markers lie along these dimensions, and how do they interact?
+    \item Can listeners recover latent contextual parameters (pragmatic controversy, speaker goal strength) from the observed marker, and does this inference predict downstream action adoption?
+    \item Do the empirical patterns align with a noisy-threshold RSA-style utility model?
+\end{enumerate}
+
+\subsection{Hypotheses}
+
+\paragraph{Exploratory hypotheses.}
+\begin{enumerate}
+    \item Norming study: We expect to find a range of propositional controversy ratings across the 8 critical topics, with some topics being widely accepted (low controversy) and others being more contested (high controversy).
+    \item Production --- threshold patterns: We expect to find that the three consensus markers are selected in a systematic way along the utility landscape.
+\end{enumerate}
+
+\paragraph{Production (Speaker-side).}
+\begin{enumerate}[label=H\arabic*.]
+    \item \textbf{Main effect of goal strength ($g$):} Higher speaker goal strength leads to the selection of stronger consensus markers.
+    \item \textbf{Main effect of pragmatic controversy ($pc_{\text{prag}}$):} Higher pragmatic controversy (disagreement in the epistemic community) leads to the selection of weaker consensus markers (more cautious hedging).
+    \item \textbf{Interaction ($pc_{\text{prag}} \times g$):} The positive effect of goal strength on marker strength is attenuated when pragmatic controversy is high, reflecting the increased cost of assertive marking under community disagreement.
+\end{enumerate}
+
+\paragraph{Comprehension (Listener-side).}
+\begin{enumerate}[label=H\arabic*., start=4]
+    \item \textbf{Marker encodes goal inference:} Conditions that license stronger markers (via the production model) yield higher inferred speaker goal strength ($\hat{g}$) ratings.
+    \item \textbf{Marker encodes adoption:} Conditions with stronger markers yield higher action adoption likelihood ($\hat{A}$) ratings.
+    \item \textbf{Credibility discounting:} Strong markers in high-$pc_{\text{prag}}$ contexts show reduced adoption likelihood compared to the same marker in low-$pc_{\text{prag}}$ contexts (interaction effect on $\hat{A}$).
+\end{enumerate}
+
+
+\section{Design Plan}
+
+\subsection{Study Type}
+
+The project consists of three sequentially dependent studies:
+\begin{enumerate}
+    \item \textbf{Norming study} --- establishes baseline propositional controversy ratings for critical topics.
+    \item \textbf{Production experiment} --- speaker-role forced-choice task to estimate marker selection thresholds.
+    \item \textbf{Comprehension experiment} --- listener-role rating task to test pragmatic inferences from markers.
+\end{enumerate}
+
+All three experiments are conducted online, programmed using the magpie v3 framework (Vue 2), and deployed via GitHub Pages.
+
+\subsection{Blinding}
+No blinding is employed. Participants are not informed of the specific hypotheses.
+
+\subsection{Study Design}
+\label{sec:study-design}
+
+\paragraph{Norming study.} Within-subjects rating task. Each participant rates all 8 critical topics. No experimental conditions.
+
+\paragraph{Production experiment.} $2 \times 2$ fully crossed within-subjects design with Latin-square counterbalancing.
+\begin{itemize}
+    \item \textbf{Factor 1:} Pragmatic perceived controversy ($pc_{\text{prag}}$): low vs.\ high
+    \item \textbf{Factor 2:} Speaker goal strength ($g$): low vs.\ high
+    \item \textbf{Covariate:} Propositional controversy ($pc_{\text{prop}}$, continuous, from norming study, mean-centered)
+\end{itemize}
+
+\paragraph{Comprehension experiment.} $2 \times 2$ fully crossed within-subjects design with Latin-square counterbalancing.
+\begin{itemize}
+    \item \textbf{Factor 1:} Pragmatic perceived controversy ($pc_{\text{prag}}$): low vs.\ high
+    \item \textbf{Factor 2:} Implied goal strength ($g_{\text{implied}}$): low vs.\ high
+    \item \textbf{Covariate:} Propositional controversy ($pc_{\text{prop}}$, continuous, from norming study, mean-centered)
+\end{itemize}
+
+Crucially, the comprehension experiment does \emph{not} ask listeners to infer perceived controversy; $pc_{\text{prag}}$ is already given in the context paragraph. The listener's task is to infer the speaker's goal strength $g$ and decide on action adoption, based on the observed marker in a known controversy context.
+
+\paragraph{Model-driven item selection for the comprehension experiment.}
+The marker presented in each comprehension trial is determined by the fitted production model. For each of the 32 cells in the full design matrix (8 items $\times$ 4 conditions), the production model yields a posterior predictive distribution $P(\text{marker} \mid pc_{\text{prag}}, g, pc_{\text{prop}})$. The \emph{modal marker} (the marker with the highest posterior probability) is assigned to that cell.
+
+Because $pc_{\text{prop}}$ varies continuously across topics, the modal marker may differ across items within the same $(pc_{\text{prag}}, g)$ condition. For instance, under the (low $pc_{\text{prag}}$, high $g$) condition, a highly accepted topic may receive \textit{bekanntlich} while a more contested topic receives \textit{ja}. This yields natural within-condition marker variation that is principled (model-driven) rather than arbitrary.
+
+Within the Latin square, each participant sees 2 items per condition. These 2 items may feature the same or different markers, depending on their $pc_{\text{prop}}$ values. This design allows the analysis to disentangle the effect of the experimental condition from the effect of marker identity itself (see Section~\ref{sec:comp-analysis}).
+
+\subsection{Randomization}
+In all three experiments, trial order is fully randomized per participant. In the production and comprehension experiments, item-to-condition assignment follows a $4 \times 8$ Latin square, with 4 counterbalancing lists.
+
+
+\section{Sampling Plan}
+
+\subsection{Existing Data}
+No existing data will be used for any of the three experiments.
+
+\subsection{Data Collection Procedures}
+Participants are recruited via Prolific. Eligibility: native speakers of German, self-reported via a language-at-home filter. All participants must reside in a German-speaking country. Each participant completes only one of the three experiments.
+
+\subsection{Sample Size}
+
+\paragraph{Norming study.} $N = 100$ participants.
+
+\paragraph{Production experiment.} $N = 80$ participants, with $n = 20$ per counterbalancing list (4 lists). Each participant sees 8 critical items (2 items per condition) plus 8 fillers, yielding 16 trials total. This gives 40 observations per condition per item (across all participants), and 160 observations per condition overall.
+
+\paragraph{Comprehension experiment.} $N = 80$ participants, with $n = 20$ per counterbalancing list (4 lists). Same trial structure as production (8 critical + 8 fillers = 16 trials per participant).
+
+\subsection{Sample Size Rationale}
+Sample sizes are guided by conventions in experimental pragmatics using Bayesian mixed-effects models. $N = 80$ per experiment provides adequate power for detecting medium-sized effects in ordinal (production) and continuous (comprehension) response models with random intercepts for participants and items.
+
+\subsection{Stopping Rule}
+Data collection stops when the target $N$ is reached for each experiment. No interim analyses will be conducted.
+
+
+\section{Variables}
+
+\subsection{Manipulated Variables}
+
+\paragraph{Pragmatic perceived controversy ($pc_{\text{prag}}$).}
+Manipulated via the context paragraph preceding the target sentence.
+\begin{itemize}
+    \item \textbf{Low:} The speaker's social circle largely agrees on $p$.\\
+    Example (German): \textit{``In eurem Kollegenkreis teilen die meisten die Ansicht, dass [p].''}
+    \item \textbf{High:} The speaker's social circle is divided on $p$.\\
+    Example (German): \textit{``In eurem Kollegenkreis gehen die Meinungen dazu allerdings stark auseinander.''}
+\end{itemize}
+
+\paragraph{Speaker goal strength ($g$; production only).}
+Manipulated via a goal instruction appended after the context paragraph.
+\begin{itemize}
+    \item \textbf{Low:} \textit{``Du m\"ochtest das nur kurz anmerken.''} (`You just want to make a brief note of this.')
+    \item \textbf{High:} \textit{``Es ist dir sehr wichtig, dass dein Gespr\"achspartner das akzeptiert.''} (`It is very important to you that your interlocutor accepts this.')
+\end{itemize}
+
+\paragraph{Implied goal strength ($g_{\text{implied}}$; comprehension only).}
+Not directly manipulated via text. Instead, it is encoded through the marker presented in each trial, which is determined by the fitted production model (see Model-driven marker selection in Section~\ref{sec:study-design}). The listener observes $pc_{\text{prag}}$ from the context and the marker from the utterance; $g_{\text{implied}}$ is the latent goal level for which that marker was the modal choice under the production model.
+
+\paragraph{Propositional controversy ($pc_{\text{prop}}$; covariate).}
+Continuous topic-level variable obtained from the norming study. Entered as a mean-centered covariate in all analyses.
+
+\subsection{Measured Variables}
+
+\paragraph{Norming study.}
+\begin{itemize}
+    \item \textbf{Propositional controversy rating} ($pc_{\text{prop}}$): 0--100 slider (0 = \textit{\"uberhaupt nicht anerkannt} `not accepted at all'; 100 = \textit{vollst\"andig anerkannt} `completely accepted').
+\end{itemize}
+
+\paragraph{Production experiment.}
+\begin{itemize}
+    \item \textbf{Marker choice} (ordinal, 3 levels): Selected from a dropdown menu containing the three consensus markers, ordered by presumed strength:
+    \begin{enumerate}
+        \item \textit{soviel ich wei\ss} (`as far as I know') --- weakest
+        \item \textit{ja} (modal particle, roughly `as you know / of course')
+        \item \textit{bekanntlich} (`as is well known') --- strongest
+    \end{enumerate}
+\end{itemize}
+
+\paragraph{Comprehension experiment.}
+\begin{itemize}
+    \item \textbf{Inferred speaker goal strength} ($\hat{g}$): 0--100 slider (0 = \textit{\"uberhaupt nicht} `not at all'; 100 = \textit{sehr stark} `very strongly').\\
+    Prompt: \textit{``Wie stark hast du den Eindruck, dass die Sprecherin m\"ochte, dass du ihre Empfehlung befolgst?''} (`How strongly do you get the impression that the speaker wants you to follow their recommendation?')
+    \item \textbf{Adoption likelihood} ($\hat{A}$): 0--100 slider (0 = \textit{sehr unwahrscheinlich} `very unlikely'; 100 = \textit{sehr wahrscheinlich} `very likely').\\
+    Prompt: \textit{``Wie wahrscheinlich ist es, dass du die empfohlene Handlung tats\"achlich umsetzt?''} (`How likely is it that you will actually carry out the recommended action?')
+\end{itemize}
+
+
+\section{Materials}
+
+\subsection{Critical Items (8 Topics)}
+
+The eight critical topics cover propositions that vary in propositional controversy (established via norming). Each topic includes a claim ($p$), a sentence frame with a slot for the consensus marker, and a consequent action ($q$).
+
+\begin{longtable}{p{1.8cm} p{5cm} p{5.5cm}}
+\toprule
+\textbf{Topic} & \textbf{Claim ($p$)} & \textbf{Consequent ($q$)} \\
+\midrule
+\endhead
+Klimawandel & Der Klimawandel wird durch menschliche Aktivit\"aten verursacht. & auf Flugreisen verzichten \\
+\addlinespace
+Ern\"ahrung & Eine \"uberwiegend pflanzliche Ern\"ahrung f\"ordert die Gesundheit. & mehr pflanzliche Lebensmittel einbauen \\
+\addlinespace
+Stadtverkehr & Ein ausgebautes Nahverkehrsnetz entlastet den Stadtverkehr deutlich. & h\"aufiger auf \"offentliche Verkehrsmittel umsteigen \\
+\addlinespace
+Digitali-sierung & Digitale Kompetenzen sind in der heutigen Arbeitswelt unverzichtbar. & regelm\"a\ss ig digitale Weiterbildungsangebote nutzen \\
+\addlinespace
+Schlaf & Ausreichend Schlaf ist entscheidend f\"ur die kognitive Leistungsf\"ahigkeit. & auf feste Schlafzeiten achten \\
+\addlinespace
+Plastik & Einwegplastik schadet den Meeres\"okosystemen erheblich. & konsequent auf Einwegplastik verzichten \\
+\addlinespace
+Sport & Regelm\"a\ss ige k\"orperliche Bewegung senkt das Risiko f\"ur Herz-Kreislauf-Erkrankungen deutlich. & regelm\"a\ss ig Sport integrieren \\
+\addlinespace
+Lokalkauf & Das Kaufen bei lokalen H\"andlern st\"arkt die regionale Wirtschaft nachhaltig. & \"ofter bei lokalen Gesch\"aften einkaufen \\
+\bottomrule
+\end{longtable}
+
+In the production experiment, markers are inserted into the Mittelfeld of the sentence frame (e.g., ``Der Klimawandel wird \textbf{[MARKER]} durch menschliche Aktivit\"aten verursacht. Deshalb solltest du auf Flugreisen verzichten.''). In the comprehension experiment, the marker is pre-filled.
+
+\subsection{Filler Items (8 Items)}
+
+Eight filler vignettes use uncontroversial everyday topics (e.g., train travel, reading lamps, cooking, coffee) with fixed low-controversy contexts. In production, participants choose a marker; in comprehension, a randomly assigned marker is presented. Fillers dilute critical items and reduce demand characteristics.
+
+\subsection{Counterbalancing}
+
+A $4 \times 8$ Latin square assigns items to conditions across 4 lists. Each participant is assigned to one list (via URL parameter). Each list guarantees:
+\begin{itemize}
+    \item Every item appears exactly once per participant.
+    \item Each of the 4 conditions appears exactly twice per participant (2 items per condition).
+    \item Full crossing of items and conditions across all lists.
+\end{itemize}
+
+Assignment formula: condition for item $i$ in list $l$ = $(i + l) \bmod 4$, where $l \in \{0, 1, 2, 3\}$.
+
+
+\section{Procedure}
+
+\subsection{Norming Study}
+\begin{enumerate}
+    \item Instruction screen (German): Participants are told they will see claims about various topics and should rate how widely each claim is accepted in society (\textit{``Bitte sch\"atzen Sie f\"ur jede Aussage ein, wie sehr sie in der Gesellschaft als allgemein anerkannt gilt.''}). The slider anchors are explained: left end = \textit{\"uberhaupt nicht anerkannt} (`not accepted at all'), middle = \textit{teils anerkannt, teils nicht} (`partly accepted, partly not'), right end = \textit{vollst\"andig anerkannt} (`completely accepted'). Participants are told there are no right or wrong answers.
+    \item 8 trials (randomized order): Each trial displays a claim in a highlighted box (e.g., \textit{``Der Klimawandel wird durch menschliche Aktivit\"aten verursacht.''}), followed by the question: \textit{``Wie sehr gilt diese Aussage Ihrer Meinung nach als allgemein anerkannt?''} (`In your opinion, how widely is this claim accepted as generally established?'). Participants respond on a 0--100 slider (initialized at 50). The current slider value is displayed below the slider.
+    \item Post-test questionnaire: native language, age, education level, optional comments.
+    \item Submission.
+\end{enumerate}
+Estimated duration: 2 minutes.
+
+\subsection{Production Experiment}
+\begin{enumerate}
+    \item Instruction screen (German): Participants are told the study investigates how German speakers use certain linguistic expressions to refer to shared knowledge (\textit{``In dieser Studie untersuchen wir, wie Sprecherinnen und Sprecher des Deutschen bestimmte sprachliche Ausdr\"ucke verwenden, um auf geteiltes Wissen hinzuweisen.''}). They will be placed in everyday situations and should select the expression they find most natural from a dropdown menu (\textit{``Lies jede Situation sorgf\"altig durch und w\"ahle dann aus dem Dropdown-Men\"u den Ausdruck aus, den du in dieser Situation am nat\"urlichsten finden w\"urdest.''}). Participants are told there are no right or wrong answers and should respond spontaneously in German.
+    \item 16 trials (randomized order; 8 critical + 8 fillers): Each trial displays (a) a context paragraph establishing pragmatic controversy, (b) a goal instruction in italics, (c) the question \textit{``Welchen Ausdruck w\"urdest du in dieser Situation verwenden?''} (`Which expression would you use in this situation?'), and (d) a sentence frame with a dropdown menu containing the 3 consensus markers. Below the sentence frame, the consequent clause is shown: \textit{``Deshalb solltest du [q].''} The ``Weiter'' button is disabled until a marker is selected.
+    \item Post-test questionnaire: native language, age, education level, optional comments.
+    \item Submission.
+\end{enumerate}
+Estimated duration: 5 minutes.
+
+\subsection{Comprehension Experiment}
+\begin{enumerate}
+    \item Instruction screen (German): Participants are told the study investigates how listeners perceive certain linguistic expressions in German (\textit{``In dieser Studie untersuchen wir, wie H\"orerinnen und H\"orer bestimmte sprachliche Ausdr\"ucke im Deutschen wahrnehmen.''}). They will be placed in everyday situations where they overhear someone making a statement and deriving a recommendation (\textit{``Du wirst in kurze Alltagssituationen versetzt, in denen du mith\"orst, wie jemand eine Aussage macht und daraus eine Handlungsempfehlung ableitet.''}). Participants should read each situation carefully and answer two questions using sliders. They are told there are no right or wrong answers and should respond spontaneously.
+    \item 16 trials (randomized order; 8 critical + 8 fillers): Each trial displays (a) a context paragraph establishing the listener-perspective situation and pragmatic controversy, (b) the speaker's utterance with a pre-filled consensus marker in bold and the consequent action (labeled \textit{``Die Sprecherin sagt:''} followed by the full sentence), and (c) two 0--100 slider questions in fixed order:
+    \begin{itemize}
+        \item Inferred goal strength: \textit{``Wie stark hast du den Eindruck, dass die Sprecherin m\"ochte, dass du ihre Empfehlung befolgst?''} (`How strongly do you get the impression that the speaker wants you to follow their recommendation?'), anchored from \textit{\"uberhaupt nicht} (`not at all') to \textit{sehr stark} (`very strongly').
+        \item Adoption likelihood: \textit{``Wie wahrscheinlich ist es, dass du die empfohlene Handlung tats\"achlich umsetzt?''} (`How likely is it that you will actually carry out the recommended action?'), anchored from \textit{sehr unwahrscheinlich} (`very unlikely') to \textit{sehr wahrscheinlich} (`very likely').
+    \end{itemize}
+    Both sliders are initialized at 50. The ``Weiter'' button is disabled until both sliders have been moved at least once.
+    \item Post-test questionnaire: native language, age, education level, optional comments.
+    \item Submission.
+\end{enumerate}
+Estimated duration: 5 minutes.
+
+
+\section{Analysis Plan}
+
+\subsection{Exclusion Criteria}
+
+No participants will be excluded based on their responses. All collected data will be included in the analysis. However, we will report descriptive statistics on response times and may conduct sensitivity analyses excluding outliers (e.g., RTs < 300 ms or > 3 SDs above the mean) to check robustness.
+
+\subsection{Norming Study Analysis}
+For each topic, we compute the mean $pc_{\text{prop}}$ rating (0--100). These means are used as continuous, mean-centered covariates in the subsequent experiments. We report per-topic means, standard deviations, and 95\% bootstrapped confidence intervals.
+
+\subsection{Production Experiment Analysis}
+
+\paragraph{Descriptive analysis.}
+\begin{itemize}
+    \item Stacked bar charts showing marker proportions per condition.
+    \item Heatmaps of mean marker strength across $pc_{\text{prop}} \times pc_{\text{prag}}$, faceted by $g$.
+\end{itemize}
+
+\paragraph{Confirmatory analysis.}
+We fit a Bayesian cumulative (ordinal) probit mixed-effects model using \texttt{brms}: \verb|marker ~ pc_prop * pc_prag * g + (1 | participant)|, with ordered thresholds. Hypotheses H1--H3 are evaluated via posterior expected predictions:
+\begin{itemize}
+    \item H1: The model-predicted probability of selecting a stronger marker is higher under high $g$ than low $g$, holding other predictors constant.
+    \item H2: The model-predicted probability of selecting a stronger marker is lower under high $pc_{\text{prag}}$ than low $pc_{\text{prag}}$, holding other predictors constant.
+    \item H3: The predicted increase in marker strength from low to high $g$ is smaller under high $pc_{\text{prag}}$ than under low $pc_{\text{prag}}$ (attenuated goal effect under controversy).
+\end{itemize}
+
+For each hypothesis, we compute contrasts on the posterior expected predictions and report the posterior probability that the contrast is in the predicted direction, along with 95\% highest density intervals (HDIs).
+
+\paragraph{RSA model fitting.}
+We additionally fit the noisy-threshold RSA model (Stan) to estimate threshold parameters $\theta_i$ and utility weights ($w_{pc}$, $w_g$, $w_{int}$) directly from the ordinal choice data. Posterior predictive checks are used to evaluate model fit.
+
+\subsection{Comprehension Experiment Analysis}
+\label{sec:comp-analysis}
+
+\paragraph{Descriptive analysis.}
+\begin{itemize}
+    \item Condition means for $\hat{g}$ and $\hat{A}$ per condition with 95\% bootstrapped CIs.
+    \item Ratings grouped by actual marker identity.
+    \item Scatterplots of each DV vs.\ $pc_{\text{prop}}$ covariate per condition.
+\end{itemize}
+
+\paragraph{Confirmatory analysis.}
+For each dependent variable ($\hat{g}$ and $\hat{A}$), we fit a Bayesian Beta regression model using \texttt{brms} (ratings rescaled to $(0,1)$): \verb|y ~ marker * pc_prag|, with random intercepts for participants and topics. The marker predictor is coded as ordinal marker strength (1 = \textit{soviel ich wei\ss}, 2 = \textit{ja}, 3 = \textit{bekanntlich}) and $pc_{\text{prag}}$ is contrast-coded ($-0.5 / +0.5$).
+
+Hypotheses H4--H6 are evaluated via posterior expected predictions:
+\begin{itemize}
+    \item H4: The predicted $\hat{g}$ rating is higher for stronger markers than for weaker markers, holding $pc_{\text{prag}}$ constant.
+    \item H5: The predicted $\hat{A}$ rating is higher for stronger markers than for weaker markers, holding $pc_{\text{prag}}$ constant.
+    \item H6: The predicted increase in $\hat{A}$ from weaker to stronger markers is smaller under high $pc_{\text{prag}}$ than under low $pc_{\text{prag}}$ (credibility discounting).
+\end{itemize}
+
+For each hypothesis, we compute contrasts on the posterior expected predictions and report the posterior probability that the contrast is in the predicted direction, along with 95\% HDIs.
+
+\paragraph{RSA listener parameter estimation (exploratory).}
+In the RSA model, the literal listener observes a marker $u_i$ and knows the perceived controversy $pc = PC(pc_{\text{prop}}, pc_{\text{prag}})$ for the current trial---$pc_{\text{prag}}$ is given by the context and $pc_{\text{prop}}$ is a property of the topic (obtained from the norming study). The only latent variable the listener must infer is the speaker's goal strength $g$:
+\begin{equation}
+P(g \mid u_i, pc) \propto P(u_i \mid pc, g) \cdot P(g)
+\end{equation}
+The speaker likelihood $P(u_i \mid pc, g)$ is computed from the production-fitted threshold parameters (the $\mu$, $\sigma$, and $\lambda$ values obtained in the production experiment). The listener maps the posterior expected goal strength $\mathrm{E}[g \mid u_i, pc]$, together with the known $pc$, to an adoption decision via a logistic link:
+\begin{equation}
+\text{logit}(P_{\text{adopt}}) = \eta_0 + \eta_g \cdot \mathrm{E}[g \mid u_i, pc] - \eta_{pc} \cdot pc - \eta_{\text{int}} \cdot \mathrm{E}[g \mid u_i, pc] \cdot pc
+\end{equation}
+The four listener-side parameters have the following interpretation: $\eta_0$ is a baseline adoption tendency, $\eta_g$ captures how strongly inferred goal strength promotes adoption, $\eta_{pc}$ captures how perceived controversy discourages adoption, and $\eta_{\text{int}}$ allows controversy to attenuate the effect of goal strength (credibility discounting).
+
+We fit $(\eta_0, \eta_g, \eta_{pc}, \eta_{\text{int}})$ to the mean comprehension ratings per cell, with the production-side threshold parameters held fixed at their posterior means. This tests whether the full RSA model---with production parameters determining the speaker likelihood and listener parameters governing the adoption decision---can simultaneously account for both production choices and comprehension ratings under a single unified framework.
+
+
+\section{Sequential Dependency Between Experiments}
+
+The three experiments are conducted in a fixed order due to informational dependencies:
+
+\begin{enumerate}
+    \item \textbf{Norming study} $\to$ provides $pc_{\text{prop}}$ ratings per topic, used as covariates in both subsequent experiments.
+    \item \textbf{Production experiment} $\to$ provides marker choice data. The noisy-threshold RSA model is fitted to these data, yielding threshold parameters $\theta_i$ and utility weights ($w_{pc}$, $w_g$, $w_{int}$).
+    \item \textbf{Bayesian item selection for markers used in the comprehension experiment} $\to$ For each of the 32 cells (8 items $\times$ 4 conditions), the fitted model's posterior predictive distribution determines the modal marker. This produces a concrete 8 $\times$ 4 assignment matrix specifying which marker each item receives in each condition.
+    \item \textbf{Comprehension experiment} $\to$ uses the assignment matrix from Step 3. Each participant sees 8 critical items via the same Latin square as production; the marker in each trial is read off from the matrix.
+\end{enumerate}
+
+This sequential design means that the specific marker in each comprehension trial is not pre-determined at registration time. We pre-register the \emph{procedure} for selecting markers (modal marker under the fitted production model for each item $\times$ condition cell) rather than the specific assignments themselves. The full assignment matrix will be reported alongside the production model results before comprehension data collection begins.
+
+\section{Other}
+
+\subsection{Software and Tools}
+\begin{itemize}
+    \item \textbf{Experiment platform:} magpie v3 (Vue 2 framework), deployed via GitHub Pages.
+    \item \textbf{Participant recruitment:} Prolific.
+    \item \textbf{Statistical analysis:} R (version $\geq$ 4.0), with packages \texttt{brms}, \texttt{rstan}, \texttt{dplyr}, \texttt{ggplot2}, \texttt{tidyr}.
+    \item \textbf{Bayesian model fitting:} Stan (via \texttt{rstan} and \texttt{brms}).
+\end{itemize}
+
+\subsection{Data Availability}
+All data, analysis scripts, and experiment code will be made publicly available on OSF upon completion of data collection.
+
+\subsection{Ethical Considerations}
+The study involves no deception. Participants provide informed consent before the experiment. The study protocol will be reviewed by the relevant institutional ethics board prior to data collection.
+
+\end{document}

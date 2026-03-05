@@ -8,16 +8,16 @@
         bestimmte sprachliche Ausdrücke verwenden, um auf geteiltes Wissen hinzuweisen.
       </p>
       <p>
-        Sie werden in <strong>{{ shuffledTrials.length }} verschiedene Alltagssituationen</strong>
-        versetzt. Lesen Sie jede Situation sorgfältig durch und wählen Sie dann aus dem
-        Dropdown-Menü den Ausdruck aus, den Sie in dieser Situation am natürlichsten finden würden.
+        Du wirst in <strong>{{ shuffledTrials.length }} verschiedene Alltagssituationen</strong>
+        versetzt. Lies jede Situation sorgfältig durch und wähle dann aus dem
+        Dropdown-Menü den Ausdruck aus, den du in dieser Situation am natürlichsten finden würdest.
       </p>
       <p>
-        Es gibt keine richtigen oder falschen Antworten – uns interessiert Ihr persönliches
-        Sprachgefühl. Bitte antworten Sie spontan und auf Deutsch.
+        Es gibt keine richtigen oder falschen Antworten – uns interessiert dein persönliches
+        Sprachgefühl. Bitte antworte spontan und auf Deutsch.
       </p>
       <p>
-        Die Teilnahme dauert etwa <strong>10–15 Minuten</strong>. Vielen Dank für Ihre Mitarbeit!
+        Die Teilnahme dauert etwa <strong>10–15 Minuten</strong>. Vielen Dank für deine Mitarbeit!
       </p>
     </InstructionScreen>
 
@@ -40,7 +40,7 @@
 
         <div class="sentence-frame">
           <p class="frame-label">
-            Welchen Ausdruck würden Sie in dieser Situation verwenden?
+            Welchen Ausdruck würdest du in dieser Situation verwenden?
           </p>
           <p class="frame-sentence">
             <span class="frame-text">{{ trial.sentenceBefore }} </span><select
@@ -68,7 +68,7 @@
     </Screen>
 
     <!-- ── 3. Post-test ────────────────────────────────────────────── -->
-    <PostTestScreen />
+    <PostTestScreen :gender="false" />
 
     <!-- ── 4. Submit ──────────────────────────────────────────────── -->
     <SubmitResultsScreen />
@@ -81,11 +81,9 @@ import _ from 'lodash';
 import { getCriticalTrials, FILLERS } from './stimuli.js';
 
 const MARKERS = [
-  'sofern ich weiß',
-  'wie du ja weißt',
-  'wie wir wissen',
+  'soviel ich weiß',
   'ja',
-  'bekanntlichermaßen',
+  'bekanntlich',
 ];
 
 // Read ?list=N from URL; fall back to random 0–3.

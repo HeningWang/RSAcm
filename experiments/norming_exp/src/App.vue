@@ -77,7 +77,7 @@
     </Screen>
 
     <!-- ── 3. Post-test ────────────────────────────────────────────── -->
-    <PostTestScreen />
+    <PostTestScreen :gender="false" />
 
     <!-- ── 4. Submit ──────────────────────────────────────────────── -->
     <SubmitResultsScreen />
