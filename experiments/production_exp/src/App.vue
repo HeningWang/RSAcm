@@ -46,7 +46,7 @@
               v-model="selectedMarkers[trial.id]"
               class="marker-select"
             ><option value="" disabled>___</option><option
-                v-for="m in markers"
+                v-for="m in markerOptions[trial.id]"
                 :key="m"
                 :value="m"
               >{{ m }}</option></select><span class="frame-text"> {{ trial.sentenceAfter }}</span>
@@ -101,7 +101,7 @@ export default {
       listNum: null,
       shuffledTrials: [],
       selectedMarkers: {},   // { [trial.id]: marker string }
-      markers: MARKERS,
+      markerOptions: {},     // { [trial.id]: string[] }
       trialStartTime: null,
     };
   },
@@ -115,6 +115,7 @@ export default {
     // Pre-initialise selectedMarkers keys for Vue 2 reactivity
     this.shuffledTrials.forEach((trial) => {
       this.$set(this.selectedMarkers, trial.id, '');
+      this.$set(this.markerOptions, trial.id, _.shuffle([...MARKERS]));
     });
     this.trialStartTime = Date.now();
   },
