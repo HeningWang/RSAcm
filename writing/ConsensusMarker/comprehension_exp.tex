@@ -50,9 +50,9 @@ embedded in the sentence and asks what goal strength the speaker likely
 had and how likely the listener is to adopt $q$.
 
 The specific marker presented in each vignette is not chosen arbitrarily
-from all five markers. Instead, it is the \emph{Bayesian best-choice
+from the three candidate markers. Instead, it is the \emph{Bayesian best-choice
 marker} for the corresponding production condition: the marker with the
-highest posterior probability under the noisy-threshold RSA model fitted
+highest posterior probability under the cost-augmented noisy-threshold RSA model fitted
 to the production data, given the context's \textsc{pc\textsubscript{prag}}
 level and a specified $g$ level. This mirrors the production design
 exactly and ensures that the comprehension stimuli reflect ecologically
@@ -120,11 +120,11 @@ marker; they read the sentence with the marker already in place and respond
 to the two rating probes.
 
 Critically, the marker assigned to each condition is not drawn arbitrarily
-from the five candidates. Instead, for each of the four production
+from the three candidates. Instead, for each of the four production
 conditions (pc\textsubscript{prag} $\times$ $g$), the marker used in
 comprehension is the \textbf{Bayesian best-choice marker}: the marker
 $u^*$ with the highest posterior probability under the fitted
-noisy-threshold RSA production model,
+cost-augmented noisy-threshold RSA production model,
 \[
 u^* = \arg\max_{u} \; P(u \mid pc_{\mathrm{prag}}, g,
                            pc_{\mathrm{prop}\_c}).
@@ -138,7 +138,7 @@ is optimal under the model, creating a tight production--comprehension
 link and allowing a direct empirical test of the Bayesian inversion
 hypothesis.
 
-All five markers remain candidates; the mapping from conditions to
+All three markers remain candidates; the mapping from conditions to
 best-choice markers is an empirical output of the production analysis,
 not a design pre-commitment.
 
@@ -254,7 +254,7 @@ perspective.
 \paragraph{Marker manipulation.}
 The dependent measures of the production experiment (which marker is chosen)
 become the independent variable here.
-One of the five consensus markers is inserted into the Mittelfeld of the
+One of the three consensus markers is inserted into the Mittelfeld of the
 target sentence.
 A complete sample item for the \textit{Digitalisierung} topic
 ($\textsc{pc}_\text{prag} = \text{high}$, marker = \textit{bekanntlich};
@@ -372,7 +372,7 @@ scale with no visible numbers, labelled at the endpoints as shown):
   \item \textbf{Adoption likelihood of $q$} (operationalises $\widehat{A}$):
   \begin{quote}
     \textit{Wie wahrscheinlich ist es, dass du die empfohlene Handlung
-    tats\"achlich umsetzt?}\\
+    dann auch tats\"achlich umsetzt?}\\
     (`How likely is it that you will actually carry out the recommended
     action?')\\
     Endpoints: 0 = \textit{sehr unwahrscheinlich}
@@ -497,9 +497,9 @@ P(\widehat{A} \mid u, \text{context})
 \mid u)$ is conditioned on the context's \textsc{pc\textsubscript{prag}}
 level as a known prior (since it is explicitly given to the listener).
 
-The threshold parameters $(\mu_1,\ldots,\mu_4, \sigma_1,\ldots,\sigma_4,
-\lambda)$ are estimated jointly from the production experiment data via
-the Stan model.
+The threshold parameters $(\mu_1,\mu_2, \sigma_1,\sigma_2,
+\lambda)$ together with the marker-specific costs $(c_u)$ are estimated
+jointly from the production experiment data via the Stan model.
 Given those threshold estimates, the listener parameters
 $(\eta_0, \eta_g, \eta_{pc}, \eta_{\mathrm{int}})$ are then estimated by
 minimising the weighted squared deviation between the model-predicted

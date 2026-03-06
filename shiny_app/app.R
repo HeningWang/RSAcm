@@ -2,7 +2,14 @@ library(shiny)
 library(ggplot2)
 library(dplyr)
 library(tidyr)
-library(aida)
+
+theme_model_base <- function() {
+  theme_minimal(base_size = 14) +
+    theme(
+      panel.grid.minor = element_blank(),
+      plot.title.position = "plot"
+    )
+}
 
 # ══════════════════════════════════════════════════════════════════════════════
 # MODEL FUNCTIONS
@@ -12,6 +19,18 @@ PC <- function(pc_prop, pc_prag) pc_prop * pc_prag
 
 U <- function(pc, g, w_pc = 1, w_g = 1, w_int = 0.8) {
   -w_pc * pc + w_g * g - w_int * pc * g
+}
+
+choice_prob_matrix <- function(util, thr, uthr, sig, usig, lambda, costs) {
+  weights <- vapply(seq_along(thr), function(i) {
+    interval_lik(util, thr[i], sig[i], uthr[i], usig[i], lambda) * exp(-costs[i])
+  }, numeric(length(util)))
+  row_sums <- rowSums(weights)
+  bad <- !is.finite(row_sums) | row_sums <= 0
+  row_sums[bad] <- 1
+  probs <- sweep(weights, 1, row_sums, "/")
+  if (any(bad)) probs[bad, ] <- 1 / ncol(probs)
+  probs
 }
 
 # Noisy-threshold interval likelihood (Option A)
@@ -63,9 +82,7 @@ scale_fill_discrete <- function(...) {
 
 # Assign CSP colors to markers in order
 marker_names <- c(
-  "sofern ich weiß",
-  "wie du ja weißt",
-  "wie wir wissen",
+  "soviel ich weiß",
   "ja",
   "bekanntlich"
 )
@@ -101,7 +118,7 @@ ui <- fluidPage(
   
   fluidRow(column(12, div(style="padding:20px 10px 8px 10px;",
                           h2("Consensus Marker Model Explorer"),
-                          h4("Qualitative predictions — ordinal interval comprehension model")
+                          h4("Qualitative predictions — cost-augmented noisy-threshold model")
   ))),
   
   fluidRow(
@@ -115,24 +132,26 @@ ui <- fluidPage(
              sliderInput("w_g",    "Weight w_g",    min=0.1, max=3,  value=1,   step=0.1),
              sliderInput("w_int",  "Interaction w_int", min=0, max=3, value=0.8, step=0.1),
              hr(),
+             tags$b(style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7eb8f7;letter-spacing:.1em;", "MARKER COSTS"),
+             helpText(style="color:#5a6a80;font-size:11px;", "Higher costs penalize stronger or more marked choices, allowing weaker markers to block stronger ones when they already do enough."),
+             sliderInput("cost_soviel",      "Cost soviel ich weiß",     min=0, max=3, value=0.0, step=0.05),
+             sliderInput("cost_ja",          "Cost ja",                  min=0, max=3, value=0.35, step=0.05),
+             sliderInput("cost_bekanntlich", "Cost bekanntlich",         min=0, max=3, value=0.6, step=0.05),
+             hr(),
              tags$b(style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7eb8f7;letter-spacing:.1em;", "ADOPTION PARAMETERS"),
              sliderInput("eta_0",  "η₀ (intercept)", min=-2, max=2, value=0, step=0.1),
              sliderInput("eta_g",  "η_g",            min=0,  max=5, value=2, step=0.1),
              sliderInput("eta_pc", "η_pc",           min=0,  max=5, value=2, step=0.1),
              hr(),
              tags$b(style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7eb8f7;letter-spacing:.1em;", "MARKER THRESHOLDS"),
-             helpText(style="color:#5a6a80;font-size:11px;", "Must be ordered: sofern < wie du < wie wir < ja < bekanntlich"),
-             sliderInput("th_sofern",     "sofern ich weiß", min=-3, max=3, value=-0.8, step=0.1),
-             sliderInput("th_wiedu",      "wie du ja weißt", min=-3, max=3, value=-0.4, step=0.1),
-             sliderInput("th_wiewissen",  "wie wir wissen",  min=-3, max=3, value=-0.1, step=0.1),
-             sliderInput("th_ja",         "ja",              min=-3, max=3, value= 0.2, step=0.1),
+             helpText(style="color:#5a6a80;font-size:11px;", "Must be ordered: soviel < ja < bekanntlich"),
+             sliderInput("th_soviel",     "soviel ich weiß", min=-3, max=3, value=-0.6, step=0.1),
+             sliderInput("th_ja",         "ja",              min=-3, max=3, value= 0.05, step=0.1),
              sliderInput("th_bekanntlich","bekanntlich",     min=-3, max=3, value= 0.55, step=0.05),
              hr(),
              tags$b(style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7eb8f7;letter-spacing:.1em;", "THRESHOLD NOISE (σ)"),
              helpText(style="color:#5a6a80;font-size:11px;", "σ=0 → hard boundary. Increase to model overlapping markers."),
-             sliderInput("sig_sofern",     "σ sofern ich weiß", min=0, max=1, value=0.1, step=0.05),
-             sliderInput("sig_wiedu",      "σ wie du ja weißt", min=0, max=1, value=0.15, step=0.05),
-             sliderInput("sig_wiewissen",  "σ wie wir wissen",  min=0, max=1, value=0.15, step=0.05),
+             sliderInput("sig_soviel",     "σ soviel ich weiß", min=0, max=1, value=0.1, step=0.05),
              sliderInput("sig_ja",         "σ ja",              min=0, max=1, value=0.15, step=0.05),
              sliderInput("sig_bekanntlich","σ bekanntlich",     min=0, max=1, value=0.1,  step=0.05),
              hr(),
@@ -148,9 +167,9 @@ ui <- fluidPage(
              tabPanel("Posterior Summaries",
                       br(),
                       div(class="pred-box",
-                          "Stronger markers license lower expected perceived controversy E[pc∣u] and higher persuasive goal strength E[g∣u].",
+                         "Stronger markers still tend to license lower expected controversy E[pc∣u] and higher persuasive goal strength E[g∣u], but marker costs can block unnecessarily strong choices.",
                           tags$br(),
-                          "Adoption probability P(Adopt∣u) should also increase monotonically with marker strength."
+                         "This creates a weakest-sufficient bias: if a weaker marker already does the job, the speaker need not go all in with the strongest one."
                       ),
                       fluidRow(
                         column(4, plotOutput("plot_Epc",   height=270)),
@@ -188,7 +207,7 @@ ui <- fluidPage(
                       ),
                       fluidRow(
                         column(3, selectInput("marker_decomp1", "Left marker",
-                                              choices=marker_names, selected="sofern ich weiß")),
+                                              choices=marker_names, selected="soviel ich weiß")),
                         column(3, selectInput("marker_decomp2", "Right marker",
                                               choices=marker_names, selected="bekanntlich"))
                       ),
@@ -206,9 +225,9 @@ ui <- fluidPage(
              tabPanel("Super-additivity",
                       br(),
                       div(class="pred-box",
-                          "Super-additivity: as pragmatic controversy (pc_prag) increases, the gap in E[g∣u] between strong and weak markers widens.",
+                         "Super-additivity: as pragmatic controversy (pc_prag) increases, the gap in E[g∣u] between strong and weak markers widens.",
                           tags$br(),
-                          "In high-pc contexts, only a strong marker can credibly signal sufficient persuasive goal g, so inference about g becomes more sensitive to marker choice."
+                         "But with non-zero marker costs, strong markers can still be disfavoured when a weaker option is already sufficient for the speaker's purpose."
                       ),
                       fluidRow(
                         column(4, sliderInput("pc_prop_fixed", "Fix pc_prop at:",
@@ -223,7 +242,9 @@ ui <- fluidPage(
              tabPanel("Utility Landscape",
                       br(),
                       div(class="pred-box",
-                          "Utility U(pc, g) = −w_pc·pc + w_g·g − w_int·(pc·g) partitions the space into licensed regions. Solid lines mark mean thresholds μ_u; dashed lines show the ±σ uncertainty band. Each marker licenses the band between its threshold and the next."
+                         "Base utility U(pc, g) = −w_pc·pc + w_g·g − w_int·(pc·g) is combined with marker-specific costs c_u.",
+                         tags$br(),
+                         "Choice weights are proportional to interval fit × exp(−c_u), so stronger markers can be blocked when they are unnecessarily costly."
                       ),
                       plotOutput("plot_utility", height=480),
                       br(),
@@ -234,9 +255,9 @@ ui <- fluidPage(
              tabPanel("Scalar Implicature",
                       br(),
                       div(class="pred-box",
-                          "Using a weaker marker implicates that the speaker judged the context insufficiently strong to license the next stronger one.",
+                         "Using a weaker marker implicates either that the context did not support a stronger marker enough, or that the stronger option was not worth its extra cost.",
                           tags$br(),
-                          "The posterior over utility U∣u should be concentrated in the licensed interval [μ_i, μ_{i+1}), with mass falling off sharply above μ_{i+1}. The upper threshold thus functions as an implicated upper bound — a scalar implicature analog."
+                         "The posterior over utility U∣u should still concentrate in the licensed interval [μ_i, μ_{i+1}), but costs compress the top end by favoring weaker sufficient competitors."
                       ),
                       plotOutput("plot_scalar", height=460),
                       br(),
@@ -247,11 +268,11 @@ ui <- fluidPage(
              tabPanel("Infelicity",
                       br(),
                       div(class="pred-box",
-                          "A marker is infelicitous when the context utility U(pc, g) falls outside its licensed interval.",
+                         "A marker is infelicitous when its cost-adjusted choice probability is much lower than that of the best competitor in the same context.",
                           tags$br(),
-                          "Infelicity score = log P(u_best | pc, g) − log P(u | pc, g): how much worse the chosen marker is versus the optimal one.",
+                         "Infelicity score = log P(u_best | pc, g) − log P(u | pc, g): how much worse the chosen marker is versus the optimal one.",
                           tags$br(),
-                          "Asymmetric oddness: using bekanntlich in high-controversy contexts incurs a larger penalty than using sofern ich weiß in clearly settled ones, because the utility gap is larger at the strong end."
+                         "Costs add another source of oddness: an over-strong marker can sound excessive even in favorable contexts if a cheaper weaker marker would already suffice."
                       ),
                       fluidRow(
                         column(4, sliderInput("g_infel", "Fix g at:", min=0.1, max=0.9, value=0.7, step=0.1))
@@ -260,8 +281,35 @@ ui <- fluidPage(
                       br(),
                       downloadButton("dl_infel", "↓ infelicity.png")
              ),
+
+             # ── Tab 7: Sufficiency blocking ─────────────────────────────────────
+             tabPanel("Sufficiency Blocking",
+                      br(),
+                      div(class="pred-box",
+                          "New prediction: in low-controversy contexts, a strong marker can be blocked even under high speaker goal if a weaker marker is already sufficient.",
+                          tags$br(),
+                          "The line plot compares direct speaker choice probabilities across goal strength g at fixed controversy pc. Red shading marks regions where bekanntlich would win without marker costs but is blocked once costs are included.",
+                          tags$br(),
+                          "The heatmap below shows the full pc × g region where this overkill effect appears."
+                      ),
+                      fluidRow(
+                        column(4, sliderInput("pc_block", "Fix overall controversy pc at:",
+                                              min=0.01, max=0.99, value=0.15, step=0.01)),
+                        column(8, div(class="stat-box",
+                                       div(class="stat-label", "Blocking summary"),
+                                       div(style="font-size:13px;line-height:1.5;", textOutput("block_summary"))
+                        ))
+                      ),
+                      plotOutput("plot_block", height=430),
+                      br(),
+                      downloadButton("dl_block", "↓ sufficiency_blocking.png"),
+                      br(), br(),
+                      plotOutput("plot_block_map", height=430),
+                      br(),
+                      downloadButton("dl_block_map", "↓ sufficiency_blocking_map.png")
+             ),
              
-             # ── Tab 7: Credibility discounting ────────────────────────────────
+             # ── Tab 8: Credibility discounting ────────────────────────────────
              tabPanel("Credibility Discounting",
                       br(),
                       div(class="pred-box",
@@ -271,7 +319,7 @@ ui <- fluidPage(
                           tags$br(),
                           "But P(Adopt\u2223u, pc_prior) converges as pc_prior rises: the controversy penalty erodes the advantage of strong markers.",
                           tags$br(),
-                          "The discounting effect: the gap P(Adopt\u2223bekanntlich) \u2212 P(Adopt\u2223sofern) shrinks toward zero at high pc_prior and high \u03b7_pc."
+                            "The discounting effect: the gap P(Adopt\u2223bekanntlich) \u2212 P(Adopt\u2223soviel ich weiß) shrinks toward zero at high pc_prior and high \u03b7_pc."
                       ),
                       fluidRow(
                         column(3, sliderInput("eta_g2",    "\u03b7_g (goal weight)",           min=0, max=8, value=2,   step=0.1)),
@@ -302,9 +350,7 @@ server <- function(input, output, session) {
   # ── Reactive thresholds (ordered) ────────────────────────────────────────
   thresholds_r <- reactive({
     c(
-      "sofern ich weiß" = input$th_sofern,
-      "wie du ja weißt" = input$th_wiedu,
-      "wie wir wissen"  = input$th_wiewissen,
+      "soviel ich weiß" = input$th_soviel,
       "ja"              = input$th_ja,
       "bekanntlich"     = input$th_bekanntlich
     )
@@ -317,9 +363,7 @@ server <- function(input, output, session) {
   
   sigmas_r <- reactive({
     c(
-      "sofern ich weiß" = input$sig_sofern,
-      "wie du ja weißt" = input$sig_wiedu,
-      "wie wir wissen"  = input$sig_wiewissen,
+      "soviel ich weiß" = input$sig_soviel,
       "ja"              = input$sig_ja,
       "bekanntlich"     = input$sig_bekanntlich
     )
@@ -328,6 +372,14 @@ server <- function(input, output, session) {
   upper_sigmas_r <- reactive({
     sig <- sigmas_r()
     c(sig[-1], 0)   # sigma for the upper boundary of each marker
+  })
+
+  costs_r <- reactive({
+    c(
+      "soviel ich weiß" = input$cost_soviel,
+      "ja"              = input$cost_ja,
+      "bekanntlich"     = input$cost_bekanntlich
+    )
   })
   
   # ── Shared 3D base grid ───────────────────────────────────────────────────
@@ -344,17 +396,24 @@ server <- function(input, output, session) {
   })
   
   # ── Posterior for one marker ──────────────────────────────────────────────
-  posterior_for <- function(grid, mu_lo, sig_lo, mu_hi, sig_hi) {
-    lik <- interval_lik(grid$util, mu_lo, sig_lo, mu_hi, sig_hi, input$lambda)
+  posterior_for <- function(grid, idx) {
+    probs <- choice_prob_matrix(
+      grid$util,
+      thresholds_r(), upper_thresholds_r(),
+      sigmas_r(), upper_sigmas_r(),
+      input$lambda,
+      costs_r()
+    )
+    lik <- probs[, idx]
     s   <- sum(lik)
     if (s == 0 || !is.finite(s)) return(rep(1/nrow(grid), nrow(grid)))
     lik / s
   }
   
   # ── Theme ───────────────────────────────────────────────────
-  theme_set(theme_aida())
+  theme_set(theme_model_base())
   theme_model <- function() {
-    theme_aida() +
+    theme_model_base() +
       theme(
         axis.text.y  = element_text(size = 14),
         axis.text.x  = element_text(size = 14),
@@ -374,7 +433,7 @@ server <- function(input, output, session) {
     grid <- base_grid_r()
     
     lapply(seq_along(thr), function(i) {
-      post        <- posterior_for(grid, thr[i], sig[i], uthr[i], usig[i])
+      post        <- posterior_for(grid, i)
       Epc         <- sum(grid$pc * post)
       Eg          <- sum(grid$g  * post)
       logit_adopt <- input$eta_0 + input$eta_g * grid$g - input$eta_pc * grid$pc
@@ -429,8 +488,6 @@ server <- function(input, output, session) {
     sig  <- sigmas_r()
     usig <- upper_sigmas_r()
     idx  <- which(names(thr) == u)
-    mu_lo <- thr[idx];  mu_hi <- uthr[idx]
-    sig_lo <- sig[idx]; sig_hi <- usig[idx]
     
     n      <- max(input$n_grid, 30)
     g_vals <- seq(0.01, 0.99, length.out=25)
@@ -443,7 +500,8 @@ server <- function(input, output, session) {
     grid2d$post_marg <- apply(grid2d, 1, function(row) {
       pc   <- PC(row["pc_prop"], row["pc_prag"])
       util <- U(pc, g_vals, input$w_pc, input$w_g, input$w_int)
-      mean(interval_lik(util, mu_lo, sig_lo, mu_hi, sig_hi, input$lambda))
+      probs <- choice_prob_matrix(util, thr, uthr, sig, usig, input$lambda, costs_r())
+      mean(probs[, idx])
     })
     s <- sum(grid2d$post_marg)
     if (s > 0) grid2d$post_marg <- grid2d$post_marg / s
@@ -495,12 +553,11 @@ server <- function(input, output, session) {
     
     rows <- lapply(markers_sel, function(u) {
       idx    <- which(names(thr) == u)
-      mu_lo  <- thr[idx];  mu_hi  <- uthr[idx]
-      sig_lo <- sig[idx];  sig_hi <- usig[idx]
       lapply(pc_prag_vals, function(pc_prag) {
         pc   <- PC(pc_prop_val, pc_prag)
         util <- U(pc, g_vals, input$w_pc, input$w_g, input$w_int)
-        lik  <- interval_lik(util, mu_lo, sig_lo, mu_hi, sig_hi, input$lambda)
+        probs <- choice_prob_matrix(util, thr, uthr, sig, usig, input$lambda, costs_r())
+        lik  <- probs[, idx]
         s    <- sum(lik)
         post <- if (s > 0) lik/s else rep(1/length(g_vals), length(g_vals))
         data.frame(marker=u, pc_prag=pc_prag, Eg=sum(g_vals * post))
@@ -521,19 +578,16 @@ server <- function(input, output, session) {
   # ── Tab 4: utility landscape ──────────────────────────────────────────────
   plot_utility_r <- reactive({
     thr  <- thresholds_r()
+    uthr <- upper_thresholds_r()
     sig  <- sigmas_r()
+    usig <- upper_sigmas_r()
     
-    # Analytical assignment: each (pc,g) point belongs to the marker whose
-    # threshold interval contains U(pc,g). findInterval() does this in one
-    # vectorised call with no raster/contour/ribbon artefacts.
-    # Increase resolution to sub-pixel (800x800) for alias-free category boundaries
+    # Best response under the cost-augmented noisy-threshold choice rule.
     n    <- 800L
     grid <- expand.grid(pc=seq(0, 1, length.out=n), g=seq(0, 1, length.out=n))
     grid$U <- U(grid$pc, grid$g, input$w_pc, input$w_g, input$w_int)
-    
-    thr_vals         <- sort(unname(thr))
-    raw_idx          <- findInterval(grid$U, thr_vals)
-    grid$best_idx    <- pmax(1L, pmin(length(thr_vals), raw_idx))
+    probs <- choice_prob_matrix(grid$U, thr, uthr, sig, usig, input$lambda, costs_r())
+    grid$best_idx    <- max.col(probs, ties.method = "first")
     grid$best_marker <- factor(names(thr)[grid$best_idx], levels=names(thr))
     
     # Mean threshold lines only (no ±sigma bands — they cross regions and cause visual noise)
@@ -616,7 +670,7 @@ server <- function(input, output, session) {
     u_mids   <- 0.5 * (u_breaks[-1] + u_breaks[-length(u_breaks)])
     
     dens_df <- do.call(rbind, lapply(seq_along(thr), function(i) {
-      post <- posterior_for(grid, thr[i], sig[i], uthr[i], usig[i])
+      post <- posterior_for(grid, i)
       bin  <- findInterval(grid$util, u_breaks)
       bin  <- pmax(1L, pmin(length(u_mids), bin))
       mass <- tapply(post, bin, sum)
@@ -709,23 +763,20 @@ server <- function(input, output, session) {
   # ── Tab 6: Infelicity ────────────────────────────────────────────────────────
   # Infelicity score at each pc value (with g fixed) for a chosen marker vs best.
   # Score = log P(u_best | pc, g) - log P(u_chosen | pc, g).
-  # High score = context is a poor fit for the chosen marker.
+  # High score = context is a poor fit for the chosen marker after threshold fit
+  # and marker costs are combined.
   plot_infel_r <- reactive({
     thr  <- thresholds_r()
     uthr <- upper_thresholds_r()
     sig  <- sigmas_r()
     usig <- upper_sigmas_r()
-    lam  <- input$lambda
     g_val <- input$g_infel
     
     pc_seq <- seq(0.01, 0.99, length.out=200)
     util   <- U(pc_seq, g_val, input$w_pc, input$w_g, input$w_int)
     
-    # Log-likelihood for every marker at each pc
-    log_lik_mat <- vapply(seq_along(thr), function(i) {
-      l <- interval_lik(util, thr[i], sig[i], uthr[i], usig[i], lam)
-      log(pmax(l, 1e-12))
-    }, numeric(length(pc_seq)))
+    probs <- choice_prob_matrix(util, thr, uthr, sig, usig, input$lambda, costs_r())
+    log_lik_mat <- log(pmax(probs, 1e-12))
     
     # Best marker log-lik per pc point
     log_lik_best <- apply(log_lik_mat, 1, max)
@@ -755,8 +806,153 @@ server <- function(input, output, session) {
   
   output$plot_infel <- renderPlot({ plot_infel_r() })
   output$dl_infel   <- dl_handler(plot_infel_r, "infelicity.png", w=12, h=6)
+
+  # ── Tab 7: sufficiency blocking ───────────────────────────────────────────
+  blocking_df_r <- reactive({
+    thr   <- thresholds_r()
+    uthr  <- upper_thresholds_r()
+    sig   <- sigmas_r()
+    usig  <- upper_sigmas_r()
+    costs <- costs_r()
+
+    g_seq <- seq(0.01, 0.99, length.out = 250)
+    util  <- U(input$pc_block, g_seq, input$w_pc, input$w_g, input$w_int)
+
+    probs_cost <- choice_prob_matrix(util, thr, uthr, sig, usig, input$lambda, costs)
+    probs_base <- choice_prob_matrix(util, thr, uthr, sig, usig, input$lambda,
+                                     rep(0, length(costs)))
+
+    out <- do.call(rbind, lapply(seq_along(thr), function(i) {
+      data.frame(
+        g = g_seq,
+        marker = names(thr)[i],
+        prob = probs_cost[, i],
+        prob_nocost = probs_base[, i],
+        stringsAsFactors = FALSE
+      )
+    }))
+
+    out$marker <- factor(out$marker, levels = names(thr))
+    out$best_cost <- names(thr)[max.col(probs_cost, ties.method = "first")][match(out$g, g_seq)]
+    out$best_nocost <- names(thr)[max.col(probs_base, ties.method = "first")][match(out$g, g_seq)]
+    out$bek_blocked <- out$best_nocost == "bekanntlich" & out$best_cost != "bekanntlich"
+    out
+  })
+
+  plot_block_r <- reactive({
+    df <- blocking_df_r()
+    shade_df <- df |>
+      dplyr::group_by(g) |>
+      dplyr::summarise(bek_blocked = any(bek_blocked), .groups = "drop") |>
+      dplyr::filter(bek_blocked)
+
+    p <- ggplot(df, aes(x = g, y = prob, colour = marker))
+
+    if (nrow(shade_df) > 0) {
+      p <- p + geom_rect(
+        data = data.frame(
+          xmin = min(shade_df$g),
+          xmax = max(shade_df$g),
+          ymin = -Inf,
+          ymax = Inf
+        ),
+        aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+        inherit.aes = FALSE,
+        fill = "#C65353",
+        alpha = 0.10
+      )
+    }
+
+    p +
+      geom_line(linewidth = 1.4) +
+      scale_colour_manual(values = marker_colors, name = "Marker") +
+      scale_y_continuous(limits = c(0, 1), labels = scales::percent_format()) +
+      labs(
+        x = "Speaker goal strength (g)",
+        y = "Speaker choice probability",
+        title = "Weakest-sufficient prediction at fixed controversy",
+        subtitle = paste0("pc = ", sprintf("%.2f", input$pc_block),
+                          "; shading = bekanntlich blocked by a cheaper competitor")
+      ) +
+      theme_model() +
+      theme(legend.position = "top")
+  })
+
+  output$plot_block <- renderPlot({ plot_block_r() })
+  output$dl_block   <- dl_handler(plot_block_r, "sufficiency_blocking.png", w=10, h=6)
+
+  plot_block_map_r <- reactive({
+    thr   <- thresholds_r()
+    uthr  <- upper_thresholds_r()
+    sig   <- sigmas_r()
+    usig  <- upper_sigmas_r()
+    costs <- costs_r()
+
+    n_pc <- 160L
+    n_g  <- 160L
+    grid <- expand.grid(
+      pc = seq(0.01, 0.99, length.out = n_pc),
+      g  = seq(0.01, 0.99, length.out = n_g)
+    )
+    util <- U(grid$pc, grid$g, input$w_pc, input$w_g, input$w_int)
+
+    probs_cost <- choice_prob_matrix(util, thr, uthr, sig, usig, input$lambda, costs)
+    probs_base <- choice_prob_matrix(util, thr, uthr, sig, usig, input$lambda,
+                                     rep(0, length(costs)))
+
+    best_cost   <- names(thr)[max.col(probs_cost, ties.method = "first")]
+    best_nocost <- names(thr)[max.col(probs_base, ties.method = "first")]
+
+    grid$blocked <- best_nocost == "bekanntlich" & best_cost != "bekanntlich"
+    grid$winner  <- factor(best_cost, levels = names(thr))
+
+    ggplot(grid, aes(x = pc, y = g)) +
+      geom_raster(aes(fill = winner)) +
+      geom_raster(data = grid[grid$blocked, , drop = FALSE],
+                  aes(x = pc, y = g),
+                  inherit.aes = FALSE,
+                  fill = "#C65353", alpha = 0.45) +
+      scale_fill_manual(values = marker_colors, name = "Cost-sensitive\nwinner") +
+      labs(
+        x = "Overall perceived controversy (pc)",
+        y = "Speaker goal strength (g)",
+        title = "Where the strongest marker is blocked",
+        subtitle = "Red overlay: bekanntlich would win without costs, but a weaker marker wins once costs are added"
+      ) +
+      theme_model() +
+      theme(legend.position = "right")
+  })
+
+  output$plot_block_map <- renderPlot({ plot_block_map_r() })
+  output$dl_block_map   <- dl_handler(plot_block_map_r, "sufficiency_blocking_map.png", w=10, h=6)
+
+  output$block_summary <- renderText({
+    df <- blocking_df_r() |>
+      dplyr::group_by(g) |>
+      dplyr::summarise(
+        best_cost = dplyr::first(best_cost),
+        best_nocost = dplyr::first(best_nocost),
+        bek_blocked = dplyr::first(bek_blocked),
+        .groups = "drop"
+      )
+
+    blocked <- df[df$bek_blocked, , drop = FALSE]
+    if (nrow(blocked) == 0) {
+      paste0(
+        "At pc = ", sprintf("%.2f", input$pc_block),
+        ", bekanntlich is not currently blocked. Raise its cost or lower controversy further to produce the overkill pattern."
+      )
+    } else {
+      paste0(
+        "At pc = ", sprintf("%.2f", input$pc_block),
+        ", bekanntlich would be the best no-cost marker for approximately g ∈ [",
+        sprintf("%.2f", min(blocked$g)), ", ", sprintf("%.2f", max(blocked$g)),
+        "] but is blocked once costs are added. In that region, a weaker marker is predicted to be sufficient."
+      )
+    }
+  })
   
-  # ── Tab 7: Credibility discounting ──────────────────────────────────────────
+  # ── Tab 8: Credibility discounting ──────────────────────────────────────────
   # The listener has a private prior over pc (pc_prior) independent of the marker.
   # We compute E[g|u, pc_prior] and P(Adopt|u, pc_prior) by marginalising over g
   # only, with pc fixed at pc_prior (listener treats pc as known).
@@ -775,7 +971,8 @@ server <- function(input, output, session) {
     rows <- do.call(rbind, lapply(seq_along(thr), function(i) {
       do.call(rbind, lapply(pc_seq, function(pc_prior) {
         util <- U(pc_prior, g_vals, input$w_pc, input$w_g, input$w_int)
-        l    <- interval_lik(util, thr[i], sig[i], uthr[i], usig[i], lam)
+        probs <- choice_prob_matrix(util, thr, uthr, sig, usig, lam, costs_r())
+        l    <- probs[, i]
         extra_w <- if (input$disc_lam > 1) {
           mu_centre <- (unname(thr[i]) + ifelse(is.finite(unname(uthr[i])), unname(uthr[i]), unname(thr[i]) + 1)) / 2
           exp(-(input$disc_lam - 1) * (util - mu_centre)^2 / 2)

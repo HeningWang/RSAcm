@@ -1,0 +1,218 @@
+% model.tex
+% Stand-alone description of the cost-augmented noisy-threshold RSA model.
+% Can be embedded in main.tex via \input{model}.
+%
+% Compile stand-alone:
+%   pdflatex model.tex
+%
+% Embed in main.tex:
+%   \input{model}
+
+\documentclass[12pt]{article}
+\usepackage{CSPArticleStyle}
+\usepackage{csquotes}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+
+\title{Cost-Augmented Noisy-Threshold RSA Model for Consensus Markers}
+\author{}
+\date{}
+
+\begin{document}
+
+%% ============================================================
+%% When embedding in main.tex, delete from \documentclass to
+%% \begin{document} and delete \end{document} at the bottom.
+%% ============================================================
+
+\section{Model}
+
+\subsection{Overview}
+
+We model German consensus markers as lexical items that are licensed over
+intervals of a latent utility scale. The model combines three ideas:
+\begin{enumerate}
+  \item perceived controversy is jointly determined by a propositional and a pragmatic component;
+  \item speaker choice depends on a utility trade-off between controversy and persuasive goal strength;
+  \item stronger markers incur additional pragmatic costs, which creates a
+        \emph{weakest-sufficient} bias and can block overly strong markers.
+\end{enumerate}
+
+The three investigated markers are ordered from weakest to strongest as
+follows:
+\[
+\textit{soviel ich wei\ss}
+\;<\;
+\textit{ja}
+\;<\;
+\textit{bekanntlich}.
+\]
+
+\subsection{Controversy decomposition}
+
+Let
+$pc_{\text{prop}} \in [0,1]$ denote propositional controversy and
+$pc_{\text{prag}} \in [0,1]$ pragmatic controversy. Overall perceived
+controversy is defined as:
+\begin{equation}
+pc \,=\, PC(pc_{\text{prop}}, pc_{\text{prag}})
+\,=\,
+pc_{\text{prop}} \cdot pc_{\text{prag}}.
+\end{equation}
+
+This multiplicative form captures the idea that a proposition can be globally
+contentious while being relatively uncontroversial in the speaker's local
+community, and vice versa.
+
+\subsection{Base utility}
+
+Let $g \in [0,1]$ denote speaker goal strength. The speaker's base context
+utility is:
+\begin{equation}
+U(pc,g)
+\,=\,
+- w_{pc}\,pc
++ w_g\,g
+- w_{\mathrm{int}}\,pc\,g,
+\label{eq:model-utility}
+\end{equation}
+where $w_{pc}, w_g, w_{\mathrm{int}} > 0$.
+
+The first term penalizes controversy, the second rewards persuasive effort,
+and the interaction term captures that pursuing a strong goal is increasingly
+costly when controversy is high.
+
+\subsection{Noisy threshold intervals}
+
+Each marker $u_i$ is associated with a lower threshold $\theta_i$ and an upper
+threshold $\theta_{i+1}$, where the upper threshold is the lower threshold of
+the next stronger marker. For the strongest marker, the upper boundary is
+$+\infty$.
+
+Thresholds are treated as noisy rather than fixed:
+\begin{equation}
+\theta_i \sim \mathcal{N}(\mu_i, \sigma_i^2),
+\end{equation}
+with ordered means
+\[
+\mu_{\textit{soviel ich wei\ss}}
+\;<\;
+\mu_{\textit{ja}}
+\;<\;
+\mu_{\textit{bekanntlich}}.
+\]
+
+A marker fits the context to the extent that the utility falls inside its
+licensed interval. The corresponding noisy interval-fit term is:
+\begin{equation}
+\mathrm{Fit}_{\mathrm{interval}}(u_i \mid U)
+\;\propto\;
+\mathbb{E}_{\theta_i}\left[\sigma\!\left(\lambda(U-\theta_i)\right)\right]
+\cdot
+\mathbb{E}_{\theta_{i+1}}\left[\sigma\!\left(-\lambda(U-\theta_{i+1})\right)\right],
+\label{eq:model-fit}
+\end{equation}
+where $\sigma(x)=(1+e^{-x})^{-1}$ is the logistic function and $\lambda > 0$
+controls boundary sharpness.
+
+The first factor rewards utilities above the lower threshold; the second
+factor penalizes utilities above the next stronger marker's lower threshold.
+Thus, each marker is associated with an interval rather than a single cutoff.
+
+\subsection{Marker costs and sufficiency blocking}
+
+In addition to interval fit, each marker carries a marker-specific pragmatic
+cost $c_u \geq 0$. The weakest marker can be treated as the reference level,
+with stronger markers incurring larger costs.
+
+Speaker choice is therefore modeled as:
+\begin{equation}
+P(u \mid pc,g)
+\;\propto\;
+\mathrm{Fit}_{\mathrm{interval}}\!\left(u \mid U(pc,g)\right)
+\cdot e^{-c_u}.
+\label{eq:model-choice}
+\end{equation}
+
+This cost term introduces a \emph{weakest-sufficient} bias. A stronger marker
+may be licensed by the context, but still lose to a weaker marker if the weaker
+option already serves the speaker's purpose sufficiently well. This yields the
+prediction of \textbf{sufficiency blocking}: in low-controversy contexts, even
+under relatively high goal strength, \textit{bekanntlich} can be blocked if
+\textit{ja} or even \textit{soviel ich wei\ss} already provides enough force
+at lower cost.
+
+\subsection{Listener inversion}
+
+Given an observed marker $u$, the listener inverts the speaker model to infer
+latent context variables:
+\begin{equation}
+P(pc_{\text{prop}}, pc_{\text{prag}}, g \mid u)
+\;\propto\;
+P\!\left(u \mid PC(pc_{\text{prop}}, pc_{\text{prag}}), g\right)
+\,P(pc_{\text{prop}})\,P(pc_{\text{prag}})\,P(g).
+\label{eq:model-posterior}
+\end{equation}
+
+Because stronger markers generally require higher utility, they shift posterior
+mass toward lower controversy and higher goal strength. However, the cost term
+weakens a purely monotonic mapping from marker strength to speaker goal:
+observing a weaker marker can reflect either lower utility or the fact that a
+stronger marker would have been pragmatically excessive.
+
+\subsection{Adoption model}
+
+The listener's downstream adoption decision depends on the posterior over goal
+strength and controversy:
+\begin{equation}
+\text{logit}\left(P_{\mathrm{adopt}}\right)
+\;=
+\eta_0
++ \eta_g\,\mathbb{E}[g \mid u,pc]
+- \eta_{pc}\,pc
+- \eta_{\mathrm{int}}\,\mathbb{E}[g \mid u,pc]\,pc.
+\label{eq:model-adopt}
+\end{equation}
+
+Here, $\eta_0$ is a baseline adoption tendency, $\eta_g$ captures the positive
+effect of inferred speaker goal, $\eta_{pc}$ penalizes controversy, and
+$\eta_{\mathrm{int}}$ allows controversy to attenuate the effect of inferred
+goal strength.
+
+\subsection{Qualitative predictions}
+
+The model yields the following core predictions:
+\begin{enumerate}
+  \item \textbf{Goal effect:} holding controversy fixed, higher $g$ increases
+        the probability of stronger markers.
+  \item \textbf{Controversy effect:} holding $g$ fixed, higher $pc$ increases
+        the probability of weaker markers.
+  \item \textbf{Attenuated goal effect under controversy:} the impact of $g$
+        on marker strength is reduced when $pc$ is high.
+  \item \textbf{Sufficiency blocking:} in low-$pc$ regions, a stronger marker
+        can be blocked by a weaker marker if the weaker one already does enough.
+  \item \textbf{Listener-side inversion:} stronger markers tend to induce lower
+        inferred controversy and higher inferred goal strength.
+  \item \textbf{Credibility discounting:} even when a strong marker supports
+        high inferred goal strength, its effect on action adoption is reduced
+        in highly controversial contexts.
+\end{enumerate}
+
+\subsection{Interpretive summary}
+
+Relative to a vanilla RSA model that directly softmaxes over utterance utility,
+this model treats markers as corresponding to \emph{intervals} on a latent
+utility scale. The interval-fit component answers the question:
+\enquote{How well does this marker match the current utility region?}
+The cost term answers the question:
+\enquote{Is this marker stronger or more marked than the speaker needs?}
+Only their combination determines actual choice.
+
+\end{document}

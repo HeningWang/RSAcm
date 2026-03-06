@@ -2,15 +2,16 @@
 #
 # Fits the hierarchical cumulative-probit (noisy-threshold) model to the
 # critical trials and estimates:
-#   - Ordinal thresholds  μ_1 < μ_2 < μ_3 < μ_4
+#   - Ordinal thresholds  μ_1 < μ_2
 #   - Utility weights     β_pc_prop, β_pc_prag, β_g
+#   - Marker costs        c_ja, c_bekanntlich
 #   - Between-participant SD  σ_u
 #
 # Requires: rstan  (≥ 2.21)  or  cmdstanr  (preferred)
 # Stan model: models/noisy_threshold.stan
 #
 # Outputs:
-#   - fit object cached at data/fit_threshold.rds
+#   - fit object cached at data/fit_threshold_3markers.rds
 #   - plots/fig5_posteriors.pdf/png   — posterior densities of key parameters
 #   - plots/fig6_thresholds.pdf/png   — threshold estimates on utility axis
 #   - plots/fig7_ppc.pdf/png          — posterior predictive check
@@ -37,9 +38,7 @@ PLOTS_DIR <- "plots"
 dir.create(PLOTS_DIR, showWarnings = FALSE)
 
 MARKERS_ORDERED <- c(
-  "sofern ich weiß",
-  "wie du ja weißt",
-  "wie wir wissen",
+  "soviel ich weiß",
   "ja",
   "bekanntlich"
 )
@@ -87,7 +86,7 @@ crit <- dat |>
   filter(!is_filler) |>
   left_join(norming |> select(topic, pc_prop_c), by = "topic") |>
   mutate(
-    y         = match(selected_marker, MARKERS_ORDERED),   # 1–5
+    y         = match(selected_marker, MARKERS_ORDERED),   # 1–3
     pc_prag_n = ifelse(pc_prag == "high", 1L, 0L),
     g_n       = ifelse(g       == "high", 1L, 0L),
     subj      = as.integer(factor(submission_id))
@@ -106,7 +105,7 @@ stan_data <- list(
 )
 
 # ── Fit or load cached model ───────────────────────────────────────────────────
-cache_path <- "data/fit_threshold.rds"
+cache_path <- "data/fit_threshold_3markers.rds"
 
 if (file.exists(cache_path)) {
   message("Loading cached draws from ", cache_path)
@@ -144,8 +143,9 @@ if (file.exists(cache_path)) {
 }
 
 # ── Diagnostics ───────────────────────────────────────────────────────────────
-key_pars <- c("mu[1]", "mu[2]", "mu[3]", "mu[4]",
-              "beta_pc_prop", "beta_pc_prag", "beta_g", "sigma_u")
+key_pars <- c("mu[1]", "mu[2]",
+              "beta_pc_prop", "beta_pc_prag", "beta_g",
+              "cost_ja", "cost_bek", "sigma_u")
 
 cat("\n=== Posterior summary ===\n")
 print(summarise_draws(draws, mean, sd, ~quantile(.x, c(0.025, 0.975)),
@@ -154,25 +154,25 @@ print(summarise_draws(draws, mean, sd, ~quantile(.x, c(0.025, 0.975)),
 
 # ── Figure 5: Posterior densities ─────────────────────────────────────────────
 beta_draws <- draws |>
-  select(all_of(c("beta_pc_prop", "beta_pc_prag", "beta_g"))) |>
+  select(all_of(c("beta_pc_prop", "beta_pc_prag", "beta_g", "cost_ja", "cost_bek"))) |>
   pivot_longer(everything(), names_to = "parameter", values_to = "value") |>
   mutate(parameter = factor(parameter,
-                            levels = c("beta_pc_prop", "beta_pc_prag", "beta_g"),
-                            labels = c("β[pc_prop]", "β[pc_prag]", "β[g]")))
+                            levels = c("beta_pc_prop", "beta_pc_prag", "beta_g", "cost_ja", "cost_bek"),
+                            labels = c("β[pc_prop]", "β[pc_prag]", "β[g]", "c[ja]", "c[bek]")))
 
 p5a <- ggplot(beta_draws, aes(x = value)) +
   geom_density(alpha = 0.35, linewidth = 0.8, fill = CSP_colors[1], colour = CSP_colors[1]) +
   geom_vline(xintercept = 0, linetype = "dashed", colour = "grey40") +
   facet_wrap(~parameter, scales = "free", labeller = label_parsed) +
-  labs(title = "Posterior distributions of utility weights",
+  labs(title = "Posterior distributions of speaker-side parameters",
        x = "Parameter value", y = "Density") +
   theme_model()
 
 mu_draws <- draws |>
   select(starts_with("mu[")) |>
   pivot_longer(everything(), names_to = "threshold", values_to = "value") |>
-  mutate(threshold = factor(threshold, levels = paste0("mu[", 1:4, "]"),
-                            labels = paste0("μ[", 1:4, "]")))
+  mutate(threshold = factor(threshold, levels = paste0("mu[", 1:2, "]"),
+                            labels = paste0("μ[", 1:2, "]")))
 
 p5b <- ggplot(mu_draws, aes(x = value)) +
   geom_density(alpha = 0.35, linewidth = 0.8, fill = CSP_colors[4], colour = CSP_colors[4]) +
@@ -206,9 +206,7 @@ marker_labels <- tibble(
   x = c(
     mu_summ$mean[1] - 0.8,                      # below μ_1
     (mu_summ$mean[1] + mu_summ$mean[2]) / 2,    # between μ_1 and μ_2
-    (mu_summ$mean[2] + mu_summ$mean[3]) / 2,    # between μ_2 and μ_3
-    (mu_summ$mean[3] + mu_summ$mean[4]) / 2,    # between μ_3 and μ_4
-    mu_summ$mean[4] + 0.8                        # above μ_4
+    mu_summ$mean[2] + 0.8                        # above μ_2
   ),
   y = 0.55
 )
@@ -249,7 +247,7 @@ y_obs     <- crit$y
 
 p7 <- ppc_bars(y_obs, y_rep_mat[1:200, ],
                freq = FALSE) +
-  scale_x_continuous(breaks = 1:5, labels = MARKERS_ORDERED) +
+  scale_x_continuous(breaks = 1:3, labels = MARKERS_ORDERED) +
   labs(title = "Posterior predictive check — marker frequency distribution",
        x = "Marker", y = "Proportion") +
   theme_model() +

@@ -47,6 +47,8 @@ This project investigates:
     \item \textbf{Interaction ($pc_{\text{prag}} \times g$):} The positive effect of goal strength on marker strength is attenuated when pragmatic controversy is high, reflecting the increased cost of assertive marking under community disagreement.
 \end{enumerate}
 
+In the revised production model, marker choice is additionally modulated by a \emph{sufficiency / markedness cost}: stronger markers may be dispreferred when a weaker marker already adequately serves the speaker's goal. This allows the strongest marker to be \emph{blocked} in some low-controversy contexts despite high $g$, if the extra assertive force is not worth its additional pragmatic cost.
+
 \paragraph{Comprehension (Listener-side).}
 \begin{enumerate}[label=H\arabic*., start=4]
     \item \textbf{Marker encodes goal inference:} Conditions that license stronger markers (via the production model) yield higher inferred speaker goal strength ($\hat{g}$) ratings.
@@ -134,16 +136,16 @@ Data collection stops when the target $N$ is reached for each experiment. No int
 Manipulated via the context paragraph preceding the target sentence.
 \begin{itemize}
     \item \textbf{Low:} The speaker's social circle largely agrees on $p$.\\
-    Example (German): \textit{``In eurem Kollegenkreis teilen die meisten die Ansicht, dass [p].''}
+    Example (German): \textit{``In eurem gemeinsamen Umfeld teilen die meisten die Ansicht, dass [p].''}
     \item \textbf{High:} The speaker's social circle is divided on $p$.\\
-    Example (German): \textit{``In eurem Kollegenkreis gehen die Meinungen dazu allerdings stark auseinander.''}
+    Example (German): \textit{``In eurem gemeinsamen Umfeld gehen die Meinungen dazu allerdings stark auseinander.''}
 \end{itemize}
 
 \paragraph{Speaker goal strength ($g$; production only).}
 Manipulated via a goal instruction appended after the context paragraph.
 \begin{itemize}
-    \item \textbf{Low:} \textit{``Du m\"ochtest das nur kurz anmerken.''} (`You just want to make a brief note of this.')
-    \item \textbf{High:} \textit{``Es ist dir sehr wichtig, dass dein Gespr\"achspartner das akzeptiert.''} (`It is very important to you that your interlocutor accepts this.')
+    \item \textbf{Low:} \textit{``Du m\"ochtest einen Vorschlag machen und diesen nur kurz anmerken.''} (`You want to make a suggestion and just briefly note it.')
+    \item \textbf{High:} \textit{``Du m\"ochtest einen Vorschlag machen. Es ist dir sehr wichtig, dass dein/e Gespr\"achspartner/in diesen Vorschlag akzeptiert.''}\\(`You want to make a suggestion. It is very important to you that your interlocutor accepts this suggestion.')
 \end{itemize}
 
 \paragraph{Implied goal strength ($g_{\text{implied}}$; comprehension only).}
@@ -174,7 +176,7 @@ Continuous topic-level variable obtained from the norming study. Entered as a me
     \item \textbf{Inferred speaker goal strength} ($\hat{g}$): 0--100 slider (0 = \textit{\"uberhaupt nicht} `not at all'; 100 = \textit{sehr stark} `very strongly').\\
     Prompt: \textit{``Wie stark hast du den Eindruck, dass die Sprecherin m\"ochte, dass du ihre Empfehlung befolgst?''} (`How strongly do you get the impression that the speaker wants you to follow their recommendation?')
     \item \textbf{Adoption likelihood} ($\hat{A}$): 0--100 slider (0 = \textit{sehr unwahrscheinlich} `very unlikely'; 100 = \textit{sehr wahrscheinlich} `very likely').\\
-    Prompt: \textit{``Wie wahrscheinlich ist es, dass du die empfohlene Handlung tats\"achlich umsetzt?''} (`How likely is it that you will actually carry out the recommended action?')
+    Prompt: \textit{``Wie wahrscheinlich ist es, dass du die empfohlene Handlung dann auch tats\"achlich umsetzt?''} (`How likely is it that you will actually carry out the recommended action?')
 \end{itemize}
 
 
@@ -251,7 +253,7 @@ Estimated duration: 5 minutes.
     \item 16 trials (randomized order; 8 critical + 8 fillers): Each trial displays (a) a context paragraph establishing the direct-address situation and pragmatic controversy, (b) the speaker's utterance with a pre-filled consensus marker in bold and the consequent action (labeled \textit{``Sie/Er sagt zu dir:''} followed by the full sentence), and (c) two 0--100 slider questions in fixed order:
     \begin{itemize}
         \item Inferred goal strength: \textit{``Wie stark hast du den Eindruck, dass die Sprecherin m\"ochte, dass du ihre Empfehlung befolgst?''} (`How strongly do you get the impression that the speaker wants you to follow their recommendation?'), anchored from \textit{\"uberhaupt nicht} (`not at all') to \textit{sehr stark} (`very strongly').
-        \item Adoption likelihood: \textit{``Wie wahrscheinlich ist es, dass du die empfohlene Handlung tats\"achlich umsetzt?''} (`How likely is it that you will actually carry out the recommended action?'), anchored from \textit{sehr unwahrscheinlich} (`very unlikely') to \textit{sehr wahrscheinlich} (`very likely').
+        \item Adoption likelihood: \textit{``Wie wahrscheinlich ist es, dass du die empfohlene Handlung dann auch tats\"achlich umsetzt?''} (`How likely is it that you will actually carry out the recommended action?'), anchored from \textit{sehr unwahrscheinlich} (`very unlikely') to \textit{sehr wahrscheinlich} (`very likely').
     \end{itemize}
     Both sliders are initialized at 50. The ``Weiter'' button is disabled until both sliders have been moved at least once.
     \item Post-test questionnaire: native language, age, education level, optional comments.
@@ -288,7 +290,15 @@ We fit a Bayesian cumulative (ordinal) probit mixed-effects model using \texttt{
 For each hypothesis, we compute contrasts on the posterior expected predictions and report the posterior probability that the contrast is in the predicted direction, along with 95\% highest density intervals (HDIs).
 
 \paragraph{RSA model fitting.}
-We additionally fit the noisy-threshold RSA model (Stan) to estimate threshold parameters $\theta_i$ and utility weights ($w_{pc}$, $w_g$, $w_{int}$) directly from the ordinal choice data. Posterior predictive checks are used to evaluate model fit.
+We additionally fit a cost-augmented noisy-threshold RSA model (Stan) to estimate threshold parameters $\theta_i$, utility weights ($w_{pc}$, $w_g$, $w_{int}$), and marker-specific costs $c_u$ directly from the ordinal choice data. The base context utility is
+\begin{equation}
+U(pc, g) = -w_{pc}\,pc + w_g\,g - w_{int}\,pc\,g,
+\end{equation}
+and the speaker's choice probability is proportional to a noisy interval-fit term multiplied by an exponential cost penalty,
+\begin{equation}
+P(u \mid pc, g) \propto \mathrm{Fit}_{\mathrm{interval}}(u \mid U(pc,g)) \cdot e^{-c_u}.
+\end{equation}
+Posterior predictive checks are used to evaluate model fit.
 
 \subsection{Comprehension Experiment Analysis}
 \label{sec:comp-analysis}
@@ -317,7 +327,7 @@ In the RSA model, the literal listener observes a marker $u_i$ and knows the per
 \begin{equation}
 P(g \mid u_i, pc) \propto P(u_i \mid pc, g) \cdot P(g)
 \end{equation}
-The speaker likelihood $P(u_i \mid pc, g)$ is computed from the production-fitted threshold parameters (the $\mu$, $\sigma$, and $\lambda$ values obtained in the production experiment). The listener maps the posterior expected goal strength $\mathrm{E}[g \mid u_i, pc]$, together with the known $pc$, to an adoption decision via a logistic link:
+The speaker likelihood $P(u_i \mid pc, g)$ is computed from the production-fitted threshold and cost parameters (the $\mu$, $\sigma$, $\lambda$, and $c_u$ values obtained in the production experiment). The listener maps the posterior expected goal strength $\mathrm{E}[g \mid u_i, pc]$, together with the known $pc$, to an adoption decision via a logistic link:
 \begin{equation}
 \text{logit}(P_{\text{adopt}}) = \eta_0 + \eta_g \cdot \mathrm{E}[g \mid u_i, pc] - \eta_{pc} \cdot pc - \eta_{\text{int}} \cdot \mathrm{E}[g \mid u_i, pc] \cdot pc
 \end{equation}
@@ -332,7 +342,7 @@ The three experiments are conducted in a fixed order due to informational depend
 
 \begin{enumerate}
     \item \textbf{Norming study} $\to$ provides $pc_{\text{prop}}$ ratings per topic, used as covariates in both subsequent experiments.
-    \item \textbf{Production experiment} $\to$ provides marker choice data. The noisy-threshold RSA model is fitted to these data, yielding threshold parameters $\theta_i$ and utility weights ($w_{pc}$, $w_g$, $w_{int}$).
+    \item \textbf{Production experiment} $\to$ provides marker choice data. The cost-augmented noisy-threshold RSA model is fitted to these data, yielding threshold parameters $\theta_i$, utility weights ($w_{pc}$, $w_g$, $w_{int}$), and marker costs $c_u$.
     \item \textbf{Bayesian item selection for markers used in the comprehension experiment} $\to$ For each of the 32 cells (8 items $\times$ 4 conditions), the fitted model's posterior predictive distribution determines the modal marker. This produces a concrete 8 $\times$ 4 assignment matrix specifying which marker each item receives in each condition.
     \item \textbf{Comprehension experiment} $\to$ uses the assignment matrix from Step 3. Each participant sees 8 critical items via the same Latin square as production; the marker in each trial is read off from the matrix.
 \end{enumerate}

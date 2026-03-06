@@ -13,8 +13,8 @@
 # Model comparison via approximate leave-one-out cross-validation (LOO).
 #
 # Outputs:
-#   data/fit_brms_additive.rds
-#   data/fit_brms_full.rds
+#   data/fit_brms_additive_3markers.rds
+#   data/fit_brms_full_3markers.rds
 #   plots/fig8_coef_plot.pdf/png      — fixef coefficient plot
 #   plots/fig9_cond_effects.pdf/png   — conditional effects on marker scale
 #   plots/fig10_loo_compare.pdf/png   — LOO comparison
@@ -37,9 +37,7 @@ PLOTS_DIR <- "plots"
 dir.create(PLOTS_DIR, showWarnings = FALSE)
 
 MARKERS_ORDERED <- c(
-  "sofern ich weiß",
-  "wie du ja weißt",
-  "wie wir wissen",
+  "soviel ich weiß",
   "ja",
   "bekanntlich"
 )
@@ -104,7 +102,7 @@ shared_priors <- c(
 )
 
 # ── Model A: Additive ──────────────────────────────────────────────────────────
-path_a <- "data/fit_brms_additive.rds"
+path_a <- "data/fit_brms_additive_3markers.rds"
 
 if (file.exists(path_a)) {
   message("Loading cached Model A from ", path_a)
@@ -123,7 +121,7 @@ if (file.exists(path_a)) {
 }
 
 # ── Model B: Full interactions ─────────────────────────────────────────────────
-path_b <- "data/fit_brms_full.rds"
+path_b <- "data/fit_brms_full_3markers.rds"
 
 if (file.exists(path_b)) {
   message("Loading cached Model B from ", path_b)

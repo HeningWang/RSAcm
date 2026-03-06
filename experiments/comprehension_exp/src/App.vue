@@ -72,7 +72,7 @@
         <div class="rating-section">
           <p class="rating-question">
             Wie wahrscheinlich ist es, dass du die empfohlene Handlung
-            tatsächlich umsetzt?
+            dann auch tatsächlich umsetzt?
           </p>
           <div class="slider-wrap">
             <span class="anchor anchor-left">sehr<br />unwahrscheinlich</span>

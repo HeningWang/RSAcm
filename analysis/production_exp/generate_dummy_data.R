@@ -17,14 +17,15 @@
 #   Marker k is chosen whenever a latent score  z = η + ε  (ε ~ Normal(0,1))
 #   falls in the k-th threshold interval (cumulative probit ordering):
 #     k = 1  if  z ≤ μ_1
-#     k = j  if  μ_{j-1} < z ≤ μ_j   (j = 2,3,4)
-#     k = 5  if  z > μ_4
+#     k = 2  if  μ_1 < z ≤ μ_2
+#     k = 3  if  z > μ_2
 #
 # True parameters (recoverable by 02_bayesian_thresholds.R):
-#   Thresholds:  μ = (-1.5, -0.5, 0.5, 1.5)
+#   Thresholds:  μ = (-0.6, 0.8)
 #   β_pc_prop =  0.8   (more consensus → stronger marker)
 #   β_pc_prag = -0.6   (diverging social circle → weaker marker)
 #   β_g       =  1.4   (stronger persuasive goal → stronger marker)
+#   costs      = (0.0, 0.25, 0.6)  (weakest marker is reference cost 0)
 #   σ_u       =  0.4   (between-participant SD)
 #
 # Output:
@@ -36,10 +37,11 @@ set.seed(42)
 library(dplyr)
 
 # ── True parameters ────────────────────────────────────────────────────────────
-MU           <- c(-1.5, -0.5, 0.5, 1.5)   # ordinal thresholds
+MU           <- c(-0.6, 0.8)   # ordinal thresholds for 3 ordered markers
 BETA_PC_PROP <-  0.8   # effect per SD of centred pc_prop_rating (positive: more consensus → stronger marker)
 BETA_PC_PRAG <- -0.6
 BETA_G       <-  1.4
+COSTS        <- c(0.0, 0.25, 0.6)
 SIGMA_U      <-  0.4
 
 N_SUBJ        <- 80     # total participants
@@ -47,9 +49,7 @@ N_LISTS       <- 4      # Latin square lists
 SUBJ_PER_LIST <- N_SUBJ / N_LISTS   # 20
 
 MARKERS <- c(
-  "sofern ich weiß",
-  "wie du ja weißt",
-  "wie wir wissen",
+  "soviel ich weiß",
   "ja",
   "bekanntlich"
 )
@@ -102,11 +102,15 @@ utility <- function(pc_prop_c, pc_prag, g, u_s) {
     u_s
 }
 
-# Ordered-probit choice: returns integer 1–5
+# Cost-augmented ordered-probit choice: returns integer 1–3
 sample_marker <- function(eta) {
-  z    <- eta + rnorm(1)
-  cuts <- c(-Inf, MU, Inf)
-  findInterval(z, cuts[2:5]) + 1L   # 1-indexed
+  p_base <- c(
+    pnorm(MU[1] - eta),
+    pnorm(MU[2] - eta) - pnorm(MU[1] - eta),
+    1 - pnorm(MU[2] - eta)
+  )
+  w <- p_base * exp(-COSTS)
+  sample(1:3, 1, prob = w / sum(w))
 }
 
 # ── Simulate participants ──────────────────────────────────────────────────────
@@ -147,7 +151,7 @@ for (s in seq_len(N_SUBJ)) {
   filler_rows <- vector("list", nrow(FILLER_ITEMS))
   for (j in seq_len(nrow(FILLER_ITEMS))) {
     item <- FILLER_ITEMS[j, ]
-    mk   <- sample(1:5, 1)
+    mk   <- sample(1:3, 1)
     filler_rows[[j]] <- tibble(
       submission_id    = s,
       list_num         = list_num,

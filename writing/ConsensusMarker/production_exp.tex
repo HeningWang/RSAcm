@@ -40,7 +40,7 @@
 \subsection{Overview}
 
 The production experiment empirically estimates the decision thresholds
-that govern the use of five German consensus markers by placing
+that govern the use of three German consensus markers by placing
 participants in the speaker role.
 Participants read short vignettes that independently varied
 \emph{pragmatic perceived controversy} (\textsc{pc\textsubscript{prag}})
@@ -57,7 +57,18 @@ The resulting distribution of marker choices across the
 $\textsc{pc}_\text{prag} \times g$ design, combined with the
 continuous \textsc{pc\textsubscript{prop}} covariate, provides the
 empirical basis for estimating the ordinal thresholds
-$\mu_1 < \cdots < \mu_4$ of the noisy-threshold RSA model.
+$\mu_1 < \mu_2$ of the noisy-threshold RSA model.
+
+In the revised model, marker choice is not driven by threshold fit alone.
+The speaker first computes a base context utility
+\[
+U(pc,g) = -w_{pc}\,pc + w_g\,g - w_{\mathrm{int}}\,pc\,g,
+\]
+and the final choice probability additionally includes a marker-specific
+cost term $c_u$.
+Intuitively, this implements a \emph{weakest-sufficient} bias: even when
+a stronger marker is in principle licensed, it may be disfavoured if a
+weaker marker already achieves the speaker's purpose at lower pragmatic cost.
 
 \subsection{Participants}
 
@@ -70,13 +81,11 @@ Data collection is ongoing; a target of $N = 80$ participants is planned
 
 \subsubsection{Markers}
 
-The five consensus markers under investigation are, from weakest to
+The three consensus markers under investigation are, from weakest to
 strongest presumed common-ground commitment:
 
 \begin{enumerate}
-  \item \textit{sofern ich wei\ss{}} (`as far as I know')
-  \item \textit{wie du ja wei\ss t} (`as you (prt) know')
-  \item \textit{wie wir wissen} (`as we know')
+  \item \textit{soviel ich wei\ss{}} (`as far as I know')
   \item \textit{ja} (modal particle; roughly `as you know / of course')
   \item \textit{bekanntlich} (`as is well known / notoriously')
 \end{enumerate}
@@ -93,11 +102,11 @@ example~(\ref{ex:frame}):
   working world.'
 \end{exe}
 
-This syntactic position is licit for all five markers: modal particles
-such as \textit{ja} canonically occupy the left edge of the Mittelfeld
+This syntactic position is licit for all three markers: the modal particle
+\textit{ja} canonically occupies the left edge of the Mittelfeld
 \citep{thurmair1989modalpartikeln}, while the adverb \textit{bekanntlich}
-and parenthetical clauses (\textit{wie wir wissen}, etc.) can appear
-there as well (see \citealt{jacobs_semantics_1991} for discussion).
+and the parenthetical expression \textit{soviel ich wei\ss{}} can also
+appear in this region (see \citealt{jacobs_semantics_1991} for discussion).
 Each target sentence was followed by a consequent clause with the
 recommended action $q$: \textit{Deshalb solltest du [q].}
 (`Therefore, you should [q].')
@@ -361,7 +370,7 @@ potential demand characteristics.
 \subsubsection{Dependent variable}
 
 The dependent variable was the marker chosen from a drop-down menu
-displaying all five options in fixed order (as listed in
+displaying all three options in fixed order (as listed in
 Section~\ref{sub:markers}).
 No response time threshold was imposed, but response times were logged.
 Recorded per trial: \texttt{trial\_id}, \texttt{topic}, \texttt{is\_filler},

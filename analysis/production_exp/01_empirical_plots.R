@@ -24,9 +24,7 @@ PLOTS_DIR <- "plots"
 dir.create(PLOTS_DIR, showWarnings = FALSE)
 
 MARKERS_ORDERED <- c(
-  "sofern ich weiß",
-  "wie du ja weißt",
-  "wie wir wissen",
+  "soviel ich weiß",
   "ja",
   "bekanntlich"
 )
@@ -118,7 +116,7 @@ p1 <- ggplot(cond_props,
 save_plot(p1, "fig1_stacked_bar", w = 7, h = 5.5)
 
 # ── Figure 2: Tile / heatmap — mean marker index by pc_prag × g ──────────────
-# Mean marker index (1 = sofern, 5 = bekanntlich) as fill
+# Mean marker index (1 = soviel ich weiß, 3 = bekanntlich) as fill
 mean_idx <- crit |>
   mutate(marker_index = as.integer(selected_marker)) |>
   group_by(pc_prag, g) |>
@@ -129,7 +127,7 @@ p2 <- ggplot(mean_idx,
   geom_tile(colour = "white", linewidth = 1.5) +
   geom_text(aes(label = round(mean_marker, 2)), size = 5.5, fontface = "bold") +
   scale_fill_distiller(palette = "RdYlBu", direction = 1,
-                       limits = c(1, 5), name = "Mean marker\n(1=sofern, 5=bekanntlich)") +
+                       limits = c(1, 3), name = "Mean marker\n(1=soviel ich weiß, 3=bekanntlich)") +
   scale_x_discrete(drop = FALSE) +
   scale_y_discrete(drop = FALSE) +
   labs(

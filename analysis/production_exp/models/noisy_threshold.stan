@@ -7,9 +7,13 @@
 //     η_t  =  β_pc_prop · pc_prop_t  +  β_pc_prag · pc_prag_t  +  β_g · g_t
 //              +  u_s
 //
-//   Marker choice k is determined by thresholds on a latent continuum:
-//     P(Y_t ≤ k)  =  Φ( μ_k  −  η_t )        (cumulative probit)
-//     P(Y_t  = k)  =  P(Y_t ≤ k)  −  P(Y_t ≤ k−1)
+//   Base marker fit is determined by thresholds on a latent continuum:
+//     P_base(Y_t ≤ k)  =  Φ( μ_k  −  η_t )        (cumulative probit)
+//     P_base(Y_t  = k) =  P_base(Y_t ≤ k) − P_base(Y_t ≤ k−1)
+//
+//   Choice additionally includes marker-specific costs:
+//     P(Y_t = k) ∝ P_base(Y_t = k) * exp(-cost_k)
+//   with cost_1 fixed to 0 for identifiability.
 //
 //   Threshold noise (σ_thresh): each threshold μ_k is estimated with
 //   uncertainty, i.e., μ_k = μ̃_k + ε_k, ε_k ~ N(0, σ_thresh).
@@ -17,10 +21,12 @@
 //   (standard cumulative probit with unit residual SD).
 //
 // Parameters:
-//   mu[4]          : ordered thresholds  μ_1 < μ_2 < μ_3 < μ_4
+//   mu[2]          : ordered thresholds  μ_1 < μ_2
 //   beta_pc_prop   : effect of perceived consensus (centred norming rating, expected > 0)
 //   beta_pc_prag   : effect of pragmatic controversy      (expected < 0)
 //   beta_g         : effect of persuasive-goal strength   (expected > 0)
+//   cost_ja        : markedness / sufficiency cost for ja
+//   cost_bek       : markedness / sufficiency cost for bekanntlich
 //   u[N_subj]      : by-participant random intercepts
 //   sigma_u        : SD of random intercepts
 //
@@ -29,7 +35,7 @@
 data {
   int<lower=1> N;                        // number of critical trials
   int<lower=1> N_subj;                   // number of participants
-  array[N] int<lower=1, upper=5> y;      // marker choice (1 = sofern … 5 = bekanntlich)
+  array[N] int<lower=1, upper=3> y;      // marker choice (1 = soviel ich weiß … 3 = bekanntlich)
   vector[N] pc_prop;                     // centred norming rating (SD ≈ 1); higher = more consensus
   vector[N] pc_prag;                     // 0 (low) or 1 (high)
   vector[N] g;                           // 0 (low) or 1 (high)
@@ -37,10 +43,12 @@ data {
 }
 
 parameters {
-  ordered[4] mu;           // threshold parameters (ordered constraint built-in)
+  ordered[2] mu;           // threshold parameters (ordered constraint built-in)
   real beta_pc_prop;
   real beta_pc_prag;
   real beta_g;
+  real<lower=0> cost_ja;
+  real<lower=0> cost_bek;
   vector[N_subj] u_raw;   // non-centred parameterisation
   real<lower=0> sigma_u;
 }
@@ -55,6 +63,8 @@ model {
   beta_pc_prop ~ normal( 1, 1);          // expected positive (more consensus → stronger marker)
   beta_pc_prag ~ normal(-1, 1);
   beta_g       ~ normal( 1, 1);          // expected positive
+  cost_ja      ~ exponential(1.5);
+  cost_bek     ~ exponential(1.5);
   u_raw        ~ std_normal();           // non-centred
   sigma_u      ~ exponential(1);
 
@@ -65,14 +75,15 @@ model {
                beta_g       * g[n]       +
                u[subj[n]];
 
-    // Cumulative probit: P(Y = k | eta) = Phi(mu[k] - eta) - Phi(mu[k-1] - eta)
-    vector[5] log_p;
-    log_p[1] = log(Phi(mu[1] - eta));
-    for (k in 2:4)
-      log_p[k] = log(Phi(mu[k] - eta) - Phi(mu[k - 1] - eta));
-    log_p[5] = log1m(Phi(mu[4] - eta));
+    vector[3] log_w;
+    real p1 = fmax(Phi(mu[1] - eta), 1e-12);
+    real p2 = fmax(Phi(mu[2] - eta) - Phi(mu[1] - eta), 1e-12);
+    real p3 = fmax(1 - Phi(mu[2] - eta), 1e-12);
+    log_w[1] = log(p1);
+    log_w[2] = log(p2) - cost_ja;
+    log_w[3] = log(p3) - cost_bek;
 
-    target += log_p[y[n]];
+    target += categorical_logit_lpmf(y[n] | log_w);
   }
 }
 
@@ -88,13 +99,15 @@ generated quantities {
                beta_g       * g[n]       +
                u[subj[n]];
 
-    vector[5] log_p;
-    log_p[1] = log(Phi(mu[1] - eta));
-    for (k in 2:4)
-      log_p[k] = log(Phi(mu[k] - eta) - Phi(mu[k - 1] - eta));
-    log_p[5] = log1m(Phi(mu[4] - eta));
+    vector[3] log_w;
+    real p1 = fmax(Phi(mu[1] - eta), 1e-12);
+    real p2 = fmax(Phi(mu[2] - eta) - Phi(mu[1] - eta), 1e-12);
+    real p3 = fmax(1 - Phi(mu[2] - eta), 1e-12);
+    log_w[1] = log(p1);
+    log_w[2] = log(p2) - cost_ja;
+    log_w[3] = log(p3) - cost_bek;
 
-    y_rep[n]   = categorical_rng(softmax(log_p));
-    log_lik[n] = log_p[y[n]];
+    y_rep[n]   = categorical_logit_rng(log_w);
+    log_lik[n] = categorical_logit_lpmf(y[n] | log_w);
   }
 }
