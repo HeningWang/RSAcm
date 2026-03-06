@@ -117,16 +117,22 @@ topic_summary <- norm_dat %>%
     claim = dplyr::first(claim),
     n = dplyr::n(),
     mean_pc_prop_rating = mean(pc_prop_rating, na.rm = TRUE),
+    median_pc_prop_rating = median(pc_prop_rating, na.rm = TRUE),
     sd_pc_prop_rating = sd(pc_prop_rating, na.rm = TRUE),
     se_pc_prop_rating = se(pc_prop_rating),
     ci_low = mean_pc_prop_rating - 1.96 * se_pc_prop_rating,
     ci_high = mean_pc_prop_rating + 1.96 * se_pc_prop_rating,
+    q1_pc_prop_rating = quantile(pc_prop_rating, 0.25, na.rm = TRUE),
+    q3_pc_prop_rating = quantile(pc_prop_rating, 0.75, na.rm = TRUE),
     .groups = "drop"
   ) %>%
   mutate(
     mean_pc_prop_controversy = 1 - mean_pc_prop_rating / 100,
+    median_pc_prop_controversy = 1 - median_pc_prop_rating / 100,
     ci_low_controversy = 1 - pmin(ci_high, 100) / 100,
     ci_high_controversy = 1 - pmax(ci_low, 0) / 100,
+    q1_pc_prop_controversy = 1 - q3_pc_prop_rating / 100,
+    q3_pc_prop_controversy = 1 - q1_pc_prop_rating / 100,
     topic_label = dplyr::recode(
       as.character(topic),
       klimawandel = "Climate change (Klimawandel)",
@@ -140,7 +146,7 @@ topic_summary <- norm_dat %>%
     ),
     claim_wrapped = gsub("(.{1,45})(\\s|$)", "\\1\n", claim)
   ) %>%
-  arrange(mean_pc_prop_controversy) %>%
+  arrange(median_pc_prop_controversy) %>%
   mutate(
     topic = factor(topic, levels = topic),
     topic_label = factor(topic_label, levels = topic_label)
@@ -161,13 +167,46 @@ means_only <- topic_summary %>%
 readr::write_csv(topic_summary, OUT_SUMMARY)
 readr::write_csv(means_only, OUT_MEANS)
 
-# ── Plot: topic distributions + means ───────────────────────────────────────
-p_combined <- ggplot(
+# ── Plot: topic distributions + summaries ───────────────────────────────────
+p_base <- ggplot(
   norm_dat,
   aes(x = pc_prop_controversy, y = topic_label, fill = topic, colour = topic)
 ) +
   geom_violin(alpha = 0.20, linewidth = 0.4, width = 0.9, show.legend = FALSE) +
   geom_jitter(height = 0.10, width = 0, alpha = 0.22, size = 1.8, show.legend = FALSE) +
+  scale_x_continuous(limits = c(0, 1)) +
+  labs(
+    x = "Propositional controversy (higher -> more controversial)",
+    y = NULL
+  ) +
+  theme_model()
+
+p_distributions <- p_base +
+  geom_errorbar(
+    data = topic_summary,
+    aes(
+      x = median_pc_prop_controversy,
+      xmin = q1_pc_prop_controversy,
+      xmax = q3_pc_prop_controversy,
+      y = topic_label
+    ),
+    inherit.aes = FALSE,
+    width = 0.18,
+    linewidth = 0.7,
+    show.legend = FALSE
+  ) +
+  geom_point(
+    data = topic_summary,
+    aes(x = median_pc_prop_controversy, y = topic_label, fill = topic),
+    inherit.aes = FALSE,
+    shape = 21,
+    size = 3.5,
+    stroke = 0.5,
+    colour = "black",
+    show.legend = FALSE
+  )
+
+p_means <- p_base +
   geom_errorbar(
     data = topic_summary,
     aes(
@@ -190,16 +229,10 @@ p_combined <- ggplot(
     stroke = 0.5,
     colour = "black",
     show.legend = FALSE
-  ) +
-  scale_x_continuous(limits = c(0, 1)) +
-  labs(
-    x = "Propositional controversy (higher -> more controversial)",
-    y = NULL
-  ) +
-  theme_model()
+  )
 
-save_plot_both(p_combined, "norming_topic_distributions", width = 10, height = 6.5)
-save_plot_both(p_combined, "norming_topic_means", width = 10, height = 6.5)
+save_plot_both(p_distributions, "norming_topic_distributions", width = 10, height = 6.5)
+save_plot_both(p_means, "norming_topic_means", width = 10, height = 6.5)
 
 # ── Console output ───────────────────────────────────────────────────────────
 cat("\nNorming analysis complete.\n")
