@@ -56,6 +56,7 @@
               max="100"
               step="1"
               class="slider"
+              @input="sliderTouched[item.id] = true"
             />
             <span class="anchor anchor-right">vollständig<br />anerkannt</span>
           </div>
@@ -68,6 +69,7 @@
         <div class="btn-row">
           <button
             class="next-btn"
+            :disabled="!sliderTouched[item.id]"
             @click="recordAndAdvance(item, i)"
           >
             Weiter →
@@ -94,7 +96,8 @@ export default {
   data() {
     return {
       shuffledItems: [],
-      ratings: {},       // { [item.id]: 0–100 }
+      ratings: {},         // { [item.id]: 0–100 }
+      sliderTouched: {},   // { [item.id]: bool }
       trialStartTime: null
     };
   },
@@ -103,6 +106,7 @@ export default {
     // Initialise all sliders at 50 (neutral midpoint)
     this.shuffledItems.forEach((item) => {
       this.$set(this.ratings, item.id, 50);
+      this.$set(this.sliderTouched, item.id, false);
     });
     this.trialStartTime = Date.now();
   },
@@ -210,7 +214,12 @@ export default {
   transition: background 0.15s;
 }
 
-.next-btn:hover {
+.next-btn:hover:not(:disabled) {
   background: #3464a0;
+}
+
+.next-btn:disabled {
+  background: #bbb;
+  cursor: not-allowed;
 }
 </style>
