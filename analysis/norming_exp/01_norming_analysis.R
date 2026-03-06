@@ -124,6 +124,9 @@ topic_summary <- norm_dat %>%
     .groups = "drop"
   ) %>%
   mutate(
+    mean_pc_prop_controversy = 1 - mean_pc_prop_rating / 100,
+    ci_low_controversy = 1 - pmin(ci_high, 100) / 100,
+    ci_high_controversy = 1 - pmax(ci_low, 0) / 100,
     topic_label = dplyr::recode(
       as.character(topic),
       klimawandel = "Climate change (Klimawandel)",
@@ -137,7 +140,7 @@ topic_summary <- norm_dat %>%
     ),
     claim_wrapped = gsub("(.{1,45})(\\s|$)", "\\1\n", claim)
   ) %>%
-  arrange(mean_pc_prop_rating) %>%
+  arrange(mean_pc_prop_controversy) %>%
   mutate(
     topic = factor(topic, levels = topic),
     topic_label = factor(topic_label, levels = topic_label)
@@ -147,6 +150,7 @@ label_map <- setNames(as.character(topic_summary$topic_label), as.character(topi
 
 norm_dat <- norm_dat %>%
   mutate(
+    pc_prop_controversy = 1 - pc_prop_rating / 100,
     topic = factor(topic, levels = levels(topic_summary$topic)),
     topic_label = factor(label_map[as.character(topic)], levels = levels(topic_summary$topic_label))
   )
@@ -160,16 +164,16 @@ readr::write_csv(means_only, OUT_MEANS)
 # ── Plot: topic distributions + means ───────────────────────────────────────
 p_combined <- ggplot(
   norm_dat,
-  aes(x = pc_prop_rating, y = topic_label, fill = topic, colour = topic)
+  aes(x = pc_prop_controversy, y = topic_label, fill = topic, colour = topic)
 ) +
   geom_violin(alpha = 0.20, linewidth = 0.4, width = 0.9, show.legend = FALSE) +
   geom_jitter(height = 0.10, width = 0, alpha = 0.22, size = 1.8, show.legend = FALSE) +
   geom_errorbar(
     data = topic_summary,
     aes(
-      x = mean_pc_prop_rating,
-      xmin = pmax(ci_low, 0),
-      xmax = pmin(ci_high, 100),
+      x = mean_pc_prop_controversy,
+      xmin = ci_low_controversy,
+      xmax = ci_high_controversy,
       y = topic_label
     ),
     inherit.aes = FALSE,
@@ -179,7 +183,7 @@ p_combined <- ggplot(
   ) +
   geom_point(
     data = topic_summary,
-    aes(x = mean_pc_prop_rating, y = topic_label, fill = topic),
+    aes(x = mean_pc_prop_controversy, y = topic_label, fill = topic),
     inherit.aes = FALSE,
     shape = 21,
     size = 3.5,
@@ -187,9 +191,9 @@ p_combined <- ggplot(
     colour = "black",
     show.legend = FALSE
   ) +
-  scale_x_continuous(limits = c(0, 100)) +
+  scale_x_continuous(limits = c(0, 1)) +
   labs(
-    x = "Propositional controversy",
+    x = "Propositional controversy (higher -> more controversial)",
     y = NULL
   ) +
   theme_model()

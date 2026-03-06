@@ -1,26 +1,26 @@
-item_id,topic,claim,n,mean_pc_prop_rating,sd_pc_prop_rating,se_pc_prop_rating,ci_low,ci_high,topic_label,claim_wrapped
-2,ernaehrung,Eine überwiegend pflanzliche Ernährung fördert die Gesundheit.,102,44.529411764705884,22.005717475936823,2.178890709023771,40.25878597501929,48.800037554392475,Nutrition (Ernährung),"Eine überwiegend pflanzliche Ernährung
-fördert die Gesundheit.
-"
-1,klimawandel,Der Klimawandel wird durch menschliche Aktivitäten verursacht.,102,71.57843137254902,18.755031681035085,1.8570248537426577,67.9386626592134,75.21820008588463,Climate change (Klimawandel),"Der Klimawandel wird durch menschliche
-Aktivitäten verursacht.
-"
-8,lokalkauf,Der Einkauf bei lokalen Händlern stärkt die regionale Wirtschaft nachhaltig.,102,73.34313725490196,17.051172311278055,1.6883176368883868,70.03403468660072,76.6522398232032,Local shopping (Lokalkauf),"Der Einkauf bei lokalen Händlern stärkt die
-regionale Wirtschaft nachhaltig.
-"
-3,stadtverkehr,Ein ausgebautes Nahverkehrsnetz entlastet den Stadtverkehr erheblich.,102,73.83333333333333,20.715461931521197,2.0511363733122545,69.8131060416413,77.85356062502535,Urban transport (Stadtverkehr),"Ein ausgebautes Nahverkehrsnetz entlastet den
-Stadtverkehr erheblich.
-"
-4,digitalisierung,Digitale Kompetenzen sind in der heutigen Arbeitswelt unverzichtbar.,102,79.23529411764706,17.10664075245138,1.693809830962438,75.91542684896068,82.55516138633344,Digital skills (Digitalisierung),"Digitale Kompetenzen sind in der heutigen
-Arbeitswelt unverzichtbar.
-"
-5,schlaf,Ausreichend Schlaf ist entscheidend für die kognitive Leistungsfähigkeit.,102,84.54901960784314,16.239316336253776,1.6079319169962645,81.39747305053045,87.70056616515582,Sleep (Schlaf),"Ausreichend Schlaf ist entscheidend für die
-kognitive Leistungsfähigkeit.
-"
-6,plastik,Einwegplastik schadet den Meeresökosystemen erheblich.,102,84.63725490196079,16.140956586229333,1.5981928505148144,81.50479691495175,87.76971288896982,Plastic waste (Plastik),"Einwegplastik schadet den Meeresökosystemen
-erheblich.
-"
-7,sport,Regelmäßige körperliche Bewegung senkt das Risiko für Herz-Kreislauf-Erkrankungen deutlich.,102,87.13725490196079,15.72916771931378,1.557419677034656,84.08471233497286,90.18979746894871,Exercise (Sport),"Regelmäßige körperliche Bewegung senkt das
+item_id,topic,claim,n,mean_pc_prop_rating,sd_pc_prop_rating,se_pc_prop_rating,ci_low,ci_high,mean_pc_prop_controversy,ci_low_controversy,ci_high_controversy,topic_label,claim_wrapped
+7,sport,Regelmäßige körperliche Bewegung senkt das Risiko für Herz-Kreislauf-Erkrankungen deutlich.,102,87.13725490196079,15.72916771931378,1.557419677034656,84.08471233497286,90.18979746894871,0.12862745098039208,0.09810202531051293,0.15915287665027134,Exercise (Sport),"Regelmäßige körperliche Bewegung senkt das
 Risiko für Herz-Kreislauf-Erkrankungen
 deutlich.
+"
+6,plastik,Einwegplastik schadet den Meeresökosystemen erheblich.,102,84.63725490196079,16.140956586229333,1.5981928505148144,81.50479691495175,87.76971288896982,0.1536274509803921,0.1223028711103018,0.1849520308504825,Plastic waste (Plastik),"Einwegplastik schadet den Meeresökosystemen
+erheblich.
+"
+5,schlaf,Ausreichend Schlaf ist entscheidend für die kognitive Leistungsfähigkeit.,102,84.54901960784314,16.239316336253776,1.6079319169962645,81.39747305053045,87.70056616515582,0.15450980392156866,0.12299433834844176,0.18602526949469544,Sleep (Schlaf),"Ausreichend Schlaf ist entscheidend für die
+kognitive Leistungsfähigkeit.
+"
+4,digitalisierung,Digitale Kompetenzen sind in der heutigen Arbeitswelt unverzichtbar.,102,79.23529411764706,17.10664075245138,1.693809830962438,75.91542684896068,82.55516138633344,0.2076470588235294,0.17444838613666558,0.24084573151039324,Digital skills (Digitalisierung),"Digitale Kompetenzen sind in der heutigen
+Arbeitswelt unverzichtbar.
+"
+3,stadtverkehr,Ein ausgebautes Nahverkehrsnetz entlastet den Stadtverkehr erheblich.,102,73.83333333333333,20.715461931521197,2.0511363733122545,69.8131060416413,77.85356062502535,0.2616666666666667,0.22146439374974647,0.30186893958358696,Urban transport (Stadtverkehr),"Ein ausgebautes Nahverkehrsnetz entlastet den
+Stadtverkehr erheblich.
+"
+8,lokalkauf,Der Einkauf bei lokalen Händlern stärkt die regionale Wirtschaft nachhaltig.,102,73.34313725490196,17.051172311278055,1.6883176368883868,70.03403468660072,76.6522398232032,0.2665686274509804,0.23347760176796795,0.2996596531339928,Local shopping (Lokalkauf),"Der Einkauf bei lokalen Händlern stärkt die
+regionale Wirtschaft nachhaltig.
+"
+1,klimawandel,Der Klimawandel wird durch menschliche Aktivitäten verursacht.,102,71.57843137254902,18.755031681035085,1.8570248537426577,67.9386626592134,75.21820008588463,0.28421568627450977,0.24781799914115366,0.3206133734078659,Climate change (Klimawandel),"Der Klimawandel wird durch menschliche
+Aktivitäten verursacht.
+"
+2,ernaehrung,Eine überwiegend pflanzliche Ernährung fördert die Gesundheit.,102,44.529411764705884,22.005717475936823,2.178890709023771,40.25878597501929,48.800037554392475,0.5547058823529412,0.5119996244560753,0.597412140249807,Nutrition (Ernährung),"Eine überwiegend pflanzliche Ernährung
+fördert die Gesundheit.
 "
