@@ -15,8 +15,7 @@
         eines Schiebereglers.
       </p>
       <p>
-        Es gibt keine richtigen oder falschen Antworten – uns interessiert dein
-        persönlicher Eindruck. Bitte antworte spontan.
+        Es gibt keine richtigen oder falschen Antworten. Bitte antworte spontan.
       </p>
       <p>
         Die Teilnahme dauert etwa <strong>5 Minuten</strong>. Vielen Dank für deine Mitarbeit!

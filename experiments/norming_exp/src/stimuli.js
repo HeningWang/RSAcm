@@ -28,7 +28,7 @@ export const ITEMS = [
   {
     id: 3,
     topic: 'stadtverkehr',
-    claim: 'Ein ausgebautes Nahverkehrsnetz entlastet den Stadtverkehr deutlich.'
+    claim: 'Ein ausgebautes Nahverkehrsnetz entlastet den Stadtverkehr erheblich.'
   },
   {
     id: 4,
@@ -53,6 +53,6 @@ export const ITEMS = [
   {
     id: 8,
     topic: 'lokalkauf',
-    claim: 'Das Kaufen bei lokalen Händlern stärkt die regionale Wirtschaft nachhaltig.'
+    claim: 'Der Einkauf bei lokalen Händlern stärkt die regionale Wirtschaft nachhaltig.'
   },
 ];

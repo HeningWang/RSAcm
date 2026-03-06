@@ -96,7 +96,7 @@ const CRITICAL_ITEMS = [
     sentenceAfter:  'den Stadtverkehr erheblich.',
     q: 'häufiger auf öffentliche Verkehrsmittel umsteigen',
     contexts: [
-      'Dein/e Gesprächspartner/in spricht mit dir über Verkehrspolitik in eurer Stadt. In eurem gemeinsamen Umfeld sehen das die meisten ähnlich, dass ein ausgebautes Nahverkehrsnetz den Stadtverkehr deutlich entlastet.',
+      'Dein/e Gesprächspartner/in spricht mit dir über Verkehrspolitik in eurer Stadt. In eurem gemeinsamen Umfeld sehen das die meisten ähnlich, dass ein ausgebautes Nahverkehrsnetz den Stadtverkehr erheblich entlastet.',
 
       'Dein/e Gesprächspartner/in spricht mit dir über Verkehrspolitik in eurer Stadt. In eurem gemeinsamen Umfeld gehen die Meinungen dazu weit auseinander.',
     ],
@@ -162,11 +162,11 @@ const CRITICAL_ITEMS = [
   {
     id: 8,
     topic: 'lokalkauf',
-    sentenceBefore: 'Das Kaufen bei lokalen Händlern stärkt',
+    sentenceBefore: 'Der Einkauf bei lokalen Händlern stärkt',
     sentenceAfter:  'die regionale Wirtschaft nachhaltig.',
     q: 'öfter bei lokalen Geschäften einkaufen',
     contexts: [
-      'Dein/e Gesprächspartner/in spricht mit dir über Einkaufsgewohnheiten. In eurem gemeinsamen Umfeld teilen die meisten die Überzeugung, dass das Kaufen bei lokalen Händlern die regionale Wirtschaft nachhaltig stärkt.',
+      'Dein/e Gesprächspartner/in spricht mit dir über Einkaufsgewohnheiten. In eurem gemeinsamen Umfeld teilen die meisten die Überzeugung, dass der Einkauf bei lokalen Händlern die regionale Wirtschaft nachhaltig stärkt.',
 
       'Dein/e Gesprächspartner/in spricht mit dir über Einkaufsgewohnheiten. In eurem gemeinsamen Umfeld gehen die Meinungen dazu weit auseinander.',
     ],
@@ -228,8 +228,8 @@ export function getFillers() {
       context:
         'Dein/e Gesprächspartner/in spricht mit dir über Lesegewohnheiten. Du hast dich über Kopfschmerzen beim Lesen beklagt.',
       marker: randomFillerMarker(),
-      sentenceBefore: 'Gutes Licht beim Lesen schont',
-      sentenceAfter:  'die Augen.',
+      sentenceBefore: 'Beim Lesen schont',
+      sentenceAfter:  'gutes Licht die Augen.',
       q: 'dir eine bessere Leselampe anschaffen',
     },
     {
@@ -240,8 +240,8 @@ export function getFillers() {
       context:
         'Dein/e Gesprächspartner/in spricht mit dir über den Ernährungsalltag. Du hast erwähnt, dass dein Geld für Essen kaum reicht.',
       marker: randomFillerMarker(),
-      sentenceBefore: 'Frisch kochen spart',
-      sentenceAfter:  'auf Dauer Geld im Vergleich zu Fertiggerichten.',
+      sentenceBefore: 'Frisch Kochen spart',
+      sentenceAfter:  'im Vergleich zu Fertiggerichten Geld.',
       q: 'öfter selbst kochen',
     },
     {
@@ -289,7 +289,7 @@ export function getFillers() {
         'Dein/e Gesprächspartner/in spricht mit dir in eurem schlecht belüfteten Großraumbüro. Du hast erwähnt, dass du dich dort häufig unwohl fühlst.',
       marker: randomFillerMarker(),
       sentenceBefore: 'Regelmäßiges Lüften verbessert',
-      sentenceAfter:  'die Raumluftqualität merklich.',
+      sentenceAfter:  'die Luftqualität merklich.',
       q: 'dein Büro öfter lüften',
     },
     {

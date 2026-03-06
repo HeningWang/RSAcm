@@ -1,5 +1,5 @@
 <template>
-  <Experiment title="Konsensmarker-Studie">
+  <Experiment title="Konsensmarker-Produktionsstudie">
 
     <!-- ── 1. Instructions ─────────────────────────────────────────── -->
     <InstructionScreen :title="'Willkommen zur Studie!'">
@@ -13,11 +13,10 @@
         Dropdown-Menü den Ausdruck aus, den du in dieser Situation am natürlichsten finden würdest.
       </p>
       <p>
-        Es gibt keine richtigen oder falschen Antworten – uns interessiert dein persönliches
-        Sprachgefühl. Bitte antworte spontan und auf Deutsch.
+        Es gibt keine richtigen oder falschen Antworten. Bitte antworte spontan und auf Deutsch!
       </p>
       <p>
-        Die Teilnahme dauert etwa <strong>10–15 Minuten</strong>. Vielen Dank für deine Mitarbeit!
+        Die Teilnahme dauert etwa <strong>5–10 Minuten</strong>. Vielen Dank für deine Mitarbeit!
       </p>
     </InstructionScreen>
 

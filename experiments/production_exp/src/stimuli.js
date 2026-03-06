@@ -78,7 +78,7 @@ const CRITICAL_ITEMS = [
     sentenceAfter:  'den Stadtverkehr erheblich.',
     q: 'häufiger auf öffentliche Verkehrsmittel umsteigen',
     contexts: [
-      'Du sprichst mit einem/einer Gesprächspartner/in über Verkehrspolitik in eurer Stadt. In eurem gemeinsamen Umfeld sehen das die meisten ähnlich, dass ein ausgebautes Nahverkehrsnetz den Stadtverkehr deutlich entlastet.',
+      'Du sprichst mit einem/einer Gesprächspartner/in über Verkehrspolitik in eurer Stadt. In eurem gemeinsamen Umfeld sehen das die meisten ähnlich, dass ein ausgebautes Nahverkehrsnetz den Stadtverkehr erheblich entlastet.',
 
       'Du sprichst mit einem/einer Gesprächspartner/in über Verkehrspolitik in eurer Stadt. In eurem gemeinsamen Umfeld gehen die Meinungen dazu weit auseinander.',
     ],
@@ -144,11 +144,11 @@ const CRITICAL_ITEMS = [
   {
     id: 8,
     topic: 'lokalkauf',
-    sentenceBefore: 'Das Kaufen bei lokalen Händlern stärkt',
+    sentenceBefore: 'Der Einkauf bei lokalen Händlern stärkt',
     sentenceAfter:  'die regionale Wirtschaft nachhaltig.',
     q: 'öfter bei lokalen Geschäften einkaufen',
     contexts: [
-      'Du sprichst mit einem/einer Gesprächspartner/in über Einkaufsgewohnheiten. In eurem gemeinsamen Umfeld teilen die meisten die Überzeugung, dass das Kaufen bei lokalen Händlern die regionale Wirtschaft nachhaltig stärkt.',
+      'Du sprichst mit einem/einer Gesprächspartner/in über Einkaufsgewohnheiten. In eurem gemeinsamen Umfeld teilen die meisten die Überzeugung, dass der Einkauf bei lokalen Händlern die regionale Wirtschaft nachhaltig stärkt.',
 
       'Du sprichst mit einem/einer Gesprächspartner/in über Einkaufsgewohnheiten. In eurem gemeinsamen Umfeld gehen die Meinungen dazu weit auseinander.',
     ],
@@ -206,8 +206,8 @@ export const FILLERS = [
     context:
       'Du sprichst mit einem/einer Gesprächspartner/in, die sich über Kopfschmerzen beim Lesen beklagt. Ihr sitzt abends zusammen am Küchentisch.',
     goalInstruction: GOAL_HIGH,
-    sentenceBefore: 'Gutes Licht beim Lesen schont',
-    sentenceAfter:  'die Augen.',
+    sentenceBefore: 'Beim Lesen schont',
+    sentenceAfter:  'gutes Licht die Augen.',
     q: 'dir eine bessere Leselampe anschaffen',
   },
   {
@@ -218,8 +218,8 @@ export const FILLERS = [
     context:
       'Du sprichst mit einem/einer Gesprächspartner/in über den Ernährungsalltag. Dein Gegenüber klagt, dass das Geld für Essen kaum reicht.',
     goalInstruction: GOAL_LOW,
-    sentenceBefore: 'Frisch kochen spart',
-    sentenceAfter:  'auf Dauer Geld im Vergleich zu Fertiggerichten.',
+    sentenceBefore: 'Frisch Kochen spart',
+    sentenceAfter:  'im Vergleich zu Fertiggerichten Geld.',
     q: 'öfter selbst kochen',
   },
   {
@@ -267,7 +267,7 @@ export const FILLERS = [
       'Du sprichst mit einem/einer Gesprächspartner/in, die sich in eurem schlecht belüfteten Großraumbüro häufig unwohl fühlt. Es ist Mittag und alle sitzen eng beisammen.',
     goalInstruction: GOAL_LOW,
     sentenceBefore: 'Regelmäßiges Lüften verbessert',
-    sentenceAfter:  'die Raumluftqualität merklich.',
+    sentenceAfter:  'die Luftqualität merklich.',
     q: 'dein Büro öfter lüften',
   },
   {
