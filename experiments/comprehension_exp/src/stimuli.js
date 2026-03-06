@@ -151,11 +151,11 @@ const CRITICAL_ITEMS = [
     sentenceAfter:  'den Meeresökosystemen erheblich.',
     q: 'konsequent auf Einwegplastik verzichten',
     contexts: [
-      'Deine Freundin spricht mit dir über Umweltschutz. ' +
+      'Eine deiner Freunde spricht mit dir über Umweltschutz. ' +
       'In eurem Freundeskreis teilen die meisten die Überzeugung, ' +
       'dass Einwegplastik den Meeresökosystemen erheblich schadet.',
 
-      'Deine Freundin spricht mit dir über Umweltschutz. ' +
+      'Eine deiner Freunde spricht mit dir über Umweltschutz. ' +
       'In eurem Freundeskreis herrschen dazu sehr unterschiedliche Meinungen.',
     ],
   },
@@ -235,8 +235,8 @@ export function getFillers() {
       is_filler: true,
       pc_prag: null, g_implied: null, condition_index: null,
       context:
-        'Deine Freundin spricht mit dir über Reisemöglichkeiten in Deutschland. ' +
-        'Sie überlegt, wie man umweltfreundlich von München nach Hamburg kommen kann.',
+        'Eine deiner Freunde spricht mit dir über Reisemöglichkeiten in Deutschland. ' +
+        'Ihr überlegt, wie man umweltfreundlich von München nach Hamburg kommen kann.',
       marker: randomFillerMarker(),
       sentenceBefore: 'Der Zug ist',
       sentenceAfter:  'für Reisen innerhalb Deutschlands sehr praktisch.',
