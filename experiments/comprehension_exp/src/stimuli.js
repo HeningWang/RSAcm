@@ -20,8 +20,8 @@
 // each item × condition cell). The MARKER_ASSIGNMENT matrix below is a
 // placeholder and MUST be updated after the production model is fitted.
 //
-// Listener perspective: contexts describe overhearing a colleague speak,
-// rather than being the speaker oneself.
+// Listener perspective: contexts describe being directly addressed by
+// a colleague/friend, rather than being the speaker oneself.
 
 const CONDITIONS = [
   { pc_prag: 'low',  g_implied: 'low'  }, // 0
@@ -54,7 +54,7 @@ const MARKER_ASSIGNMENT = [
 ];
 
 // ── Critical items (IDs 1–8) ────────────────────────────────────────────────
-// Listener perspective: "Du hörst, wie deine Kollegin/dein Kollege ..."
+// Direct-address perspective: the speaker talks directly to the participant.
 // contexts[]: [pc_prag low, pc_prag high]
 
 const CRITICAL_ITEMS = [
@@ -66,11 +66,11 @@ const CRITICAL_ITEMS = [
     sentenceAfter:  'durch menschliche Aktivitäten verursacht.',
     q: 'auf Flugreisen verzichten',
     contexts: [
-      'Du hörst, wie dein Kollege mit einem anderen Kollegen über den Klimawandel spricht. ' +
+      'Dein Kollege spricht mit dir über den Klimawandel. ' +
       'In eurem Kollegenkreis teilen die meisten die Ansicht, ' +
       'dass der Klimawandel durch menschliche Aktivitäten verursacht wird.',
 
-      'Du hörst, wie dein Kollege mit einem anderen Kollegen über den Klimawandel spricht. ' +
+      'Dein Kollege spricht mit dir über den Klimawandel. ' +
       'In eurem Kollegenkreis gehen die Meinungen dazu allerdings stark auseinander.',
     ],
   },
@@ -83,11 +83,11 @@ const CRITICAL_ITEMS = [
     sentenceAfter:  'die Gesundheit.',
     q: 'mehr pflanzliche Lebensmittel in deinen Alltag einbauen',
     contexts: [
-      'Du hörst, wie deine Kollegin mit einer Freundin über Ernährungsgewohnheiten spricht. ' +
+      'Deine Kollegin spricht mit dir über Ernährungsgewohnheiten. ' +
       'In eurem Freundeskreis teilen die meisten die Überzeugung, ' +
       'dass eine überwiegend pflanzliche Ernährung die Gesundheit fördert.',
 
-      'Du hörst, wie deine Kollegin mit einer Freundin über Ernährungsgewohnheiten spricht. ' +
+      'Deine Kollegin spricht mit dir über Ernährungsgewohnheiten. ' +
       'In eurem Freundeskreis herrschen dazu sehr unterschiedliche Meinungen.',
     ],
   },
@@ -100,11 +100,11 @@ const CRITICAL_ITEMS = [
     sentenceAfter:  'den Stadtverkehr deutlich.',
     q: 'häufiger auf öffentliche Verkehrsmittel umsteigen',
     contexts: [
-      'Du hörst, wie dein Nachbar mit einem anderen Nachbarn über Verkehrspolitik in eurer Stadt spricht. ' +
+      'Dein Nachbar spricht mit dir über Verkehrspolitik in eurer Stadt. ' +
       'In eurer Nachbarschaft sehen das die meisten ähnlich, ' +
       'dass ein ausgebautes Nahverkehrsnetz den Stadtverkehr deutlich entlastet.',
 
-      'Du hörst, wie dein Nachbar mit einem anderen Nachbarn über Verkehrspolitik in eurer Stadt spricht. ' +
+      'Dein Nachbar spricht mit dir über Verkehrspolitik in eurer Stadt. ' +
       'In eurer Nachbarschaft gehen die Meinungen dazu weit auseinander.',
     ],
   },
@@ -117,11 +117,11 @@ const CRITICAL_ITEMS = [
     sentenceAfter:  'in der heutigen Arbeitswelt unverzichtbar.',
     q: 'regelmäßig digitale Weiterbildungsangebote nutzen',
     contexts: [
-      'Du hörst, wie deine Kollegin mit einer anderen Kollegin über Berufsausbildung und Weiterbildung spricht. ' +
+      'Deine Kollegin spricht mit dir über Berufsausbildung und Weiterbildung. ' +
       'In eurem Team teilen die meisten die Ansicht, ' +
       'dass digitale Kompetenzen in der heutigen Arbeitswelt unverzichtbar sind.',
 
-      'Du hörst, wie deine Kollegin mit einer anderen Kollegin über Berufsausbildung und Weiterbildung spricht. ' +
+      'Deine Kollegin spricht mit dir über Berufsausbildung und Weiterbildung. ' +
       'In eurem Team gehen die Meinungen dazu stark auseinander.',
     ],
   },
@@ -134,11 +134,11 @@ const CRITICAL_ITEMS = [
     sentenceAfter:  'entscheidend für die kognitive Leistungsfähigkeit.',
     q: 'auf feste Schlafzeiten achten',
     contexts: [
-      'Du hörst, wie dein Bekannter mit einem anderen Bekannten über Gesundheit und Wohlbefinden spricht. ' +
+      'Dein Bekannter spricht mit dir über Gesundheit und Wohlbefinden. ' +
       'In deinem Bekanntenkreis teilen die meisten die Ansicht, ' +
       'dass ausreichend Schlaf entscheidend für die kognitive Leistungsfähigkeit ist.',
 
-      'Du hörst, wie dein Bekannter mit einem anderen Bekannten über Gesundheit und Wohlbefinden spricht. ' +
+      'Dein Bekannter spricht mit dir über Gesundheit und Wohlbefinden. ' +
       'In deinem Bekanntenkreis gehen die Meinungen dazu stark auseinander.',
     ],
   },
@@ -151,11 +151,11 @@ const CRITICAL_ITEMS = [
     sentenceAfter:  'den Meeresökosystemen erheblich.',
     q: 'konsequent auf Einwegplastik verzichten',
     contexts: [
-      'Du hörst, wie deine Freundin mit einer anderen Freundin über Umweltschutz spricht. ' +
+      'Deine Freundin spricht mit dir über Umweltschutz. ' +
       'In eurem Freundeskreis teilen die meisten die Überzeugung, ' +
       'dass Einwegplastik den Meeresökosystemen erheblich schadet.',
 
-      'Du hörst, wie deine Freundin mit einer anderen Freundin über Umweltschutz spricht. ' +
+      'Deine Freundin spricht mit dir über Umweltschutz. ' +
       'In eurem Freundeskreis herrschen dazu sehr unterschiedliche Meinungen.',
     ],
   },
@@ -168,11 +168,11 @@ const CRITICAL_ITEMS = [
     sentenceAfter:  'das Risiko für Herz-Kreislauf-Erkrankungen deutlich.',
     q: 'regelmäßig Sport in deinen Alltag integrieren',
     contexts: [
-      'Du hörst, wie dein Kollege mit einem Arbeitskollegen über gesunden Lebensstil spricht. ' +
+      'Dein Kollege spricht mit dir über gesunden Lebensstil. ' +
       'In eurem Kollegenkreis teilen die meisten die Ansicht, ' +
       'dass regelmäßige körperliche Bewegung das Risiko für Herz-Kreislauf-Erkrankungen deutlich senkt.',
 
-      'Du hörst, wie dein Kollege mit einem Arbeitskollegen über gesunden Lebensstil spricht. ' +
+      'Dein Kollege spricht mit dir über gesunden Lebensstil. ' +
       'In eurem Kollegenkreis gehen die Meinungen dazu stark auseinander.',
     ],
   },
@@ -185,11 +185,11 @@ const CRITICAL_ITEMS = [
     sentenceAfter:  'die regionale Wirtschaft nachhaltig.',
     q: 'öfter bei lokalen Geschäften einkaufen',
     contexts: [
-      'Du hörst, wie dein Nachbar mit einem anderen Nachbarn über Einkaufsgewohnheiten spricht. ' +
+      'Dein Nachbar spricht mit dir über Einkaufsgewohnheiten. ' +
       'In eurer Nachbarschaft teilen die meisten die Überzeugung, ' +
       'dass das Kaufen bei lokalen Händlern die regionale Wirtschaft nachhaltig stärkt.',
 
-      'Du hörst, wie dein Nachbar mit einem anderen Nachbarn über Einkaufsgewohnheiten spricht. ' +
+      'Dein Nachbar spricht mit dir über Einkaufsgewohnheiten. ' +
       'In eurer Nachbarschaft gehen die Meinungen dazu weit auseinander.',
     ],
   },
@@ -220,7 +220,7 @@ export function getCriticalTrials(listNum) {
 }
 
 // ── Filler items (IDs 101–108) ───────────────────────────────────────────────
-// Listener perspective. Randomly assigned marker (no condition structure).
+// Direct-address perspective. Randomly assigned marker (no condition structure).
 const FILLER_MARKERS = ['soviel ich weiß', 'ja', 'bekanntlich'];
 
 function randomFillerMarker() {
@@ -235,8 +235,8 @@ export function getFillers() {
       is_filler: true,
       pc_prag: null, g_implied: null, condition_index: null,
       context:
-        'Du hörst, wie deine Freundin mit einer anderen Freundin über Reisemöglichkeiten in Deutschland spricht. ' +
-        'Sie überlegt, wie sie umweltfreundlich von München nach Hamburg kommen kann.',
+        'Deine Freundin spricht mit dir über Reisemöglichkeiten in Deutschland. ' +
+        'Sie überlegt, wie man umweltfreundlich von München nach Hamburg kommen kann.',
       marker: randomFillerMarker(),
       sentenceBefore: 'Der Zug ist',
       sentenceAfter:  'für Reisen innerhalb Deutschlands sehr praktisch.',
@@ -248,8 +248,8 @@ export function getFillers() {
       is_filler: true,
       pc_prag: null, g_implied: null, condition_index: null,
       context:
-        'Du hörst, wie deine Kollegin mit ihrer jüngeren Schwester spricht, ' +
-        'die sich über Kopfschmerzen beim Lesen beklagt.',
+        'Deine Kollegin spricht mit dir über Lesegewohnheiten. ' +
+        'Du hast dich über Kopfschmerzen beim Lesen beklagt.',
       marker: randomFillerMarker(),
       sentenceBefore: 'Gutes Licht beim Lesen schont',
       sentenceAfter:  'die Augen.',
@@ -261,8 +261,8 @@ export function getFillers() {
       is_filler: true,
       pc_prag: null, g_implied: null, condition_index: null,
       context:
-        'Du hörst, wie dein Kollege mit einem Studienfreund über seinen Ernährungsalltag spricht. ' +
-        'Der Freund klagt, dass sein Geld für Essen kaum reicht.',
+        'Dein Kollege spricht mit dir über den Ernährungsalltag. ' +
+        'Du hast erwähnt, dass dein Geld für Essen kaum reicht.',
       marker: randomFillerMarker(),
       sentenceBefore: 'Frisch kochen spart',
       sentenceAfter:  'auf Dauer Geld im Vergleich zu Fertiggerichten.',
@@ -274,8 +274,8 @@ export function getFillers() {
       is_filler: true,
       pc_prag: null, g_implied: null, condition_index: null,
       context:
-        'Du hörst, wie deine Kollegin mit einer anderen Kollegin spricht, ' +
-        'die morgens immer sehr müde ist. Ihr seid alle an der Kaffeemaschine im Büro.',
+        'Deine Kollegin spricht mit dir an der Kaffeemaschine im Büro. ' +
+        'Du hast erzählt, dass du morgens immer sehr müde bist.',
       marker: randomFillerMarker(),
       sentenceBefore: 'Ein Kaffee am Morgen hilft',
       sentenceAfter:  'vielen Menschen, wach zu werden.',
@@ -287,8 +287,8 @@ export function getFillers() {
       is_filler: true,
       pc_prag: null, g_implied: null, condition_index: null,
       context:
-        'Du hörst, wie dein Freund mit einem anderen Freund spricht, ' +
-        'der seit Monaten ohne Urlaub durcharbeitet und erschöpft wirkt.',
+        'Dein Freund spricht mit dir über Arbeit und Erholung. ' +
+        'Du arbeitest seit Monaten ohne Urlaub durch und bist erschöpft.',
       marker: randomFillerMarker(),
       sentenceBefore: 'Regelmäßige Auszeiten tun',
       sentenceAfter:  'der mentalen Gesundheit gut.',
@@ -300,8 +300,8 @@ export function getFillers() {
       is_filler: true,
       pc_prag: null, g_implied: null, condition_index: null,
       context:
-        'Du hörst, wie dein Mitbewohner mit einem anderen Mitbewohner spricht, ' +
-        'der sich nachmittags immer schlapp und unkonzentriert fühlt.',
+        'Dein Mitbewohner spricht mit dir. ' +
+        'Du hast erwähnt, dass du dich nachmittags immer schlapp und unkonzentriert fühlst.',
       marker: randomFillerMarker(),
       sentenceBefore: 'Genügend Wasser zu trinken verbessert',
       sentenceAfter:  'die Konzentrationsfähigkeit.',
@@ -313,8 +313,8 @@ export function getFillers() {
       is_filler: true,
       pc_prag: null, g_implied: null, condition_index: null,
       context:
-        'Du hörst, wie dein Kollege mit einer Kollegin spricht, die sich ' +
-        'in eurem schlecht belüfteten Großraumbüro häufig unwohl fühlt.',
+        'Dein Kollege spricht mit dir in eurem schlecht belüfteten Großraumbüro. ' +
+        'Du hast erwähnt, dass du dich dort häufig unwohl fühlst.',
       marker: randomFillerMarker(),
       sentenceBefore: 'Regelmäßiges Lüften verbessert',
       sentenceAfter:  'die Raumluftqualität merklich.',
@@ -326,8 +326,8 @@ export function getFillers() {
       is_filler: true,
       pc_prag: null, g_implied: null, condition_index: null,
       context:
-        'Du hörst, wie deine Kollegin mit ihrer jüngeren Nichte spricht, ' +
-        'die ständig mit voller Lautstärke Musik über Kopfhörer hört.',
+        'Deine Kollegin spricht mit dir über Hörgewohnheiten. ' +
+        'Du hörst ständig mit voller Lautstärke Musik über Kopfhörer.',
       marker: randomFillerMarker(),
       sentenceBefore: 'Laute Musik in Kopfhörern schädigt',
       sentenceAfter:  'auf Dauer das Gehör.',

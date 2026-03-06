@@ -9,7 +9,7 @@
       </p>
       <p>
         Du wirst in <strong>{{ shuffledTrials.length }} kurze Alltagssituationen</strong>
-        versetzt, in denen du mithörst, wie jemand eine Aussage macht und daraus
+        versetzt, in denen jemand dir gegenüber eine Aussage macht und daraus
         eine Handlungsempfehlung ableitet. Bitte lies jede Situation
         sorgfältig durch und beantworte anschließend zwei kurze Fragen mithilfe
         eines Schiebereglers.
@@ -38,7 +38,7 @@
         </div>
 
         <div class="utterance-box">
-          <p class="speaker-label">Die Sprecherin sagt:</p>
+          <p class="speaker-label">Sie/Er sagt zu dir:</p>
           <p class="utterance-text">
             „{{ trial.sentenceBefore }}
             <strong>{{ trial.marker }}</strong>
