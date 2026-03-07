@@ -17,6 +17,8 @@ from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 CSV_PATH = SCRIPT_DIR / "items.csv"
+COMP_BALANCED_ASSIGNMENT_PATH = SCRIPT_DIR / "comprehension_marker_assignment_balanced.csv"
+COMP_ASSIGNMENT_PATH = SCRIPT_DIR / "comprehension_marker_assignment.csv"
 EXP_ROOT = SCRIPT_DIR.parent
 
 
@@ -32,6 +34,29 @@ def load_items():
 def js_string(s):
     """Escape a string for JS single-quoted literal."""
     return s.replace("\\", "\\\\").replace("'", "\\'")
+
+
+def load_comprehension_assignment(critical):
+    default_row = ['soviel ich weiß', 'bekanntlich', 'soviel ich weiß', 'ja']
+    assignment = {int(row['item_id']): list(default_row) for row in critical}
+
+    assignment_path = None
+    if COMP_BALANCED_ASSIGNMENT_PATH.exists():
+        assignment_path = COMP_BALANCED_ASSIGNMENT_PATH
+    elif COMP_ASSIGNMENT_PATH.exists():
+        assignment_path = COMP_ASSIGNMENT_PATH
+
+    if assignment_path is None:
+        return assignment, False
+
+    with open(assignment_path, newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            item_id = int(row['item_id'])
+            condition_index = int(row['condition_index'])
+            assignment[item_id][condition_index] = row['modal_marker']
+
+    return assignment, assignment_path.name
 
 
 # ── Norming ──────────────────────────────────────────────────────────────────
@@ -201,6 +226,7 @@ def generate_production(critical, fillers):
 # ── Comprehension ────────────────────────────────────────────────────────────
 
 def generate_comprehension(critical, fillers):
+    marker_assignment, assignment_source = load_comprehension_assignment(critical)
     lines = [
         "// comprehension_exp/src/stimuli.js",
         "//",
@@ -238,20 +264,18 @@ def generate_comprehension(critical, fillers):
         "];",
         "",
         "// ── Marker assignment matrix (8 items x 4 conditions) ──────────────────────",
-        "// PLACEHOLDER: Replace with production model results before data collection.",
+        f"// Source: {assignment_source if assignment_source else 'placeholder defaults'}.",
         "// Each entry is one of: 'soviel ich weiß', 'ja', 'bekanntlich'",
         "//",
         "// markerAssignment[itemIndex][conditionIndex] -> marker string",
         "//",
-        "// Current values are illustrative defaults based on theoretical predictions:",
-        "//   low pc_prag + low g  -> 'soviel ich weiß' (weakest)",
-        "//   low pc_prag + high g -> 'bekanntlich' (strongest)",
-        "//   high pc_prag + low g -> 'soviel ich weiß' (weakest)",
-        "//   high pc_prag + high g -> 'ja' (middle; attenuated by controversy)",
+        f"export const MARKER_ASSIGNMENT_SOURCE = '{js_string(assignment_source if assignment_source else 'placeholder defaults')}';",
+        "",
         "const MARKER_ASSIGNMENT = [",
     ]
     for row in critical:
-        lines.append(f"  ['soviel ich weiß', 'bekanntlich', 'soviel ich weiß', 'ja'], // {row['item_id']}: {row['topic']}")
+        values = ", ".join(f"'{js_string(m)}'" for m in marker_assignment[int(row['item_id'])])
+        lines.append(f"  [{values}], // {row['item_id']}: {row['topic']}")
     lines.append("];")
     lines.append("")
 
@@ -295,11 +319,13 @@ def generate_comprehension(critical, fillers):
     lines.append("      id: item.id,")
     lines.append("      topic: item.topic,")
     lines.append("      is_filler: false,")
+    lines.append("      trial_type: 'critical',")
     lines.append("      pc_prag: cond.pc_prag,")
     lines.append("      g_implied: cond.g_implied,")
     lines.append("      condition_index: conditionIndex,")
     lines.append("      context: item.contexts[contextIndex],")
     lines.append("      marker,")
+    lines.append("      marker_assignment_source: MARKER_ASSIGNMENT_SOURCE,")
     lines.append("      sentenceBefore: item.sentenceBefore,")
     lines.append("      sentenceAfter: item.sentenceAfter,")
     lines.append("      q: item.q,")
@@ -325,10 +351,12 @@ def generate_comprehension(critical, fillers):
         lines.append(f"      id: {row['item_id']},")
         lines.append(f"      topic: '{row['topic']}',")
         lines.append("      is_filler: true,")
+        lines.append("      trial_type: 'filler',")
         lines.append("      pc_prag: null, g_implied: null, condition_index: null,")
         lines.append("      context:")
         lines.append(f"        '{ctx}',")
         lines.append("      marker: randomFillerMarker(),")
+        lines.append("      marker_assignment_source: 'random_filler',")
         lines.append(f"      sentenceBefore: '{js_string(row['sentence_before'])}',")
         lines.append(f"      sentenceAfter:  '{js_string(row['sentence_after'])}',")
         lines.append(f"      q: '{js_string(row['q'])}',")

@@ -22,7 +22,7 @@
 //
 // Parameters:
 //   mu[2]          : ordered thresholds  μ_1 < μ_2
-//   beta_pc_prop   : effect of perceived consensus (centred norming rating, expected > 0)
+//   beta_pc_prop   : effect of propositional controversy  (expected < 0)
 //   beta_pc_prag   : effect of pragmatic controversy      (expected < 0)
 //   beta_g         : effect of persuasive-goal strength   (expected > 0)
 //   cost_ja        : markedness / sufficiency cost for ja
@@ -36,7 +36,7 @@ data {
   int<lower=1> N;                        // number of critical trials
   int<lower=1> N_subj;                   // number of participants
   array[N] int<lower=1, upper=3> y;      // marker choice (1 = soviel ich weiß … 3 = bekanntlich)
-  vector[N] pc_prop;                     // centred norming rating (SD ≈ 1); higher = more consensus
+  vector[N] pc_prop;                     // centred propositional controversy (SD ≈ 1); higher = more controversy
   vector[N] pc_prag;                     // 0 (low) or 1 (high)
   vector[N] g;                           // 0 (low) or 1 (high)
   array[N] int<lower=1, upper=N_subj> subj; // participant index
@@ -60,7 +60,7 @@ transformed parameters {
 model {
   // -- Priors --
   mu           ~ normal(0, 2);           // weakly informative; ordered by constraint
-  beta_pc_prop ~ normal( 1, 1);          // expected positive (more consensus → stronger marker)
+  beta_pc_prop ~ normal(-1, 1);          // expected negative (more controversy → weaker marker)
   beta_pc_prag ~ normal(-1, 1);
   beta_g       ~ normal( 1, 1);          // expected positive
   cost_ja      ~ exponential(1.5);

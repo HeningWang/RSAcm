@@ -75,15 +75,24 @@ theme_model <- function() {
     )
 }
 
+as_logical_flag <- function(x) {
+  tolower(trimws(as.character(x))) %in% c("true", "t", "1")
+}
+
 # ── Load data ──────────────────────────────────────────────────────────────────
 dat <- read.csv("data/dummy_data.csv", stringsAsFactors = FALSE)
+dat <- dat |>
+  mutate(
+    is_filler = as_logical_flag(is_filler),
+    is_training = as_logical_flag(is_training)
+  )
 
-# Load norming means and compute centred predictor (mean = 0, SD ≈ 1)
+# Load norming means and compute centred controversy predictor (mean = 0, SD ≈ 1)
 norming <- read.csv("data/norming_means.csv", stringsAsFactors = FALSE) |>
-  mutate(pc_prop_c = as.numeric(scale(mean_pc_prop_rating)))
+  mutate(pc_prop_c = as.numeric(scale(-mean_pc_prop_rating)))
 
 crit <- dat |>
-  filter(!is_filler) |>
+  filter(!is_filler, !is_training) |>
   left_join(norming |> select(topic, pc_prop_c), by = "topic") |>
   mutate(
     y         = match(selected_marker, MARKERS_ORDERED),   # 1–3
@@ -98,7 +107,7 @@ stan_data <- list(
   N       = nrow(crit),
   N_subj  = length(unique(crit$subj)),
   y       = crit$y,
-  pc_prop = crit$pc_prop_c,    # continuous centred norming rating
+  pc_prop = crit$pc_prop_c,    # continuous centred controversy rating
   pc_prag = crit$pc_prag_n,
   g       = crit$g_n,
   subj    = crit$subj
@@ -122,7 +131,9 @@ if (file.exists(cache_path)) {
       iter_warmup     = 1000,
       iter_sampling   = 2000,
       seed            = 123,
-      refresh         = 500
+      refresh         = 500,
+      adapt_delta     = 0.99,
+      max_treedepth   = 12
     )
   } else {
     fit <- stan(
@@ -132,7 +143,8 @@ if (file.exists(cache_path)) {
       iter    = 3000,
       warmup  = 1000,
       seed    = 123,
-      refresh = 500
+      refresh = 500,
+      control = list(adapt_delta = 0.99, max_treedepth = 12)
     )
   }
 

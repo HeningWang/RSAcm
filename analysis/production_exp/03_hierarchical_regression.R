@@ -74,21 +74,30 @@ theme_model <- function() {
     )
 }
 
+as_logical_flag <- function(x) {
+  tolower(trimws(as.character(x))) %in% c("true", "t", "1")
+}
+
 # ── Load data ──────────────────────────────────────────────────────────────────
 dat <- read.csv("data/dummy_data.csv", stringsAsFactors = FALSE)
+dat <- dat |>
+  mutate(
+    is_filler = as_logical_flag(is_filler),
+    is_training = as_logical_flag(is_training)
+  )
 
-# Load norming means and compute centred predictor (mean = 0, SD ≈ 1)
+# Load norming means and compute centred controversy predictor (mean = 0, SD ≈ 1)
 norming <- read.csv("data/norming_means.csv", stringsAsFactors = FALSE) |>
-  mutate(pc_prop_c = as.numeric(scale(mean_pc_prop_rating)))
+  mutate(pc_prop_c = as.numeric(scale(-mean_pc_prop_rating)))
 
 crit <- dat |>
-  filter(!is_filler) |>
+  filter(!is_filler, !is_training) |>
   left_join(norming |> select(topic, pc_prop_c), by = "topic") |>
   mutate(
     marker    = ordered(selected_marker, levels = MARKERS_ORDERED),
     pc_prag   = factor(pc_prag, levels = c("low", "high")),
     g         = factor(g,       levels = c("low", "high")),
-    # pc_prop_c: centred norming rating (already computed above)
+    # pc_prop_c: centred propositional controversy (already computed above)
     pc_prag_c = ifelse(pc_prag == "high",  0.5, -0.5),
     g_c       = ifelse(g       == "high",  0.5, -0.5)
   )

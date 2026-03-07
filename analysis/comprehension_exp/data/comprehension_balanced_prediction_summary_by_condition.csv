@@ -1,0 +1,13 @@
+"pc_prag","g_implied","selected_marker","n","total_cells","prop","mean_selected_prob"
+"low","low","soviel ich weiß",5,8,0.625,0.292
+"low","low","ja",3,8,0.375,0.348
+"low","low","bekanntlich",0,8,0,NA
+"low","high","soviel ich weiß",0,8,0,NA
+"low","high","ja",0,8,0,NA
+"low","high","bekanntlich",8,8,1,0.535
+"high","low","soviel ich weiß",3,8,0.375,0.282
+"high","low","ja",5,8,0.625,0.345
+"high","low","bekanntlich",0,8,0,NA
+"high","high","soviel ich weiß",2,8,0.25,0.309
+"high","high","ja",3,8,0.375,0.345
+"high","high","bekanntlich",3,8,0.375,0.509

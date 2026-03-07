@@ -15,6 +15,11 @@
         eines Schiebereglers.
       </p>
       <p>
+        Bevor die eigentliche Studie beginnt, bearbeitest du eine
+        <strong>kurze Übungsaufgabe</strong>, damit du dich mit dem Ablauf
+        vertraut machen kannst.
+      </p>
+      <p>
         Es gibt keine richtigen oder falschen Antworten. Bitte antworte spontan.
       </p>
       <p>
@@ -22,7 +27,112 @@
       </p>
     </InstructionScreen>
 
-    <!-- ── 2. Trial Screens (one per stimulus) ────────────────────── -->
+    <!-- ── 2. Training trial ──────────────────────────────────────── -->
+    <Screen>
+      <Slide>
+        <div class="trial-header">
+          Übung
+        </div>
+
+        <p class="training-note">
+          Lies zuerst den Hintergrundtext. Beurteile dann mit den beiden
+          Schiebereglern, wie du die Äußerung der Sprecherin verstehst.
+        </p>
+
+        <div class="context-box">
+          <p class="context-text">{{ trainingTrial.context }}</p>
+        </div>
+
+        <div class="utterance-box">
+          <p class="speaker-label">Sie/Er sagt zu dir:</p>
+          <p class="utterance-text">
+            „{{ trainingTrial.sentenceBefore }}
+            <strong>{{ trainingTrial.marker }}</strong>
+            {{ trainingTrial.sentenceAfter }}
+            Deshalb solltest du {{ trainingTrial.q }}."
+          </p>
+        </div>
+
+        <div class="rating-section">
+          <p class="rating-question">
+            Wie stark hast du den Eindruck, dass die Sprecherin möchte, dass du
+            ihre Empfehlung befolgst?
+          </p>
+          <div class="slider-wrap">
+            <span class="anchor anchor-left">überhaupt<br />nicht</span>
+            <input
+              v-model.number="trainingRatingGoal"
+              type="range"
+              min="0"
+              max="100"
+              step="1"
+              class="slider"
+              @input="trainingTouchedGoal = true"
+            />
+            <span class="anchor anchor-right">sehr<br />stark</span>
+          </div>
+        </div>
+
+        <div class="rating-section">
+          <p class="rating-question">
+            Wie wahrscheinlich ist es, dass du die empfohlene Handlung dann
+            auch tatsächlich umsetzt?
+          </p>
+          <div class="slider-wrap">
+            <span class="anchor anchor-left">sehr<br />unwahrscheinlich</span>
+            <input
+              v-model.number="trainingRatingAdopt"
+              type="range"
+              min="0"
+              max="100"
+              step="1"
+              class="slider"
+              @input="trainingTouchedAdopt = true"
+            />
+            <span class="anchor anchor-right">sehr<br />wahrscheinlich</span>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button
+            class="next-btn"
+            :disabled="!trainingReady"
+            @click="recordTrainingAndAdvance"
+          >
+            Weiter →
+          </button>
+        </div>
+      </Slide>
+    </Screen>
+
+    <!-- ── 3. Transition screen ───────────────────────────────────── -->
+    <Screen>
+      <Slide>
+        <div class="transition-screen">
+          <h2 class="transition-title">
+            Die Übung ist abgeschlossen.
+          </h2>
+          <p class="transition-text">
+            Als Nächstes beginnen die eigentlichen Versuchsdurchgänge.
+          </p>
+          <p class="transition-text">
+            Lies bitte weiterhin jeweils zuerst den Hintergrundtext und bewerte
+            dann die Äußerung mit beiden Schiebereglern.
+          </p>
+
+          <div class="btn-row transition-btn-row">
+            <button
+              class="next-btn"
+              @click="startMainTrials"
+            >
+              Studie starten →
+            </button>
+          </div>
+        </div>
+      </Slide>
+    </Screen>
+
+    <!-- ── 4. Trial Screens (one per stimulus) ────────────────────── -->
     <Screen
       v-for="(trial, i) in shuffledTrials"
       :key="trial.id"
@@ -100,10 +210,10 @@
       </Slide>
     </Screen>
 
-    <!-- ── 3. Post-test ────────────────────────────────────────────── -->
+    <!-- ── 5. Post-test ────────────────────────────────────────────── -->
     <PostTestScreen :gender="false" />
 
-    <!-- ── 4. Submit ──────────────────────────────────────────────── -->
+    <!-- ── 6. Submit ──────────────────────────────────────────────── -->
     <SubmitResultsScreen />
 
   </Experiment>
@@ -124,10 +234,34 @@ function resolveListNum() {
 
 export default {
   name: 'App',
+  computed: {
+    trainingReady() {
+      return this.trainingTouchedGoal && this.trainingTouchedAdopt;
+    },
+  },
   data() {
     return {
       listNum: null,
       shuffledTrials: [],
+      trainingTrial: {
+        id: 'training',
+        topic: 'training',
+        trial_type: 'training',
+        is_filler: false,
+        pc_prag: 'low',
+        g_implied: 'high',
+        condition_index: null,
+        marker: 'ja',
+        marker_assignment_source: 'manual_training',
+        context: 'Stell dir vor, ein Freund spricht mit dir über den Arbeitsalltag. In eurem Umfeld sehen die meisten das ähnlich: regelmäßige Pausen helfen dabei, sich besser zu konzentrieren.',
+        sentenceBefore: 'Regelmäßige Pausen helfen',
+        sentenceAfter: 'im Arbeitsalltag, konzentriert zu bleiben.',
+        q: 'heute bewusst kurze Pausen einplanen',
+      },
+      trainingRatingGoal: 50,
+      trainingRatingAdopt: 50,
+      trainingTouchedGoal: false,
+      trainingTouchedAdopt: false,
       ratings_g: {},          // { [trial.id]: 0–100 }
       ratings_adopt: {},      // { [trial.id]: 0–100 }
       sliderTouched_g: {},    // { [trial.id]: bool }
@@ -156,21 +290,93 @@ export default {
     bothSlidersTouched(trialId) {
       return this.sliderTouched_g[trialId] && this.sliderTouched_adopt[trialId];
     },
+    trialKey(trial) {
+      const condition = trial.condition_index === null || trial.condition_index === undefined
+        ? 'filler'
+        : `c${trial.condition_index}`;
+      return `${trial.trial_type}-${trial.id}-${condition}-list${this.listNum}`;
+    },
     recordAndAdvance(trial, index) {
       const rt = Date.now() - this.trialStartTime;
+      const ratingGoal = this.ratings_g[trial.id];
+      const ratingAdopt = this.ratings_adopt[trial.id];
       this.$magpie.addTrialData({
         trial_index: index + 1,
+        display_order: index + 1,
+        list_num: this.listNum,
+        trial_key: this.trialKey(trial),
+        trial_type: trial.trial_type,
+        is_training: false,
+        is_critical: !trial.is_filler,
         trial_id: trial.id,
+        item_id: trial.id,
         topic: trial.topic,
         is_filler: trial.is_filler,
         condition_index: trial.condition_index,
         pc_prag: trial.pc_prag,
         g_implied: trial.g_implied,
+        pc_prag_analysis: trial.pc_prag === null ? 'filler' : trial.pc_prag,
+        g_implied_analysis: trial.g_implied === null ? 'filler' : trial.g_implied,
         marker: trial.marker,
-        rating_g: this.ratings_g[trial.id],
-        rating_adopt: this.ratings_adopt[trial.id],
+        marker_assignment_source: trial.marker_assignment_source,
+        context: trial.context,
+        sentence_before: trial.sentenceBefore,
+        sentence_after: trial.sentenceAfter,
+        recommended_action: trial.q,
+        question_goal: 'Wie stark hast du den Eindruck, dass die Sprecherin möchte, dass du ihre Empfehlung befolgst?',
+        question_adopt: 'Wie wahrscheinlich ist es, dass du die empfohlene Handlung dann auch tatsächlich umsetzt?',
+        rating_g: ratingGoal,
+        rating_adopt: ratingAdopt,
+        inferred_goal_strength: ratingGoal,
+        adoption_likelihood: ratingAdopt,
+        scale_min: 0,
+        scale_max: 100,
+        scale_step: 1,
         rt,
       });
+      this.trialStartTime = Date.now();
+      this.$magpie.nextScreen();
+    },
+    recordTrainingAndAdvance() {
+      const rt = Date.now() - this.trialStartTime;
+      this.$magpie.addTrialData({
+        trial_index: 0,
+        display_order: 0,
+        list_num: this.listNum,
+        trial_key: 'training',
+        trial_type: 'training',
+        is_training: true,
+        is_critical: false,
+        trial_id: 'training',
+        item_id: 'training',
+        topic: this.trainingTrial.topic,
+        is_filler: false,
+        condition_index: this.trainingTrial.condition_index,
+        pc_prag: this.trainingTrial.pc_prag,
+        g_implied: this.trainingTrial.g_implied,
+        pc_prag_analysis: this.trainingTrial.pc_prag,
+        g_implied_analysis: this.trainingTrial.g_implied,
+        marker: this.trainingTrial.marker,
+        marker_assignment_source: this.trainingTrial.marker_assignment_source,
+        context: this.trainingTrial.context,
+        sentence_before: this.trainingTrial.sentenceBefore,
+        sentence_after: this.trainingTrial.sentenceAfter,
+        recommended_action: this.trainingTrial.q,
+        question_goal: 'Wie stark hast du den Eindruck, dass die Sprecherin möchte, dass du ihre Empfehlung befolgst?',
+        question_adopt: 'Wie wahrscheinlich ist es, dass du die empfohlene Handlung dann auch tatsächlich umsetzt?',
+        rating_g: this.trainingRatingGoal,
+        rating_adopt: this.trainingRatingAdopt,
+        inferred_goal_strength: this.trainingRatingGoal,
+        adoption_likelihood: this.trainingRatingAdopt,
+        scale_min: 0,
+        scale_max: 100,
+        scale_step: 1,
+        rt,
+      });
+      this.trialStartTime = Date.now();
+      this.$magpie.nextScreen();
+    },
+    startMainTrials() {
       this.trialStartTime = Date.now();
       this.$magpie.nextScreen();
     },
@@ -179,6 +385,12 @@ export default {
 </script>
 
 <style scoped>
+.training-note {
+  margin-bottom: 1.2em;
+  color: #444;
+  line-height: 1.5;
+}
+
 .trial-header {
   color: #888;
   font-size: 0.85em;
@@ -265,6 +477,27 @@ export default {
 .btn-row {
   display: flex;
   justify-content: flex-end;
+}
+
+.transition-screen {
+  max-width: 42rem;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.transition-title {
+  margin-bottom: 1rem;
+  color: #2d4b78;
+}
+
+.transition-text {
+  margin-bottom: 0.9rem;
+  line-height: 1.6;
+}
+
+.transition-btn-row {
+  justify-content: center;
+  margin-top: 1.4rem;
 }
 
 .next-btn {

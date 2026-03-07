@@ -16,6 +16,8 @@ analysis/production_exp/
 ├── 01_empirical_plots.R      # Stage 1 — exploratory visualisations
 ├── 02_bayesian_thresholds.R  # Stage 2 — Stan noisy-threshold model
 ├── 03_hierarchical_regression.R  # Stage 3 — brms hierarchical regression
+├── 04_rsa_soft_thresholds.R  # Stage 4 — direct RSA soft-threshold fit
+├── 05_frequentist_ordinal.R  # Stage 5 — ordinal::clmm frequentist analysis
 ├── run_pipeline.R            # Orchestrator
 ├── models/
 │   └── noisy_threshold.stan  # Stan program
@@ -82,6 +84,26 @@ Models compared via LOO-CV.
 | fig9\_cond\_effects | Predicted probabilities per condition × marker |
 | fig10\_loo\_compare | LOO ELPD comparison of Models A and B |
 
+### Stage 4 — RSA soft-threshold fit (`04_rsa_soft_thresholds.R`)
+
+Fits the cost-augmented noisy-threshold RSA model directly with a bounded MAP fit.
+
+| Figure | Content |
+| --- | --- |
+| fig11\_rsa\_soft\_thresholds | Marker probabilities along latent utility axis |
+| fig12\_rsa\_utility\_landscape | Soft threshold bands projected onto the utility landscape |
+| fig13\_rsa\_observed\_vs\_predicted | Observed vs. RSA-predicted marker proportions |
+
+### Stage 5 — Frequentist ordinal analysis (`05_frequentist_ordinal.R`)
+
+Fits cumulative-probit mixed models via `ordinal::clmm`.
+
+| Figure | Content |
+| --- | --- |
+| fig14\_freq\_coef\_plot | Wald coefficient intervals for additive CLMM |
+| fig15\_freq\_cond\_effects | Frequentist predicted probabilities by condition |
+| fig16\_freq\_model\_compare | AIC comparison of additive vs. full model |
+
 ## R package requirements
 
 ```r
@@ -90,7 +112,8 @@ install.packages(c(
   "scales", "patchwork", "ggdist",          # plot helpers
   "posterior", "bayesplot",                  # MCMC diagnostics
   "rstan",                                   # Stan backend (or cmdstanr)
-  "brms"                                     # hierarchical regression
+  "brms",                                    # hierarchical regression
+  "ordinal"                                  # frequentist cumulative-link models
 ))
 ```
 

@@ -1,0 +1,44 @@
+Counts by selected marker
+  selected_marker  n
+1     bekanntlich 11
+2              ja 11
+3 soviel ich weiß 10
+
+Mean selected probability by assigned marker
+# A tibble: 3 × 5
+  selected_marker     n mean_selected_prob mean_modal_prob mean_loss
+  <chr>           <int>              <dbl>           <dbl>     <dbl>
+1 bekanntlich        11              0.528           0.528     0    
+2 ja                 11              0.346           0.427     0.210
+3 soviel ich weiß    10              0.293           0.365     0.223
+
+Counts by condition and marker
+# A tibble: 4 × 5
+  pc_prag g_implied bekanntlich    ja `soviel ich weiß`
+  <chr>   <chr>           <int> <int>             <int>
+1 high    high                3     3                 2
+2 high    low                 0     5                 3
+3 low     high                8     0                 0
+4 low     low                 0     3                 5
+
+Mean selected probability by condition and marker
+# A tibble: 8 × 4
+  pc_prag g_implied selected_marker mean_selected_prob
+  <chr>   <chr>     <chr>                        <dbl>
+1 high    high      bekanntlich                  0.509
+2 high    high      ja                           0.345
+3 high    high      soviel ich weiß              0.309
+4 high    low       ja                           0.345
+5 high    low       soviel ich weiß              0.282
+6 low     high      bekanntlich                  0.535
+7 low     low       ja                           0.348
+8 low     low       soviel ich weiß              0.292
+
+Mean selected probability by condition
+# A tibble: 4 × 3
+  pc_prag g_implied mean_selected_prob
+  <chr>   <chr>                  <dbl>
+1 high    high                   0.397
+2 high    low                    0.321
+3 low     high                   0.535
+4 low     low                    0.313

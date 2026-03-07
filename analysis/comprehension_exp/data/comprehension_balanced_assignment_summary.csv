@@ -1,0 +1,8 @@
+"metric","value"
+"target_counts","10/11/11"
+"total_log_posterior_support","-31.046"
+"mean_selected_probability","0.392"
+"mean_modal_probability","0.442"
+"cells_deviating_from_modal","21"
+"mean_log_prob_loss","0.142"
+"max_log_prob_loss","0.427"

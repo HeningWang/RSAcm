@@ -50,13 +50,28 @@ embedded in the sentence and asks what goal strength the speaker likely
 had and how likely the listener is to adopt $q$.
 
 The specific marker presented in each vignette is not chosen arbitrarily
-from the three candidate markers. Instead, it is the \emph{Bayesian best-choice
-marker} for the corresponding production condition: the marker with the
-highest posterior probability under the cost-augmented noisy-threshold RSA model fitted
-to the production data, given the context's \textsc{pc\textsubscript{prag}}
-level and a specified $g$ level. This mirrors the production design
-exactly and ensures that the comprehension stimuli reflect ecologically
-valid marker use rather than arbitrary marker$\times$item pairings.
+from the three candidate markers. Our preregistered plan was to assign,
+for each item$\times$condition cell, the \emph{Bayesian best-choice marker}:
+the marker with the highest posterior probability under the cost-augmented
+noisy-threshold RSA model fitted to the production data, given the context's
+\textsc{pc\textsubscript{prag}} level and a specified $g$ level. This was
+intended to mirror the production design closely and to ensure that the
+comprehension stimuli reflect model-based marker use rather than arbitrary
+marker$\times$item pairings.
+
+Applying this strict modal-assignment rule to the fitted production model,
+however, yielded a highly imbalanced stimulus set: most critical cells were
+assigned the strongest marker, with very little variation across marker
+categories. In addition, many of these modal decisions were supported only by
+very small probability margins over the next-best alternative. Because such a
+stimulus set would make the comprehension experiment substantially less
+informative about marker-based listener inferences, we introduced a documented,
+exploratory balancing step for stimulus construction. Starting from the same
+posterior predictive probabilities, we selected a near-balanced assignment of
+the three markers across the 32 critical cells while maximizing total posterior
+support under the fitted production model. The strict modal assignment is
+retained as the preregistered baseline, but the balanced assignment is used for
+the actual comprehension materials.
 
 \textsc{pc\textsubscript{prag}} is retained as an explicit context
 manipulation (low vs.\ high), so that listeners can be expected to
@@ -120,9 +135,9 @@ marker; they read the sentence with the marker already in place and respond
 to the two rating probes.
 
 Critically, the marker assigned to each condition is not drawn arbitrarily
-from the three candidates. Instead, for each of the four production
-conditions (pc\textsubscript{prag} $\times$ $g$), the marker used in
-comprehension is the \textbf{Bayesian best-choice marker}: the marker
+from the three candidates. Under the preregistered plan, for each of the four
+production conditions (pc\textsubscript{prag} $\times$ $g$), the marker used in
+comprehension was to be the \textbf{Bayesian best-choice marker}: the marker
 $u^*$ with the highest posterior probability under the fitted
 cost-augmented noisy-threshold RSA production model,
 \[
@@ -133,14 +148,20 @@ Because $pc_{\mathrm{prop}}$ varies continuously across items,
 $u^*$ may differ per item even within the same
 (pc\textsubscript{prag}, $g$) cell; the final stimulus list is therefore
 constructed item-by-item once the production model has been fitted.
-This ensures that comprehension vignettes reflect speaker behaviour that
-is optimal under the model, creating a tight production--comprehension
-link and allowing a direct empirical test of the Bayesian inversion
-hypothesis.
+In practice, the fitted production model yielded a nearly degenerate modal map,
+with most cells assigned to \textit{bekanntlich}. We therefore retained the
+model-based logic of the procedure but replaced strict cellwise modal selection
+with an uncertainty-aware balancing step: among the marker assignments with
+high posterior support, we selected a near-balanced configuration across the 32
+critical cells. This preserves the production--comprehension link while also
+ensuring that the comprehension experiment contains sufficient marker variation
+to test listener-side inferences.
 
 All three markers remain candidates; the mapping from conditions to
-best-choice markers is an empirical output of the production analysis,
-not a design pre-commitment.
+markers is an empirical output of the production analysis, not a design
+pre-commitment. In the final comprehension materials, we use the
+\textbf{balanced model-based assignment}, rather than the strict modal
+assignment, in order to maintain informative variation across marker types.
 
 \subsubsection{Topic Items}
 

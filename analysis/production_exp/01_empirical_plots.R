@@ -68,11 +68,20 @@ save_plot <- function(p, name, w = 8, h = 5) {
   invisible(p)
 }
 
+as_logical_flag <- function(x) {
+  tolower(trimws(as.character(x))) %in% c("true", "t", "1")
+}
+
 # ── Load & prep ────────────────────────────────────────────────────────────────
 dat <- read.csv(DAT_PATH, stringsAsFactors = FALSE)
+dat <- dat |>
+  mutate(
+    is_filler = as_logical_flag(is_filler),
+    is_training = as_logical_flag(is_training)
+  )
 
 crit <- dat |>
-  filter(!is_filler) |>
+  filter(!is_filler, !is_training) |>
   mutate(
     selected_marker = factor(selected_marker, levels = MARKERS_ORDERED),
     pc_prag = factor(pc_prag, levels = c("low", "high"),
@@ -109,11 +118,11 @@ p1 <- ggplot(cond_props,
   ) +
   theme_model() +
   theme(
-    axis.text.x        = element_text(angle = 0, hjust = 0.5),
+    axis.text.x        = element_text(angle = 30, hjust = 1, vjust = 1, size = 12),
     legend.position    = "right",
     panel.grid.major.x = element_blank()
   )
-save_plot(p1, "fig1_stacked_bar", w = 7, h = 5.5)
+save_plot(p1, "fig1_stacked_bar", w = 8.5, h = 5.5)
 
 # ── Figure 2: Tile / heatmap — mean marker index by pc_prag × g ──────────────
 # Mean marker index (1 = soviel ich weiß, 3 = bekanntlich) as fill
@@ -125,7 +134,7 @@ mean_idx <- crit |>
 p2 <- ggplot(mean_idx,
              aes(x = g, y = pc_prag, fill = mean_marker)) +
   geom_tile(colour = "white", linewidth = 1.5) +
-  geom_text(aes(label = round(mean_marker, 2)), size = 5.5, fontface = "bold") +
+  geom_text(aes(label = round(mean_marker, 2)), size = 4.2, fontface = "bold") +
   scale_fill_distiller(palette = "RdYlBu", direction = 1,
                        limits = c(1, 3), name = "Mean marker\n(1=soviel ich weiß, 3=bekanntlich)") +
   scale_x_discrete(drop = FALSE) +
@@ -137,8 +146,14 @@ p2 <- ggplot(mean_idx,
     y        = "Pragmatic controversy (pc_prag)"
   ) +
   theme_model() +
-  theme(legend.position = "right")
-save_plot(p2, "fig2_heatmap", w = 5.5, h = 3.5)
+  theme(
+    legend.position = "right",
+    axis.text.x = element_text(size = 11),
+    axis.text.y = element_text(size = 11),
+    legend.text = element_text(size = 11),
+    legend.title = element_text(size = 11)
+  )
+save_plot(p2, "fig2_heatmap", w = 7, h = 4.5)
 
 # ── Figure 3: Faceted bar — distribution per factor, marginalised ───────────────
 # Marginalise over the other factor to show main effects (2 factors: pc_prag, g)
@@ -193,7 +208,7 @@ save_plot(p3, "fig3_marginals", w = 8, h = 5)
 # Collapse the 2×2 conditions to a 1-D utility score and plot marker proportions.
 # Utility proxy = −pc_prag + 2·g  (ranges -1 to 2 over the 4 conditions)
 crit_util <- dat |>
-  filter(!is_filler) |>
+  filter(!is_filler, !is_training) |>
   mutate(
     pc_prag_n = ifelse(pc_prag == "high", 1, 0),
     g_n       = ifelse(g       == "high", 1, 0),

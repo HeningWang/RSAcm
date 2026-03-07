@@ -34,25 +34,22 @@ const CONDITIONS = [
 ];
 
 // ── Marker assignment matrix (8 items x 4 conditions) ──────────────────────
-// PLACEHOLDER: Replace with production model results before data collection.
+// Source: comprehension_marker_assignment_balanced.csv.
 // Each entry is one of: 'soviel ich weiß', 'ja', 'bekanntlich'
 //
 // markerAssignment[itemIndex][conditionIndex] -> marker string
 //
-// Current values are illustrative defaults based on theoretical predictions:
-//   low pc_prag + low g  -> 'soviel ich weiß' (weakest)
-//   low pc_prag + high g -> 'bekanntlich' (strongest)
-//   high pc_prag + low g -> 'soviel ich weiß' (weakest)
-//   high pc_prag + high g -> 'ja' (middle; attenuated by controversy)
+export const MARKER_ASSIGNMENT_SOURCE = 'comprehension_marker_assignment_balanced.csv';
+
 const MARKER_ASSIGNMENT = [
-  ['soviel ich weiß', 'bekanntlich', 'soviel ich weiß', 'ja'], // 1: klimawandel
-  ['soviel ich weiß', 'bekanntlich', 'soviel ich weiß', 'ja'], // 2: ernaehrung
+  ['ja', 'bekanntlich', 'ja', 'bekanntlich'], // 1: klimawandel
+  ['soviel ich weiß', 'bekanntlich', 'soviel ich weiß', 'soviel ich weiß'], // 2: ernaehrung
   ['soviel ich weiß', 'bekanntlich', 'soviel ich weiß', 'ja'], // 3: stadtverkehr
-  ['soviel ich weiß', 'bekanntlich', 'soviel ich weiß', 'ja'], // 4: digitalisierung
-  ['soviel ich weiß', 'bekanntlich', 'soviel ich weiß', 'ja'], // 5: schlaf
-  ['soviel ich weiß', 'bekanntlich', 'soviel ich weiß', 'ja'], // 6: plastik
-  ['soviel ich weiß', 'bekanntlich', 'soviel ich weiß', 'ja'], // 7: sport
-  ['soviel ich weiß', 'bekanntlich', 'soviel ich weiß', 'ja'], // 8: lokalkauf
+  ['ja', 'bekanntlich', 'ja', 'bekanntlich'], // 4: digitalisierung
+  ['soviel ich weiß', 'bekanntlich', 'ja', 'ja'], // 5: schlaf
+  ['soviel ich weiß', 'bekanntlich', 'ja', 'ja'], // 6: plastik
+  ['ja', 'bekanntlich', 'ja', 'bekanntlich'], // 7: sport
+  ['soviel ich weiß', 'bekanntlich', 'soviel ich weiß', 'soviel ich weiß'], // 8: lokalkauf
 ];
 
 // ── Critical items (IDs 1-8) ────────────────────────────────────────────────
@@ -186,11 +183,13 @@ export function getCriticalTrials(listNum) {
       id: item.id,
       topic: item.topic,
       is_filler: false,
+      trial_type: 'critical',
       pc_prag: cond.pc_prag,
       g_implied: cond.g_implied,
       condition_index: conditionIndex,
       context: item.contexts[contextIndex],
       marker,
+      marker_assignment_source: MARKER_ASSIGNMENT_SOURCE,
       sentenceBefore: item.sentenceBefore,
       sentenceAfter: item.sentenceAfter,
       q: item.q,
@@ -212,10 +211,12 @@ export function getFillers() {
       id: 101,
       topic: 'bahn',
       is_filler: true,
+      trial_type: 'filler',
       pc_prag: null, g_implied: null, condition_index: null,
       context:
         'Dein/e Gesprächspartner/in spricht mit dir über Reisemöglichkeiten in Deutschland. Ihr überlegt, wie man umweltfreundlich von München nach Hamburg kommen kann.',
       marker: randomFillerMarker(),
+      marker_assignment_source: 'random_filler',
       sentenceBefore: 'Der Zug ist',
       sentenceAfter:  'für Reisen innerhalb Deutschlands sehr praktisch.',
       q: 'häufiger mit der Bahn reisen',
@@ -224,10 +225,12 @@ export function getFillers() {
       id: 102,
       topic: 'leselicht',
       is_filler: true,
+      trial_type: 'filler',
       pc_prag: null, g_implied: null, condition_index: null,
       context:
         'Dein/e Gesprächspartner/in spricht mit dir über Lesegewohnheiten. Du hast dich über Kopfschmerzen beim Lesen beklagt.',
       marker: randomFillerMarker(),
+      marker_assignment_source: 'random_filler',
       sentenceBefore: 'Beim Lesen schont',
       sentenceAfter:  'gutes Licht die Augen.',
       q: 'dir eine bessere Leselampe anschaffen',
@@ -236,10 +239,12 @@ export function getFillers() {
       id: 103,
       topic: 'kochen',
       is_filler: true,
+      trial_type: 'filler',
       pc_prag: null, g_implied: null, condition_index: null,
       context:
         'Dein/e Gesprächspartner/in spricht mit dir über den Ernährungsalltag. Du hast erwähnt, dass dein Geld für Essen kaum reicht.',
       marker: randomFillerMarker(),
+      marker_assignment_source: 'random_filler',
       sentenceBefore: 'Frisch Kochen spart',
       sentenceAfter:  'im Vergleich zu Fertiggerichten Geld.',
       q: 'öfter selbst kochen',
@@ -248,10 +253,12 @@ export function getFillers() {
       id: 104,
       topic: 'kaffee',
       is_filler: true,
+      trial_type: 'filler',
       pc_prag: null, g_implied: null, condition_index: null,
       context:
         'Dein/e Gesprächspartner/in spricht mit dir an der Kaffeemaschine im Büro. Du hast erzählt, dass du morgens immer sehr müde bist.',
       marker: randomFillerMarker(),
+      marker_assignment_source: 'random_filler',
       sentenceBefore: 'Ein Kaffee am Morgen hilft',
       sentenceAfter:  'vielen Menschen, wach zu werden.',
       q: 'morgens eine kleine Kaffeepause einplanen',
@@ -260,10 +267,12 @@ export function getFillers() {
       id: 105,
       topic: 'urlaub',
       is_filler: true,
+      trial_type: 'filler',
       pc_prag: null, g_implied: null, condition_index: null,
       context:
         'Dein/e Gesprächspartner/in spricht mit dir über Arbeit und Erholung. Du arbeitest seit Monaten ohne Urlaub durch und bist erschöpft.',
       marker: randomFillerMarker(),
+      marker_assignment_source: 'random_filler',
       sentenceBefore: 'Regelmäßige Auszeiten tun',
       sentenceAfter:  'der mentalen Gesundheit gut.',
       q: 'dieses Jahr endlich Urlaub nehmen',
@@ -272,10 +281,12 @@ export function getFillers() {
       id: 106,
       topic: 'trinken',
       is_filler: true,
+      trial_type: 'filler',
       pc_prag: null, g_implied: null, condition_index: null,
       context:
         'Dein/e Gesprächspartner/in spricht mit dir. Du hast erwähnt, dass du dich nachmittags immer schlapp und unkonzentriert fühlst.',
       marker: randomFillerMarker(),
+      marker_assignment_source: 'random_filler',
       sentenceBefore: 'Genügend Wasser zu trinken verbessert',
       sentenceAfter:  'die Konzentrationsfähigkeit.',
       q: 'öfter ein Glas Wasser trinken',
@@ -284,10 +295,12 @@ export function getFillers() {
       id: 107,
       topic: 'frischluft',
       is_filler: true,
+      trial_type: 'filler',
       pc_prag: null, g_implied: null, condition_index: null,
       context:
         'Dein/e Gesprächspartner/in spricht mit dir in eurem schlecht belüfteten Großraumbüro. Du hast erwähnt, dass du dich dort häufig unwohl fühlst.',
       marker: randomFillerMarker(),
+      marker_assignment_source: 'random_filler',
       sentenceBefore: 'Regelmäßiges Lüften verbessert',
       sentenceAfter:  'die Luftqualität merklich.',
       q: 'dein Büro öfter lüften',
@@ -296,10 +309,12 @@ export function getFillers() {
       id: 108,
       topic: 'laerm',
       is_filler: true,
+      trial_type: 'filler',
       pc_prag: null, g_implied: null, condition_index: null,
       context:
         'Dein/e Gesprächspartner/in spricht mit dir über Hörgewohnheiten. Du hörst ständig mit voller Lautstärke Musik über Kopfhörer.',
       marker: randomFillerMarker(),
+      marker_assignment_source: 'random_filler',
       sentenceBefore: 'Laute Musik in Kopfhörern schädigt',
       sentenceAfter:  'auf Dauer das Gehör.',
       q: 'die Lautstärke beim Musikhören reduzieren',
