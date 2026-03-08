@@ -1,0 +1,16 @@
+"parameter","estimate"
+"k_pc_prop",0.465903486871889
+"goal_intercept",115.381605126314
+"goal_rsa_slope",-1.20063565185709
+"goal_ja_offset",16.3807794094388
+"goal_bekanntlich_offset",20.4307206837751
+"adoption_eta0",-20.0498307380344
+"adoption_eta_g",49.1118974143486
+"adoption_eta_pc",197.126404302697
+"adoption_eta_int",-386.519883105538
+"adoption_ja_offset",-2.55188592358655
+"adoption_bekanntlich_offset",-6.19781044586081
+"goal_rmse_base",6.75630321693885
+"goal_rmse_enhanced",4.03556203190794
+"adoption_rmse_base",7.54290457614158
+"adoption_rmse_enhanced",7.48285537849646

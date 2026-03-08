@@ -1,0 +1,25 @@
+"outcome","model","marker","pc_prag","mean","lower","upper"
+"Inferred goal strength","Main","soviel ich weiß","Prag. Controversy: low",64.8074879182446,60.4414621567807,69.1626534049532
+"Inferred goal strength","Main","soviel ich weiß","Prag. Controversy: high",64.0466040043354,59.6291771170765,68.575786892908
+"Inferred goal strength","Main","ja","Prag. Controversy: low",69.4648509945894,65.841312521779,72.9032819483591
+"Inferred goal strength","Main","ja","Prag. Controversy: high",69.854030801451,66.2655730820366,73.2740380598517
+"Inferred goal strength","Main","bekanntlich","Prag. Controversy: low",73.7568774160571,70.10970225343,77.1427551108739
+"Inferred goal strength","Main","bekanntlich","Prag. Controversy: high",75.069063448607,70.2026360808602,79.1771946333473
+"Inferred goal strength","Sensitivity","soviel ich weiß","Prag. Controversy: low",65.0678758494774,60.3775389278613,69.5425669228617
+"Inferred goal strength","Sensitivity","soviel ich weiß","Prag. Controversy: high",64.4192478182546,59.7127467813342,69.3295526073984
+"Inferred goal strength","Sensitivity","ja","Prag. Controversy: low",69.7215593774764,66.0823332757826,73.2291637769478
+"Inferred goal strength","Sensitivity","ja","Prag. Controversy: high",70.0187056928899,66.2385375509533,73.5196633513159
+"Inferred goal strength","Sensitivity","bekanntlich","Prag. Controversy: low",73.9986496562279,70.0823256330996,77.6715368381022
+"Inferred goal strength","Sensitivity","bekanntlich","Prag. Controversy: high",75.0509081669347,70.0341854870911,79.378258958192
+"Adoption likelihood","Main","soviel ich weiß","Prag. Controversy: low",55.5851071232057,49.9382381776745,61.1040336259074
+"Adoption likelihood","Main","soviel ich weiß","Prag. Controversy: high",51.6161468395053,45.9275905933172,57.3372918125317
+"Adoption likelihood","Main","ja","Prag. Controversy: low",56.4724844491929,51.6795857234649,61.1396512786271
+"Adoption likelihood","Main","ja","Prag. Controversy: high",53.1740798872032,48.1737680298795,57.9190131382609
+"Adoption likelihood","Main","bekanntlich","Prag. Controversy: low",57.3452968020171,52.1739098251298,62.3124848995686
+"Adoption likelihood","Main","bekanntlich","Prag. Controversy: high",54.7108024980295,48.0651318643993,60.9547709538762
+"Adoption likelihood","Sensitivity","soviel ich weiß","Prag. Controversy: low",55.83167157703,50.069827213448,61.283788411192
+"Adoption likelihood","Sensitivity","soviel ich weiß","Prag. Controversy: high",51.7555717319905,46.1322121435099,57.6371237120036
+"Adoption likelihood","Sensitivity","ja","Prag. Controversy: low",56.6472396416577,51.7964339837843,61.3765103648556
+"Adoption likelihood","Sensitivity","ja","Prag. Controversy: high",53.0877370702753,48.0527382777162,57.9200544202423
+"Adoption likelihood","Sensitivity","bekanntlich","Prag. Controversy: low",57.448702539769,52.2966227897832,62.4385390814464
+"Adoption likelihood","Sensitivity","bekanntlich","Prag. Controversy: high",54.4000792796015,47.7000335950108,60.8046939512679

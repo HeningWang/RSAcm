@@ -1,0 +1,10 @@
+"model","parameter","estimate"
+"base_relaxed","eta_0",6.77380663731102
+"base_relaxed","eta_g",-12.8245703211753
+"base_relaxed","eta_pc",45.0098889067145
+"base_relaxed","eta_int",-88.5469475438152
+"react_relaxed","eta_0",3.83899964187847
+"react_relaxed","eta_g",-1.05003016130412
+"react_relaxed","eta_pc",44.8143271478857
+"react_relaxed","eta_int",-88.0943819378274
+"react_relaxed","eta_r",11.7650475678164

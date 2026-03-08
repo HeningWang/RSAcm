@@ -1,0 +1,128 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[skip=4pt plus1pt]{parskip}
+\usepackage{natbib}
+\usepackage{stmaryrd}
+
+\pagestyle{empty}
+\setlength{\abovedisplayskip}{6pt}
+\setlength{\belowdisplayskip}{6pt}
+
+\begin{document}
+
+\noindent\textbf{\large From Controversy to Consensus: A Noisy-Threshold RSA Model of German Consensus Markers}
+
+\smallskip
+%\noindent Hening Wang, Yuhan Guo \hfill \textit{Sinn und Bedeutung 30}
+
+\medskip
+
+We propose a noisy-threshold RSA model that unifies production and comprehension of German \emph{consensus markers} --- \textit{soviel ich wei\ss} (`as far as I know'), \textit{ja} (`as you know'), and \textit{bekanntlich} (`as is well known') --- and validate it with three preregistered experiments. These markers share a common function: they mark a proposition $p$ as settled in the common ground \citep{repp2013common} and can be deployed to support downstream communicative goals such as convincing an interlocutor, a so-called manipulative use \citep{doring2016modal, seemann2025}. We group them under the label \emph{consensus markers} as a class of common-ground management devices. Previous work has focused predominantly on \textit{ja}, analyzing it as marking $p$ as \textsc{known} \citep{thurmair1989modalpartikeln}, as conveying uncontroversiality \citep{jacobs_semantics_1991, zimmermann2011discourse}, or as a discourse particle with common-ground effects \citep{grosz2021discourse}. These accounts share a categorical framing that leaves open how markers within this class differ \emph{gradiently} --- in how controversy is handled and how strongly the speaker commits to the claim. We address this gap by modeling consensus markers within probabilistic pragmatics \citep{goodman2016pragmatic, franke2016probabilistic}. Our core theoretical contribution is threefold: (i) marker choice reflects a trade-off between perceived controversy and speaker goal strength, formalized as a utility function; (ii) perceived controversy decomposes into propositional and pragmatic components; (iii) the resulting utility space is partitioned by noisy thresholds rather than categorical boundaries. Three experiments --- norming, production, and comprehension --- provide converging empirical support for this framework.
+
+\textbf{Model.}
+We model consensus marker use via a utility-threshold framework. The core idea is that marker choice reflects a trade-off between how controversial a proposition is perceived to be and how strongly the speaker wants to use it as an argumentative premise. Perceived controversy is decomposed into two components: \emph{propositional controversy} $pc_{\text{prop}} \in [0,1]$ (how implausible or contentious $p$ is given world knowledge) and \emph{pragmatic controversy} $pc_{\text{prag}} \in [0,1]$ (expected disagreement within the relevant epistemic community), combined multiplicatively: $pc = pc_{\text{prop}} \cdot pc_{\text{prag}}$. This captures the intuition that even a contentious proposition can count as uncontroversial if the relevant community happens to agree on it, and that a factually uncontentious proposition may still be pragmatically controversial if the community is ill-informed. A speaker's marker choice is governed by a utility function over controversy and persuasive goal strength $g \in [0,1]$:
+%
+\begin{equation}
+U(pc, g) = -w_{pc} \cdot pc + w_g \cdot g - w_{int} \cdot pc \cdot g
+\end{equation}
+%
+The negative interaction term $w_{int} \cdot pc \cdot g$ encodes the idea that pursuing a strong persuasive goal becomes increasingly costly when controversy is high --- a speaker who aggressively invokes community consensus on a contested claim risks appearing manipulative or uninformed. Each marker $u_i$ is associated with an ordered threshold $\theta_i$ on the utility scale ($\theta_{\textit{soviel}} < \theta_{\textit{ja}} < \theta_{\textit{bekanntlich}}$), so that stronger markers require higher utility. The speaker selects $u_i$ when utility falls within the noisy interval $[\theta_i, \theta_{i+1})$, formalized as:
+%
+\begin{equation}
+P(u_i \mid pc, g) \;\propto\; \sigma\!\bigl(\lambda(U - \theta_i)\bigr) \cdot \sigma\!\bigl(-\lambda(U - \theta_{i+1})\bigr)
+\end{equation}
+%
+where $\sigma$ is the logistic function and $\lambda > 0$ controls boundary sharpness. On the comprehension side, a rational listener observes $u_i$ and inverts the speaker model via Bayes' rule to jointly infer $pc$ and $g$:
+%
+\begin{equation}
+P(pc_{\text{prop}}, pc_{\text{prag}}, g \mid u_i) \;\propto\; P(u_i \mid pc, g) \cdot P(pc_{\text{prop}}) \, P(pc_{\text{prag}}) \, P(g)
+\end{equation}
+%
+The listener then decides whether to adopt a proposed action $q$ by integrating over the posterior via a logistic adoption link:
+\begin{equation}
+P(\text{Adopt}(q) \mid u) = \int \sigma(\eta_0 + \eta_g \, g - \eta_{pc} \, pc) \; P(pc, g \mid u) \; d(pc, g)
+\end{equation}
+This two-stage structure --- posterior inference followed by decision --- separates the listener's epistemic update (what does the marker tell me about the speaker's state?) from the downstream behavioural consequence (should I act on it?).
+
+\textbf{Experiments.}
+We validate the model with three preregistered experiments. A \textbf{norming study} ($N\!=\!102$) established baseline propositional controversy ratings for 8 German-language topics on a 0--100 scale. Topics varied from low controversy (e.g., ``regular exercise reduces cardiovascular risk'': $pc_{\text{prop}} = 0.13$) to moderate (e.g., ``plant-based diet promotes health'': $pc_{\text{prop}} = 0.55$); overall, topics were rated as relatively uncontroversial, providing a controlled baseline for experimentally manipulating pragmatic controversy. In the \textbf{production experiment} ($N\!=\!80$, 640 critical trials), participants read vignettes specifying a community context ($pc_{\text{prag}}$: low/high) and a communicative goal ($g$: low/high), then selected one of three markers (\textit{soviel ich wei\ss} $<$ \textit{ja} $<$ \textit{bekanntlich}) to complete a target sentence of the form ``\textsc{marker}($p$), therefore $q$'', yielding a $2 \times 2$ within-participant design with $pc_{\text{prop}}$ as a continuous covariate. In the \textbf{comprehension experiment} ($N\!=\!80$, 640 critical trials), participants read vignettes containing one of the three markers and rated (i) inferred speaker goal strength ($\hat{g}$) and (ii) action adoption likelihood ($\hat{A}$) on 0--100 scales, in a design crossing marker (3 levels) with pragmatic controversy ($pc_{\text{prag}}$: low/high).
+
+\textbf{Production results.}
+All three preregistered hypotheses are confirmed. We fit Bayesian cumulative-probit models predicting ordinal marker choice ($1 = $ \textit{soviel ich wei\ss}, $2 = $ \textit{ja}, $3 = $ \textit{bekanntlich}). \textbf{H1} (goal strength increases marker strength): posterior pairwise contrasts show that under low $pc_{\text{prag}}$, higher goal strength increases expected marker strength by $0.28$ ($P(>0) = 1.00$); under high $pc_{\text{prag}}$, the same effect shrinks to $0.06$ ($P(>0) = 0.74$). \textbf{H2} (pragmatic controversy decreases marker strength): under high goal strength, higher $pc_{\text{prag}}$ reduces expected marker strength by $-0.17$ ($P(<0) = 0.98$). \textbf{H3} (goal-strength effect is attenuated under high pragmatic controversy): the interaction contrast is $-0.22$, $P(<0) = 0.97$, confirming that community disagreement dampens the persuasive-goal advantage --- exactly as the model's $w_{int} \cdot pc \cdot g$ term predicts. The RSA noisy-threshold model, fit via MAP estimation, reveals an ordered threshold structure $\theta_{\textit{soviel}} < \theta_{\textit{ja}} < \theta_{\textit{bekanntlich}}$, but with substantial noise ($\sigma = 0.41$) and overlapping intervals for \textit{ja} and \textit{bekanntlich} (Figure~1c), indicating a soft rather than categorical boundary between these two markers.
+
+\textbf{Comprehension results.}
+All preregistered hypotheses are confirmed, and a striking unpredicted finding emerges. Bayesian beta-regression models with marker as a categorical predictor (reference = \textit{soviel ich wei\ss}) confirm the listener-side predictions (Figure~1e--f). \textbf{H4} (stronger markers imply higher inferred goal strength): both \textit{ja} ($\beta = 0.49$, 95\% CrI $[0.26, 0.71]$, $P(>0) = 1.00$) and \textit{bekanntlich} ($\beta = 0.46$, 95\% CrI $[0.25, 0.66]$, $P(>0) = 1.00$) reliably increase inferred goal strength relative to \textit{soviel ich wei\ss}. \textbf{H5} (stronger markers increase adoption): under low pragmatic controversy, \textit{ja} produces the largest adoption boost ($+13.6$ points, $P(>0) = 0.998$), while \textit{bekanntlich} is reliably \emph{lower} than \textit{ja} ($-8.8$ points, $P(<0) = 0.986$), revealing a non-monotonic adoption pattern. \textbf{H6} (credibility discounting): higher $pc_{\text{prag}}$ reliably decreases adoption ($-7.5$ points, $P(<0) > 0.999$), confirming that community disagreement dampens the persuasive force of consensus markers. Most interestingly, \textit{ja} does most of the work: \textit{ja} and \textit{bekanntlich} do not differ on inferred goal strength, yet \textit{ja} drives the strongest adoption effect. This suggests that once a speaker departs from the epistemic hedge \textit{soviel ich wei\ss} by using any consensus marker, the listener infers similar persuasive intent --- but the strongest marker \textit{bekanntlich} may trigger pragmatic reactance, where listeners resist the argumentative pressure of a claim presented as beyond dispute.
+
+\textbf{Discussion.}
+\textit{Ja} is special in convincing communication. Across production and comprehension, our results converge on a picture where \textit{ja} occupies a pragmatically privileged position: it is strong enough to signal persuasive intent but not so strong as to trigger resistance. In production, the noisy-threshold model reveals that \textit{ja} and \textit{bekanntlich} occupy overlapping intervals on the utility scale, confirming that their distinction is gradient rather than categorical. In comprehension, \textit{ja} drives the strongest adoption effect despite signalling the same goal strength as \textit{bekanntlich} --- a dissociation between goal inference and action uptake that suggests \textit{bekanntlich} may trigger pragmatic reactance by presenting $p$ as beyond dispute.
+
+The noisy-threshold RSA model provides a unified formal account: the same utility function and threshold structure that generates speaker marker choice also allows a Bayesian listener to infer latent contextual parameters. The model captures key empirical patterns --- the interaction between controversy and goal strength in production, and the non-monotonic adoption in comprehension --- within a single framework. One direction for extending the model is to include a null utterance (unmarked assertion) in the speaker's choice set, which may better capture the baseline against which consensus markers are evaluated and sharpen the threshold estimates. More broadly, this framework demonstrates that non-truth-conditional discourse particles --- often treated as resistant to formal compositional analysis --- can be productively modeled as rational signals within probabilistic pragmatics \citep{gutzmann2015use}, extending RSA-style models from referential communication to discourse-level common-ground management.
+
+\vfill
+
+\renewcommand{\bibsection}{}
+{\footnotesize
+\bibliographystyle{apalike}
+\bibliography{references}
+}
+
+\newpage
+
+% ============================================================
+% PAGE 2: FIGURES
+% ============================================================
+
+\begin{figure}[h!]
+  \centering
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{fig_norming.pdf}
+    \caption{Norming: propositional controversy ($pc_{\text{prop}}$) by topic.}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{fig_rsa_thresholds.pdf}
+    \caption{RSA noisy thresholds along the latent utility axis.}
+  \end{subfigure}
+
+  \medskip
+
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{fig_prod_empirical.pdf}
+    \caption{Production: empirical proportions vs.\ model predictions.}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{fig_prod_posteriors.pdf}
+    \caption{Production: posterior distributions of key parameters (H1--H3).}
+  \end{subfigure}
+
+  \medskip
+
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{fig_comp_predictions.pdf}
+    \caption{Comprehension: posterior predictions for goal and adoption.}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{fig_comp_posteriors.pdf}
+    \caption{Comprehension: posterior distributions of key parameters (H4--H6).}
+  \end{subfigure}
+
+  \caption{Model and experimental results. (a) Norming study: baseline propositional controversy. (b) RSA noisy-threshold model: marker probabilities along the utility axis with threshold means (dashed) and $\pm\sigma$ bands. (c--d) Production: marker choice patterns and confirmatory parameter estimates. (e--f) Comprehension: listener inference and adoption patterns.}
+  \label{fig:all-results}
+\end{figure}
+
+\end{document}

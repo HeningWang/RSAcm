@@ -1,0 +1,12 @@
+"parameter","estimate"
+"alpha",8.6886661687233
+"beta",1.20837436553865
+"alpha_conf.low",-50.6393351700713
+"alpha_conf.high",68.0166675075179
+"beta_conf.low",0.0212350934603296
+"beta_conf.high",2.39551363761696
+"r_squared",0.125910429804358
+"rmse_raw",20.2578951398166
+"rmse_calibrated",6.75630321693885
+"weighted_cor_raw",0.354838596835741
+"weighted_cor_calibrated",0.354838596835741

@@ -1,0 +1,13 @@
+"outcome","model","parameter","mean","lower","upper"
+"Adoption likelihood","Main","Marker strength",0.0521679463422813,-0.0435344596,0.1468979545
+"Adoption likelihood","Main","Prag. controversy",-0.14179305934678,-0.2760584885,-0.0052518767025002
+"Adoption likelihood","Main","Marker × Prag. controversy",0.0281202962502085,-0.15539571575,0.20936355725
+"Adoption likelihood","Sensitivity","Marker strength",0.0458227919836672,-0.05603864645,0.14478081875
+"Adoption likelihood","Sensitivity","Prag. controversy",-0.153020358038212,-0.315283376,0.00635676484749993
+"Adoption likelihood","Sensitivity","Marker × Prag. controversy",0.0215622515868253,-0.1640447985,0.20542836025
+"Inferred goal strength","Main","Marker strength",0.244027319986667,0.15637853775,0.33078938625
+"Inferred goal strength","Main","Prag. controversy",0.0189663869149535,-0.09876438465,0.1374888995
+"Inferred goal strength","Main","Marker × Prag. controversy",0.0532167539535337,-0.116135362,0.21365524775
+"Inferred goal strength","Sensitivity","Marker strength",0.2399148327285,0.135880179,0.34174948975
+"Inferred goal strength","Sensitivity","Prag. controversy",0.0145796466649939,-0.098305020275,0.12970966875
+"Inferred goal strength","Sensitivity","Marker × Prag. controversy",0.0438204740911946,-0.12307529125,0.212970296
