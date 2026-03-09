@@ -194,6 +194,7 @@ plot17_long <- bind_rows(
                labels = c("Goal: low", "Goal: high"))
   )
 
+# --- Version A: 2x2 facet (original) ---
 p17 <- ggplot(
   plot17_long,
   aes(x = marker, y = value, colour = series, shape = series, group = series)
@@ -223,6 +224,99 @@ p17 <- ggplot(
   )
 
 save_plot(p17, "fig17_empirical_vs_model_by_condition", w = 9.2, h = 6.2)
+
+# --- Version B: facet by marker, conditions overlaid, empirical + model ---
+# Each marker gets its own panel; conditions encoded by color/linetype;
+# both empirical (circles) and model (triangles) shown
+plot17b_data <- plot17_long |>
+  mutate(
+    condition = interaction(
+      gsub("Prag\\. Controversy: ", "", pc_prag),
+      gsub("Goal: ", "", g),
+      sep = ", "
+    ),
+    condition = factor(condition,
+                       levels = c("low, low", "low, high",
+                                  "high, low", "high, high"),
+                       labels = c("low pc, low g",
+                                  "low pc, high g",
+                                  "high pc, low g",
+                                  "high pc, high g")),
+    pc_prag_level = gsub("Prag\\. Controversy: ", "", pc_prag)
+  )
+
+p17b <- ggplot(
+  plot17b_data,
+  aes(x = condition, y = value, colour = series, shape = series, group = series)
+) +
+  geom_line(linewidth = 0.7, position = position_dodge(width = 0.25), alpha = 0.9) +
+  geom_errorbar(aes(ymin = low, ymax = high),
+                width = 0.12,
+                linewidth = 0.6,
+                position = position_dodge(width = 0.25)) +
+  geom_point(size = 2.8, position = position_dodge(width = 0.25)) +
+  facet_wrap(~ marker, nrow = 1) +
+  scale_colour_manual(values = c("Empirical" = CSP_colors[1], "Model" = CSP_colors[2])) +
+  scale_shape_manual(values = c("Empirical" = 16, "Model" = 17)) +
+  scale_y_continuous(labels = scales::percent_format(), limits = c(0, 0.75)) +
+  labs(
+    x = "Pragmatic controversy, Goal strength",
+    y = "Marker proportion",
+    colour = NULL,
+    shape = NULL
+  ) +
+  theme_model() +
+  theme(
+    axis.text.x = element_text(size = 11, angle = 25, hjust = 1),
+    legend.position = "top",
+    panel.grid.major.x = element_blank(),
+    strip.text = element_text(size = 13, face = "bold")
+  )
+
+save_plot(p17b, "fig17b_facet_by_marker", w = 10, h = 5)
+
+# --- Version C: facet by marker, conditions on x-axis (empirical + model) ---
+# Each marker gets its own panel; easy to see how conditions shift proportions
+plot17_facet_marker <- plot17_long |>
+  mutate(
+    condition = interaction(
+      gsub("Prag\\. Controversy: ", "", pc_prag),
+      gsub("Goal: ", "", g),
+      sep = "\n"
+    ),
+    condition = factor(condition,
+                       levels = c("low\nlow", "low\nhigh",
+                                  "high\nlow", "high\nhigh"))
+  )
+
+p17c <- ggplot(
+  plot17_facet_marker,
+  aes(x = condition, y = value, colour = series, shape = series, group = series)
+) +
+  geom_line(linewidth = 0.7, position = position_dodge(width = 0.25), alpha = 0.9) +
+  geom_errorbar(aes(ymin = low, ymax = high),
+                width = 0.12,
+                linewidth = 0.6,
+                position = position_dodge(width = 0.25)) +
+  geom_point(size = 2.8, position = position_dodge(width = 0.25)) +
+  facet_wrap(~ marker, nrow = 1) +
+  scale_colour_manual(values = c("Empirical" = CSP_colors[1], "Model" = CSP_colors[2])) +
+  scale_shape_manual(values = c("Empirical" = 16, "Model" = 18)) +
+  scale_y_continuous(labels = scales::percent_format(), limits = c(0, 0.75)) +
+  labs(
+    x = "pc_prag / goal",
+    y = "Marker proportion",
+    colour = NULL,
+    shape = NULL
+  ) +
+  theme_model() +
+  theme(
+    legend.position = "top",
+    panel.grid.major.x = element_blank(),
+    strip.text = element_text(size = 13, face = "bold")
+  )
+
+save_plot(p17c, "fig17c_facet_by_marker", w = 10, h = 5)
 
 # ── Figure 18: posterior effects ─────────────────────────────────────────────
 full_path <- file.path(DATA_DIR, "fit_brms_full_3markers.rds")

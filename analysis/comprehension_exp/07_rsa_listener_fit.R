@@ -43,12 +43,13 @@ theme_set(theme_aida())
 theme_comp <- function() {
   theme_aida() +
     theme(
-      axis.text.y = element_text(size = 12),
-      axis.text.x = element_text(size = 11),
-      axis.title = element_text(size = 13),
-      strip.text = element_text(size = 12, face = "bold"),
-      legend.text = element_text(size = 11),
-      legend.title = element_text(size = 12)
+      axis.text.y  = element_text(size = 13),
+      axis.text.x  = element_text(size = 13),
+      axis.title.y = element_text(size = 15),
+      axis.title.x = element_text(size = 15),
+      strip.text   = element_text(size = 12.5, face = "bold"),
+      legend.text  = element_text(size = 12),
+      legend.title = element_text(size = 13)
     )
 }
 
@@ -505,6 +506,7 @@ plot_compare <- bind_rows(
     series = factor(series, levels = c("Observed", "Model"))
   )
 
+# --- fig7 version A: original facet_grid(outcome ~ pc_prag) ---
 p_compare <- ggplot(plot_compare,
                     aes(x = marker, y = value, colour = series, shape = series, group = series)) +
   geom_errorbar(aes(ymin = lower, ymax = upper),
@@ -524,8 +526,40 @@ p_compare <- ggplot(plot_compare,
     panel.grid.major.x = element_blank()
   )
 
+# --- fig7 version B: rows = outcome, cols = series (Observed/Model) ---
+# Controversy encoded by color; only 2 lines per panel for clarity
+plot_compare_b <- plot_compare |>
+  mutate(
+    pc_label = factor(pc_prag,
+                      levels = c("Prag. Controversy: low", "Prag. Controversy: high"),
+                      labels = c("low", "high"))
+  )
+
+p_compare_b <- ggplot(plot_compare_b,
+                      aes(x = marker, y = value,
+                          colour = pc_label, group = pc_label)) +
+  geom_errorbar(aes(ymin = lower, ymax = upper),
+                width = 0.1,
+                linewidth = 0.6,
+                position = position_dodge(width = 0.2)) +
+  geom_point(size = 2.8, position = position_dodge(width = 0.2)) +
+  geom_line(linewidth = 0.8, position = position_dodge(width = 0.2)) +
+  facet_grid(outcome ~ series, scales = "free_y") +
+  scale_colour_manual(values = c("low" = CSP_colors[1], "high" = CSP_colors[3]),
+                      name = "Prag. controversy") +
+  labs(x = NULL, y = "Mean rating") +
+  theme_comp() +
+  theme(
+    legend.position = "top",
+    legend.key.width = unit(1.2, "cm"),
+    axis.text.x = element_text(size = 12, angle = 18, hjust = 1),
+    panel.grid.major.x = element_blank(),
+    strip.text = element_text(size = 12.5, face = "bold")
+  )
+
 save_plot(p, "fig6_rsa_listener_predictions", SCRIPT_DIR, width = 9.8, height = 6)
 save_plot(p_compare, "fig7_rsa_base_vs_enhanced", SCRIPT_DIR, width = 10.4, height = 6.2)
+save_plot(p_compare_b, "fig7b_rsa_overlay", SCRIPT_DIR, width = 9, height = 6.5)
 
 cat("Saved:\n")
 cat("  data/comprehension_rsa_listener_cell_predictions.csv\n")
