@@ -41,12 +41,12 @@ theme_set(theme_aida())
 theme_model <- function() {
   theme_aida() +
     theme(
-      axis.text.y  = element_text(size = 14),
-      axis.text.x  = element_text(size = 14),
-      axis.title.y = element_text(size = 16),
-      axis.title.x = element_text(size = 16),
-      legend.text  = element_text(size = 13),
-      legend.title = element_text(size = 14)
+      axis.text.y  = element_text(size = 18),
+      axis.text.x  = element_text(size = 18),
+      axis.title.y = element_text(size = 20),
+      axis.title.x = element_text(size = 20),
+      legend.text  = element_text(size = 17),
+      legend.title = element_text(size = 18)
     )
 }
 

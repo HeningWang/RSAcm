@@ -43,13 +43,13 @@ theme_set(theme_aida())
 theme_comp <- function() {
   theme_aida() +
     theme(
-      axis.text.y  = element_text(size = 13),
-      axis.text.x  = element_text(size = 13),
-      axis.title.y = element_text(size = 15),
-      axis.title.x = element_text(size = 15),
-      strip.text   = element_text(size = 12.5, face = "bold"),
-      legend.text  = element_text(size = 12),
-      legend.title = element_text(size = 13)
+      axis.text.y  = element_text(size = 18),
+      axis.text.x  = element_text(size = 18),
+      axis.title.y = element_text(size = 20),
+      axis.title.x = element_text(size = 20),
+      strip.text   = element_text(size = 17, face = "bold"),
+      legend.text  = element_text(size = 17),
+      legend.title = element_text(size = 18)
     )
 }
 
@@ -428,22 +428,22 @@ summarise_with_uncertainty <- function(data, n_boot = 2000) {
 plot_long <- bind_rows(
   cell_means |>
     transmute(topic, pc_prag, marker, n,
-              outcome = "Inferred goal strength",
+              outcome = "Goal strength",
               series = "Observed",
               value = mean_goal),
   cell_means |>
     transmute(topic, pc_prag, marker, n,
-              outcome = "Inferred goal strength",
+              outcome = "Goal strength",
               series = "RSA",
               value = goal_hat_enhanced),
   cell_means |>
     transmute(topic, pc_prag, marker, n,
-              outcome = "Adoption likelihood",
+              outcome = "Adoption",
               series = "Observed",
               value = mean_adoption),
   cell_means |>
     transmute(topic, pc_prag, marker, n,
-              outcome = "Adoption likelihood",
+              outcome = "Adoption",
               series = "RSA",
               value = rsa_adoption_pred_enhanced)
 ) |>
@@ -478,22 +478,22 @@ p <- ggplot(plot_long,
 plot_compare <- bind_rows(
   cell_means |>
     transmute(topic, pc_prag, marker, n,
-              outcome = "Inferred goal strength",
+              outcome = "Goal strength",
               series = "Observed",
               value = mean_goal),
   cell_means |>
     transmute(topic, pc_prag, marker, n,
-              outcome = "Inferred goal strength",
+              outcome = "Goal strength",
               series = "Model",
               value = goal_hat_enhanced),
   cell_means |>
     transmute(topic, pc_prag, marker, n,
-              outcome = "Adoption likelihood",
+              outcome = "Adoption",
               series = "Observed",
               value = mean_adoption),
   cell_means |>
     transmute(topic, pc_prag, marker, n,
-              outcome = "Adoption likelihood",
+              outcome = "Adoption",
               series = "Model",
               value = rsa_adoption_pred_enhanced)
 ) |>

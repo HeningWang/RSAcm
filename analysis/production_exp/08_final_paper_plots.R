@@ -44,12 +44,12 @@ theme_set(theme_aida())
 theme_model <- function() {
   theme_aida() +
     theme(
-      axis.text.y  = element_text(size = 13),
-      axis.text.x  = element_text(size = 13),
-      axis.title.y = element_text(size = 15),
-      axis.title.x = element_text(size = 15),
-      legend.text  = element_text(size = 12),
-      legend.title = element_text(size = 13)
+      axis.text.y  = element_text(size = 18),
+      axis.text.x  = element_text(size = 18),
+      axis.title.y = element_text(size = 20),
+      axis.title.x = element_text(size = 20),
+      legend.text  = element_text(size = 17),
+      legend.title = element_text(size = 18)
     )
 }
 
@@ -220,7 +220,7 @@ p17 <- ggplot(
     axis.text.x = element_text(angle = 18, hjust = 1, vjust = 1),
     legend.position = "top",
     panel.grid.major.x = element_blank(),
-    strip.text = element_text(size = 12.5, face = "bold")
+    strip.text = element_text(size = 17, face = "bold")
   )
 
 save_plot(p17, "fig17_empirical_vs_model_by_condition", w = 9.2, h = 6.2)
@@ -270,7 +270,7 @@ p17b <- ggplot(
     axis.text.x = element_text(size = 11, angle = 25, hjust = 1),
     legend.position = "top",
     panel.grid.major.x = element_blank(),
-    strip.text = element_text(size = 13, face = "bold")
+    strip.text = element_text(size = 17, face = "bold")
   )
 
 save_plot(p17b, "fig17b_facet_by_marker", w = 10, h = 5)
@@ -313,7 +313,7 @@ p17c <- ggplot(
   theme(
     legend.position = "top",
     panel.grid.major.x = element_blank(),
-    strip.text = element_text(size = 13, face = "bold")
+    strip.text = element_text(size = 17, face = "bold")
   )
 
 save_plot(p17c, "fig17c_facet_by_marker", w = 10, h = 5)
