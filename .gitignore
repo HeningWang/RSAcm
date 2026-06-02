@@ -50,3 +50,7 @@ writing/ConsensusMarker/build/
 # *.pdf
 .vscode/settings.json
 writing/.DS_Store
+
+## ── Local working files ─────────────────────────────────────────────────────
+paper/memos/
+tmp/
