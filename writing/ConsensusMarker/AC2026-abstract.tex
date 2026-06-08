@@ -47,13 +47,11 @@ Recent experimental work further links \textit{ja} to causal discourse contexts 
 What remains missing is a formal account of marker felicity that integrates community-relative consensus around $p$ with the speaker’s communicative goal in presenting $p$ as support for $q$.
 
 Building on these insights, we propose a utility-based, noisy-threshold model within probabilistic pragmatics \citep{goodman2016pragmatic, franke2016probabilistic, degen2023rational}.
-The central modelling contribution is to infer these felicity thresholds from production data and use posterior predictions for item selection of listener's tasks to connect production and interpretation.
-Marker choice is modelled as a decision about whether $p$ can be presented as a sufficiently settled premise for $q$.
-This brings together the propositional controversy of $p$, the pragmatic status of $p$ in a relevant epistemic community, and the speaker's goal in using $p$ to support $q$.
-Empirically, we implement this link in a three-step pipeline (Fig.~\ref{fig:overview}): norming estimates baseline propositional controversy, production estimates how pragmatic controversy and goal strength shape marker choice, and comprehension tests whether listeners recover speaker goals and adoption consequences from the chosen marker.
-The empirical findings are graded in both production and interpretation: lower controversy and higher goal strength favour stricter thresholds, and the corresponding markers lead listeners to infer stronger speaker goals.
+Marker choice is modelled as a decision about whether $p$ can be presented as sufficiently settled support for $q$, given its baseline controversy, its status in the relevant epistemic community, and the speaker’s communicative goal.
+The model infers marker-specific felicity thresholds from production data, with the strongest empirical contrast falling between \textit{ja} and \textit{bekanntlich}: their thresholds are distinct but partially overlapping, while \textit{soviel ich wei\ss} occupies a weaker-threshold region.
+Empirically, we implement this link in a three-step pipeline (Fig.~\ref{fig:overview}): norming estimates baseline propositional controversy, production estimates how pragmatic controversy and goal strength shape marker choice and trains the model, and comprehension tests whether listeners recover speaker goals and adoption consequences from markers selected using posterior predictions.
+The empirical findings are graded in both production and interpretation: lower controversy and higher goal strength favour stronger consensus markers, from \textit{soviel ich wei\ss} to \textit{bekanntlich}, and these markers lead listeners to infer stronger speaker goals.
 For adoption, weakly supported felicity conditions can make the speaker's attempt to present $p$ as settled visible, leading listeners to discount the recommendation, in line with pragmatic reactance \citep{Brehm1966-BREATO-2}.
-Fitted to the production data, the model estimates partially overlapping felicity thresholds for \textit{ja} and \textit{bekanntlich} from speakers' choices across contexts.
 Taken together, the results show that consensus markers constrain how $p$ can be presented as a shared premise for $q$, with speaker choice and listener inference shaped by the relevant epistemic community and the speaker's goal.
 
 \newpage
