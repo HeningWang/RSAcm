@@ -32,26 +32,25 @@ We ask whether this intuition can be formalized in a probabilistic pragmatic mod
 \ex. \textit{Impfungen sind (soviel ich wei\ss / ja / bekanntlich) sicher und wirksam; deshalb solltest du dich impfen lassen.}\\
 `Vaccinations are, as far as I know / as you know / as is well known, safe and effective; therefore you should get vaccinated.'
 \z.
-With \textit{soviel ich wei\ss}, the speaker restricts $p$ to their own evidence; \textit{ja} presents $p$ as shared with the addressee; and \textit{bekanntlich} presents $p$ as publicly accessible knowledge.
+With \textit{soviel ich wei\ss}, the speaker restricts $p$ to their own epistemic state; \textit{ja} presents $p$ as shared with the addressee; and \textit{bekanntlich} presents $p$ as more broadly publicly accessible knowledge.
 The felicity of each marker therefore depends on several dimensions at once.
 First, the status of $p$ is community-relative: the safety and efficacy of vaccination may be treated as settled in a medical-expert community, but remain contested in a divided public setting.
 Second, the speaker's goal matters.
 A political group promoting vaccination, for instance, may have an interest in presenting $p$ as already settled, because doing so strengthens the move from $p$ to the recommendation $q$.
 Third, propositions differ in their baseline degree of controversy, independently of the immediate discourse context.
-Thus, treating $p$ as settled allows the speaker to present $q$ as a recommendation supported by shared assumptions.
+Thus, by selecting a particular consensus marker, the speaker can present p as more or less settled and thereby guide the addressee toward accepting q as a recommendation grounded in shared assumptions.
 
 We use the label \emph{consensus markers} functionally: the three expressions differ in syntactic category and lexical meaning, but all bear on how $p$ is managed in the common ground.
 Previous work on German discourse particles treats \textit{ja} as contributing non-truth-conditional, use-conditional meaning \citep{gutzmann2015use,grosz2021discourse}.
 Its common-ground effect has been characterized as marking $p$ as \textsc{known} \citep{thurmair1989modalpartikeln}, speaker-assumed common knowledge \citep{karagjosova2004meaning}, uncontroversial \citep{jacobs_semantics_1991,zimmermann2011discourse,waltereit2001modal}, settled in the common ground \citep{repp2013common}, or available for manipulative use in convincing an interlocutor \citep{doring2016modal}.
 Recent experimental work further links \textit{ja} to causal discourse contexts \citep{seemann2025}, motivating the running setup in (1), where $p$ serves as the premise for the downstream recommendation $q$.
-What remains missing is a formal account of how three factors interact in determining marker-specific felicity conditions: the marker used, the relevant epistemic community, and the degree of consensus around $p$ in that community.
+What remains missing is a formal account of marker felicity that integrates community-relative consensus around $p$ with the speaker’s communicative goal in presenting $p$ as support for $q$.
 
 Building on these insights, we propose a utility-based, noisy-threshold model within probabilistic pragmatics \citep{goodman2016pragmatic, franke2016probabilistic, degen2023rational}.
-The central modelling contribution is to infer these felicity thresholds directly from production data and use them to connect production and interpretation.
+The central modelling contribution is to infer these felicity thresholds from production data and use posterior predictions for item selection of listener's tasks to connect production and interpretation.
 Marker choice is modelled as a decision about whether $p$ can be presented as a sufficiently settled premise for $q$.
 This brings together the propositional controversy of $p$, the pragmatic status of $p$ in a relevant epistemic community, and the speaker's goal in using $p$ to support $q$.
 Empirically, we implement this link in a three-step pipeline (Fig.~\ref{fig:overview}): norming estimates baseline propositional controversy, production estimates how pragmatic controversy and goal strength shape marker choice, and comprehension tests whether listeners recover speaker goals and adoption consequences from the chosen marker.
-Between production and comprehension, Bayesian item selection uses posterior predictions from the fitted production model to choose items for the listener study.
 The empirical findings are graded in both production and interpretation: lower controversy and higher goal strength favour stricter thresholds, and the corresponding markers lead listeners to infer stronger speaker goals.
 For adoption, weakly supported felicity conditions can make the speaker's attempt to present $p$ as settled visible, leading listeners to discount the recommendation, in line with pragmatic reactance \citep{Brehm1966-BREATO-2}.
 Fitted to the production data, the model estimates partially overlapping felicity thresholds for \textit{ja} and \textit{bekanntlich} from speakers' choices across contexts.

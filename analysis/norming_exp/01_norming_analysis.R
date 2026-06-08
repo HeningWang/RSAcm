@@ -176,7 +176,7 @@ p_base <- ggplot(
   geom_jitter(height = 0.10, width = 0, alpha = 0.22, size = 1.8, show.legend = FALSE) +
   scale_x_continuous(limits = c(0, 1)) +
   labs(
-    x = "Propositional controversy (higher -> more controversial)",
+    x = "Propositional controversy\n(higher -> more controversial)",
     y = NULL
   ) +
   theme_model()
